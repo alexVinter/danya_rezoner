@@ -11,7 +11,7 @@ export const ProcessSection: React.FC = () => {
             Как работаю
           </h2>
           <img
-            src="/assets/rainbow.webp?v=2"
+            src="/assets/rainbow.webp?v=3"
             alt=""
             aria-hidden="true"
             className="wob w-[150px] sm:w-[190px] md:w-[230px] h-auto select-none -mb-1"

@@ -34,7 +34,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
           className="flex items-center gap-2.5 text-slate no-underline hover:text-slate"
         >
           <img
-            src="/assets/lion-mark.webp?v=2"
+            src="/assets/lion-mark.webp?v=3"
             alt=""
             aria-hidden="true"
             className="w-[38px] h-auto flex-shrink-0"

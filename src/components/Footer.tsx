@@ -16,7 +16,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
             <div className="flex items-center gap-3">
               <span className="w-12 h-12 rounded-pill bg-paper inline-flex items-center justify-center flex-shrink-0">
                 <img
-                  src="/assets/lion-mark.webp?v=2"
+                  src="/assets/lion-mark.webp?v=3"
                   alt=""
                   aria-hidden="true"
                   className="w-[34px] h-auto"

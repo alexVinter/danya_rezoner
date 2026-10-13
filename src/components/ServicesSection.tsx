@@ -15,7 +15,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
             Услуги
           </h2>
           <img
-            src="/assets/hands-keyboard.webp?v=2"
+            src="/assets/hands-keyboard.webp?v=3"
             alt=""
             aria-hidden="true"
             className="wob w-[160px] sm:w-[220px] md:w-[260px] h-auto select-none -mb-1.5"

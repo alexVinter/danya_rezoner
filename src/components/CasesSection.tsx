@@ -110,7 +110,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
 
               <p className="mt-auto pt-2.5 mb-0 text-[16px]">
                 <button
-                  onClick={() => onOpenCase(featured.slug)}
+                  onClick={() => onOpenCase(card.slug)}
                   className="lnk font-semibold text-slate inline-flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer"
                 >
                   <span>Читать кейс</span>

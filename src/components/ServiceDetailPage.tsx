@@ -459,7 +459,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             </button>
 
             <button
-              onClick={() => onOpenCase('kontur-extern')}
+              onClick={() => onOpenCase('elba')}
               className="text-left bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col gap-3 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
             >
               <span className="text-[48px] sm:text-[56px] leading-none font-bold tracking-[-0.03em] text-orange tabular-nums">

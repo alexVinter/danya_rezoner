@@ -18,6 +18,7 @@ type AppView = 'home' | 'service-detail' | 'case-detail';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
+  const [activeCaseSlug, setActiveCaseSlug] = useState<string>('kontur-extern');
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
   // Sync hash routing on mount and on popstate
@@ -27,7 +28,14 @@ export const App: React.FC = () => {
       if (hash.includes('service') || hash.includes('telegram-ads')) {
         setCurrentView('service-detail');
         window.scrollTo(0, 0);
-      } else if (hash.includes('case-extern') || hash.includes('extern')) {
+      } else if (hash.includes('case-') || hash.includes('case/') || hash.includes('extern')) {
+        let slug = 'kontur-extern';
+        if (hash.includes('conf')) slug = 'conference';
+        else if (hash.includes('elba') && !hash.includes('webinar')) slug = 'elba';
+        else if (hash.includes('webinar') || hash.includes('funnel')) slug = 'webinars';
+        else if (hash.includes('extern')) slug = 'kontur-extern';
+
+        setActiveCaseSlug(slug);
         setCurrentView('case-detail');
         window.scrollTo(0, 0);
       } else {
@@ -63,10 +71,16 @@ export const App: React.FC = () => {
     }
   };
 
-  const navigateToCase = (_slug?: string) => {
-    window.location.hash = 'case-extern';
+  const navigateToCase = (slug: string = 'kontur-extern') => {
+    let targetSlug = 'kontur-extern';
+    if (slug.includes('conf')) targetSlug = 'conference';
+    else if (slug.includes('elba') && !slug.includes('webinar')) targetSlug = 'elba';
+    else if (slug.includes('webinar') || slug.includes('funnel')) targetSlug = 'webinars';
+
+    window.location.hash = `case-${targetSlug}`;
+    setActiveCaseSlug(targetSlug);
     setCurrentView('case-detail');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -86,7 +100,9 @@ export const App: React.FC = () => {
           />
         ) : currentView === 'case-detail' ? (
           <CaseDetailPage
+            caseSlug={activeCaseSlug}
             onBackToHome={() => navigateToHome('#cases')}
+            onSelectCase={navigateToCase}
           />
         ) : (
           <>

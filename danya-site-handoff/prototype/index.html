@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Главная</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700&amp;display=swap">
+<style>
+body{margin:0;background:#F3EFEA;color:#313A43;font-family:"Golos Text",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#313A43}a:hover{color:#B15130}
+img{display:block;max-width:100%}
+.mark{background:#313A43;color:#F3EFEA;padding:0 .12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.btn-o:hover{background:#9C472A !important}
+.btn-s:hover{background:#1F252B !important}
+.btn-line:hover{background:#B15130 !important;border-color:#B15130 !important;color:#FFFFFF !important}
+.btn-w:hover{background:#F3EFEA !important}
+.lnk{text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px}
+.lnk:hover{text-decoration-color:#B15130}
+.flink{text-decoration:none}.flink:hover{text-decoration:underline}
+:focus-visible{outline:3px solid #313A43;outline-offset:2px}
+details summary{list-style:none;cursor:pointer}
+details summary::-webkit-details-marker{display:none}
+details[open] .plus{transform:rotate(45deg)}
+.plus{transition:transform .2s}
+.svc-row{transition:background .15s}
+.svc-row:hover{background:#FFFFFF}
+@media (prefers-reduced-motion: no-preference){
+.wob:hover{animation:wob .7s ease-in-out}
+@keyframes wob{0%{rotate:0deg}30%{rotate:-3deg}65%{rotate:2deg}100%{rotate:0deg}}
+}
+@media (max-width: 1100px){
+.nav{gap:18px !important}
+.steps{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+.step-arrow{display:none !important}
+.tiles{grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+}
+@media (max-width: 900px){
+.nav{display:none !important}
+.burger{display:inline-flex !important}
+.hide-sm{display:none !important}
+.wrap{padding-left:16px !important;padding-right:16px !important}
+.g2{grid-template-columns:minmax(0,1fr) !important}
+.svc-row{grid-template-columns:minmax(0,1fr) !important;gap:14px !important}
+.cards3{grid-template-columns:minmax(0,1fr) !important}
+.steps{grid-template-columns:minmax(0,1fr) !important}
+.foot{grid-template-columns:minmax(0,1fr) !important}
+.h1{font-size:40px !important}
+.h2{font-size:32px !important}
+.h3{font-size:24px !important}
+.sec{padding-top:64px !important}
+.hero-ill{max-width:280px !important}
+.ad{padding:24px 24px 168px !important}
+.ad-hand{left:auto !important;right:28px !important;width:128px !important;bottom:-36px !important}
+.ad-label{top:14px !important;bottom:auto !important}
+.feat{padding:28px !important}
+.xp{grid-template-columns:minmax(0,1fr) !important;gap:4px !important}
+.cta{padding:32px 20px !important}
+.cta-tiger{width:240px !important;top:-112px !important;left:20px !important}
+.contact{padding-top:150px !important}
+.sec-ill{width:160px !important}
+}
+</style>
+</head>
+<body>
+<header style="position: sticky; top: 0; z-index: 20; background: #F3EFEA; border-bottom: 1px solid #CCCBC9">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 24px">
+<a href="#top" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: #313A43">
+<img src="assets/lion-mark.webp" alt="" aria-hidden="true" style="width: 38px; height: auto">
+<span style="font-size: 18px; font-weight: 700; letter-spacing: -0.01em">Даниил Винтер</span>
+</a>
+<nav class="nav" aria-label="Разделы сайта" style="display: flex; gap: 28px; font-size: 16px; font-weight: 500">
+<a href="#about" style="text-decoration: none">Обо мне</a>
+<a href="#services" style="text-decoration: none">Услуги</a>
+<a href="#cases" style="text-decoration: none">Кейсы</a>
+<a href="#process" style="text-decoration: none">Как работаю</a>
+<a href="#faq" style="text-decoration: none">FAQ</a>
+<a href="https://t.me/rezonerw" style="text-decoration: none">Блог</a>
+</nav>
+<div style="display: flex; align-items: center; gap: 10px">
+<a class="btn-o hide-sm" href="https://t.me/winter_daniil" style="display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px; background: #B15130; color: #FFFFFF; font-size: 15px; font-weight: 600; text-decoration: none">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg>
+Написать в Telegram</a>
+<button class="burger" type="button" aria-label="Открыть меню" style="display: none; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1.5px solid #313A43; border-radius: 999px; background: transparent; color: #313A43">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>
+</button>
+</div>
+</div>
+</header>
+
+<main id="top">
+
+<section style="padding: 64px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div class="g2" style="display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; align-items: center">
+<div>
+<h1 class="h1" style="margin: 0; font-size: 64px; line-height: 1.1; font-weight: 700; letter-spacing: -0.025em; max-width: 720px"><span class="mark">Платный трафик</span> для бизнеса, который продаёт через контент</h1>
+<p style="margin: 28px 0 0; font-size: 20px; line-height: 1.45; max-width: 560px">Руковожу отделом промо в агентстве АР. До этого 3 года вёл перформанс в Контуре: снизил цену подписчика в Telegram Ads на треть.</p>
+<div style="margin-top: 36px">
+<a class="btn-o" href="https://t.me/winter_daniil" style="display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 28px; border-radius: 999px; background: #B15130; color: #FFFFFF; font-size: 17px; font-weight: 600; text-decoration: none">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg>
+Написать в Telegram</a>
+</div>
+</div>
+<div style="display: flex; justify-content: center">
+<img class="wob hero-ill" src="assets/lion.webp" alt="" aria-hidden="true" style="width: 100%; max-width: 440px; rotate: -4deg">
+</div>
+</div>
+</div>
+</section>
+
+<section style="padding: 56px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<aside class="ad" aria-label="Реклама" style="position: relative; overflow: hidden; background: #BBC65E; border: 1.5px solid #313A43; border-radius: 32px; padding: 40px 48px 40px 236px; min-height: 212px; display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap">
+<img class="ad-hand" src="assets/hand3.webp" alt="" aria-hidden="true" style="position: absolute; left: 44px; bottom: -58px; width: 164px; rotate: -8deg">
+<div style="max-width: 760px">
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #F3EFEA; border: 1.5px solid #313A43; font-size: 13px; font-weight: 500">До 31 декабря</span>
+<p class="h3" style="margin: 16px 0 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -0.015em"><span class="mark">Три месяца</span>, чтобы набрать базу в Telegram</p>
+<p style="margin: 12px 0 0; font-size: 17px; line-height: 1.5">Запускаю промо в Telegram Ads и бонусом собираю воронку в боте</p>
+</div>
+<a class="btn-s" href="https://t.me/winter_daniil" style="display: inline-flex; align-items: center; height: 48px; padding: 0 26px; border-radius: 999px; background: #313A43; color: #F3EFEA; font-size: 17px; font-weight: 600; text-decoration: none">Обсудить</a>
+<span class="ad-label" style="position: absolute; right: 22px; bottom: 12px; font-size: 12px; color: #313A43">Реклама</span>
+</aside>
+</div>
+</section>
+
+<section id="about" class="sec" style="padding: 120px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<h2 class="h2" style="margin: 0 0 48px; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">Обо мне</h2>
+<div class="g2" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; align-items: start">
+<div style="background: #E3B5B3; border: 1.5px solid #313A43; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; align-items: center; gap: 28px">
+<img class="wob" src="assets/finger-sparkles.webp" alt="" aria-hidden="true" style="height: 300px; width: auto; rotate: 6deg">
+<div style="align-self: stretch">
+<p style="margin: 0; font-size: 22px; font-weight: 700">Даня Винтер</p>
+<p style="margin: 6px 0 0; font-size: 16px; line-height: 1.45">Руководитель отдела промо в агентстве АР</p>
+</div>
+</div>
+<div>
+<p style="margin: 0; font-size: 20px; line-height: 1.45; max-width: 640px">Веду платный трафик для бизнеса, который продаёт через контент: подписчики в каналы, регистрации на мероприятия, заявки из ботов.</p>
+<div style="margin-top: 32px; border-top: 1px solid #CCCBC9">
+<div class="xp" style="display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #CCCBC9">
+<span style="font-size: 14px; font-weight: 500; color: #585E64">Сейчас</span>
+<span><span style="font-size: 17px; font-weight: 600">Агентство АР</span><span style="display: block; margin-top: 2px; font-size: 15px; color: #585E64">руководитель отдела промо</span></span>
+<span style="font-size: 20px; font-weight: 700; color: #B15130; white-space: nowrap">15+ проектов</span>
+</div>
+<div class="xp" style="display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #CCCBC9">
+<span style="font-size: 14px; font-weight: 500; color: #585E64">3 года</span>
+<span><span style="font-size: 17px; font-weight: 600">СКБ Контур: Экстерн, Эльба, Конференции</span><span style="display: block; margin-top: 2px; font-size: 15px; color: #585E64">лид перформанс-маркетинга</span></span>
+<span style="font-size: 20px; font-weight: 700; color: #B15130; white-space: nowrap">−33% к CPF</span>
+</div>
+<div class="xp" style="display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #CCCBC9">
+<span style="font-size: 14px; font-weight: 500; color: #585E64">Ранее</span>
+<span><span style="font-size: 17px; font-weight: 600">Teller Agency</span><span style="display: block; margin-top: 2px; font-size: 15px; color: #585E64">трафик-стратег и таргетолог</span></span>
+<span style="font-size: 20px; font-weight: 700; color: #B15130; white-space: nowrap">40+ запусков</span>
+</div>
+<div class="xp" style="display: grid; grid-template-columns: 96px minmax(0, 1fr) auto; gap: 16px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid #CCCBC9">
+<span style="font-size: 14px; font-weight: 500; color: #585E64">Старт</span>
+<span><span style="font-size: 17px; font-weight: 600">HTML Academy и ранние проекты</span><span style="display: block; margin-top: 2px; font-size: 15px; color: #585E64">специалист по платному трафику</span></span>
+<span style="font-size: 20px; font-weight: 700; color: #B15130; white-space: nowrap">ROMI 300%</span>
+</div>
+</div>
+<div class="tiles" style="margin-top: 24px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+<div style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 16px; padding: 16px 18px">
+<p style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">TgConf 2024 и 2025</p>
+<p style="margin: 4px 0 0; font-size: 14px; color: #585E64">спикер</p>
+</div>
+<div style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 16px; padding: 16px 18px">
+<p style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">Вебинары eLama</p>
+<p style="margin: 4px 0 0; font-size: 14px; color: #585E64">эксперт</p>
+</div>
+<div style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 16px; padding: 16px 18px">
+<p style="margin: 0; font-size: 16px; font-weight: 600; line-height: 1.3">ppc.world</p>
+<p style="margin: 4px 0 0; font-size: 14px; color: #585E64">автор колонок</p>
+</div>
+<a href="https://t.me/rezonerw" style="display: block; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 16px; padding: 16px 18px; text-decoration: none">
+<span style="display: block; font-size: 16px; font-weight: 600; line-height: 1.3">Канал «Резонёр»</span>
+<span style="display: block; margin-top: 4px; font-size: 14px; color: #585E64">читать в Telegram</span>
+</a>
+</div>
+<p style="margin: 24px 0 0; font-size: 17px"><a class="lnk" href="https://t.me/winter_daniil" style="font-weight: 600">Позвать спикером</a><span aria-hidden="true" style="color: #B15130; font-weight: 600"> →</span></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="services" class="sec" style="padding: 120px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 36px">
+<h2 class="h2" style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">Услуги</h2>
+<img class="wob sec-ill" src="assets/hands-keyboard.webp" alt="" aria-hidden="true" style="width: 260px; margin-bottom: -6px">
+</div>
+<div style="border-top: 1px solid #CCCBC9">
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">01</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Разбор рекламы и воронки</h3>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Аудит текущего платного трафика, поиск точек слива бюджета и готовый план действий</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Бизнес, у которого CPL растёт или не сходятся цифры окупаемости</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Сбор данных из кабинетов и Метрики<br>Созвон 1,5–2 часа с разбором кампаний<br>Презентация с планом доработок</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">15 000 ₽</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">сбор данных, созвон, презентация, запись</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">02</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Ведение Яндекс Директа</h3>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Трафик на вебинары, посадочные страницы и лид-магниты с аналитикой до окупаемости</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">B2B-сервисы, онлайн-школы, организаторы мероприятий</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Горячие ключи и автотаргетинг<br>Регулярная чистка площадок РСЯ<br>Сплит-тесты от 3 креативов на аудиторию</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">от 30 000 ₽ / мес</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">второй канал (VK Ads) +10 000 ₽</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">03</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Ведение VK Ads</h3>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Лид-формы, подписчики в сообщества и регистрации на вебинары и мероприятия</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Мероприятия, вебинары и B2B-ниши с профессиональными сообществами</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Тест 8+ сегментов аудиторий<br>Лид-формы с автоотправкой в CRM<br>Ретаргетинг на прогретые базы</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">30 000 ₽ / мес</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">Директ + VK вместе 40 000 ₽ / мес</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">04</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em"><a class="lnk" href="telegram-ads.html" style="color: #313A43">Ведение Telegram Ads</a></h3>
+<span style="margin-top: 10px; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #BBC65E; font-size: 13px; font-weight: 500">до 31 декабря</span>
+<p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Подписчики и заявки через официальную рекламу Telegram, пока она разрешена</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Бизнесу и авторам с каналом, которым нужна база до конца года</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Стратегия и медиаплан<br>Кабинет, маркировка, запуск<br>До 10 креативов, отчёт раз в неделю</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">от 30 000 ₽ / мес</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">бюджет на рекламу от 500 € в месяц, отдельно</p>
+<a class="btn-line" href="telegram-ads.html" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Подробнее</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">05</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Связка «Директ → лендинг → Telegram»</h3>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Привожу подписчиков в Telegram-канал из Яндекса без рекламы внутри Telegram</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Бизнес с Telegram-каналом, которому с 2027 года нужны новые подписчики</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Лендинг-прокладка с высокой конверсией<br>Чат-бот с лид-магнитом за подписку<br>Кампании на Поиске и в РСЯ</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">35 000 ₽ разово</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">под ключ: лендинг, бот, трафик, аналитика</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">06</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Продвижение в MAX</h3>
+<span style="margin-top: 10px; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #BBC65E; font-size: 13px; font-weight: 500">тестовая цена</span>
+<p style="margin: 10px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Посевы в каналах MAX и VK Реклама на сайт или в канал клиента</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Бизнес и авторы, желающие занять позиции на молодом рынке раньше других</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Подбор каналов под посевы в MAX<br>Таргет через VK Рекламу<br>Тест связок на сайт или в канал</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">10 000 ₽ / мес</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">на время первых публичных кейсов</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+<div class="svc-row" style="display: grid; grid-template-columns: 56px minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px; padding: 32px 0; border-bottom: 1px solid #CCCBC9; align-items: start">
+<span style="font-size: 22px; line-height: 1.25; font-weight: 700; color: #B15130">07</span>
+<div>
+<h3 style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700; letter-spacing: -0.01em">Воронки в ботах</h3>
+<p style="margin: 8px 0 0; font-size: 16px; line-height: 1.5; color: #585E64">Чат-боты с лид-магнитом, прогревающие цепочки и сквозная разметка источников</p>
+</div>
+<div style="font-size: 15px; line-height: 1.5">
+<p style="margin: 0; font-size: 13px; font-weight: 500; color: #585E64">Для кого</p>
+<p style="margin: 2px 0 0">Онлайн-школы, B2B-компании и эксперты с вебинарными воронками</p>
+<p style="margin: 14px 0 0; font-size: 13px; font-weight: 500; color: #585E64">Что внутри</p>
+<p style="margin: 2px 0 0">Сценарий цепочки догрева с визуалом<br>Сквозная разметка источников<br>Регистрация в любой момент</p>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 6px">
+<p style="margin: 0; font-size: 22px; line-height: 1.25; font-weight: 700">от 15 000 ₽</p>
+<p style="margin: 0; font-size: 14px; line-height: 1.45; color: #585E64">бот с лид-магнитом 15 000 ₽, воронка прогрева от 30 000 ₽</p>
+<a class="btn-line" href="https://t.me/winter_daniil" style="margin-top: 10px; display: inline-flex; align-items: center; height: 44px; padding: 0 20px; border-radius: 999px; border: 1.5px solid #313A43; color: #313A43; font-size: 15px; font-weight: 600; text-decoration: none">Обсудить</a>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<section id="cases" style="margin-top: 120px; background: #263C2C; padding: 112px 0 112px">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<h2 class="h2" style="margin: 0 0 48px; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; color: #F3EFEA">Кейсы</h2>
+<article class="g2 feat" style="background: #BBC65E; border-radius: 24px; padding: 48px; display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 24px; align-items: center">
+<div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 13px; font-weight: 500">Telegram Ads</span>
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 13px; font-weight: 500">Чат-боты</span>
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 13px; font-weight: 500">Комьюнити бухгалтеров</span>
+</div>
+<p style="margin: 28px 0 0; font-size: 88px; line-height: 0.95; font-weight: 700; letter-spacing: -0.04em">−33%</p>
+<h3 class="h3" style="margin: 14px 0 0; font-size: 32px; line-height: 1.15; font-weight: 700; letter-spacing: -0.015em; max-width: 560px">к цене подписчика в Telegram Ads для канала Контур.Экстерн</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 28px">
+<div>
+<p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums">€3 → €2</p>
+<p style="margin: 6px 0 0; font-size: 14px">цена подписчика</p>
+</div>
+<div>
+<p style="margin: 0; font-size: 28px; line-height: 1.1; font-weight: 700; font-variant-numeric: tabular-nums">0,2% → 0,38%</p>
+<p style="margin: 6px 0 0; font-size: 14px">CTR</p>
+</div>
+</div>
+<a class="btn-s" href="case-extern.html" style="margin-top: 32px; display: inline-flex; align-items: center; height: 48px; padding: 0 26px; border-radius: 999px; background: #313A43; color: #F3EFEA; font-size: 17px; font-weight: 600; text-decoration: none">Читать кейс</a>
+</div>
+<div style="display: flex; justify-content: center">
+<img class="wob" src="assets/water-pistol.webp" alt="" aria-hidden="true" style="width: 100%; max-width: 420px; rotate: -12deg">
+</div>
+</article>
+<div class="cards3" style="margin-top: 24px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<article style="background: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: #B15130">114%</p>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 700">плана по регистрациям на конференцию, CPL на 30% ниже плана</h3>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">VK лид-формы</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">Яндекс Директ</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">B2B для бухгалтеров</span>
+</div>
+<p style="margin: auto 0 0; padding-top: 10px; font-size: 16px"><a class="lnk" href="#cases" style="font-weight: 600">Читать кейс</a><span aria-hidden="true" style="color: #B15130; font-weight: 600"> →</span></p>
+</article>
+<article style="background: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: #B15130">−26%</p>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 700">к цене подписчика для канала предпринимателей Контур.Эльба</h3>
+<p style="margin: 0; font-size: 15px; color: #585E64; font-variant-numeric: tabular-nums">€3,66 → €2,7 за подписчика</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">Telegram Ads</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">ИП на УСН и патенте</span>
+</div>
+<p style="margin: auto 0 0; padding-top: 10px; font-size: 16px"><a class="lnk" href="#cases" style="font-weight: 600">Читать кейс</a><span aria-hidden="true" style="color: #B15130; font-weight: 600"> →</span></p>
+</article>
+<article style="background: #FFFFFF; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em; color: #B15130">+23%</p>
+<h3 style="margin: 0; font-size: 20px; line-height: 1.3; font-weight: 700">выручки с вебинаров после пересборки воронки в ботах</h3>
+<p style="margin: 0; font-size: 15px; color: #585E64">+30% к доходимости до вебинара</p>
+<div style="display: flex; flex-wrap: wrap; gap: 6px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">Чат-боты</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">Разметка источников</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; border: 1.5px solid #313A43; font-size: 12px; font-weight: 500">B2B-вебинары</span>
+</div>
+<p style="margin: auto 0 0; padding-top: 10px; font-size: 16px"><a class="lnk" href="#cases" style="font-weight: 600">Читать кейс</a><span aria-hidden="true" style="color: #B15130; font-weight: 600"> →</span></p>
+</article>
+</div>
+<p style="margin: 32px 0 0; font-size: 16px; line-height: 1.6; color: #CACBC4">Ранние кейсы, 2022: <a class="lnk" href="#cases" style="color: #F3EFEA">HTML Academy, 2 500 человек в чат-бот по 40 ₽ и ROMI 300%</a> и <a class="lnk" href="#cases" style="color: #F3EFEA">коллаборация с блогером на охват 400 000</a></p>
+</div>
+</section>
+
+<section id="process" class="sec" style="padding: 120px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px">
+<h2 class="h2" style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">Как работаю</h2>
+<img class="wob sec-ill" src="assets/rainbow.webp" alt="" aria-hidden="true" style="width: 230px; margin-bottom: -4px">
+</div>
+<ol class="steps" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 32px">
+<li style="position: relative; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 40px; line-height: 1; font-weight: 700; color: #B15130">01</span>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E3B5B3; font-size: 13px; font-weight: 500">30 минут</span>
+<h3 style="margin: 4px 0 0; font-size: 19px; line-height: 1.25; font-weight: 700">Созвон-знакомство</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">Бесплатно. Разбираем задачу, экономику продукта, бюджет и решаем, смогу ли помочь</p>
+<svg class="step-arrow" aria-hidden="true" width="28" height="12" viewBox="0 0 28 12" style="position: absolute; right: -31px; top: 42px"><path d="M1 6h24M19 1l6 5-6 5" fill="none" stroke="#313A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</li>
+<li style="position: relative; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 40px; line-height: 1; font-weight: 700; color: #B15130">02</span>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E3B5B3; font-size: 13px; font-weight: 500">2–4 рабочих дня</span>
+<h3 style="margin: 4px 0 0; font-size: 19px; line-height: 1.25; font-weight: 700">Стратегия и медиаплан</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">Считаем вилку цены подписчика или заявки и готовим площадки</p>
+<svg class="step-arrow" aria-hidden="true" width="28" height="12" viewBox="0 0 28 12" style="position: absolute; right: -31px; top: 42px"><path d="M1 6h24M19 1l6 5-6 5" fill="none" stroke="#313A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</li>
+<li style="position: relative; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 40px; line-height: 1; font-weight: 700; color: #B15130">03</span>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E3B5B3; font-size: 13px; font-weight: 500">1–2 дня</span>
+<h3 style="margin: 4px 0 0; font-size: 19px; line-height: 1.25; font-weight: 700">Запуск</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">Собираю кабинеты, загружаю креативы, прохожу модерацию и маркировку в ОРД</p>
+<svg class="step-arrow" aria-hidden="true" width="28" height="12" viewBox="0 0 28 12" style="position: absolute; right: -31px; top: 42px"><path d="M1 6h24M19 1l6 5-6 5" fill="none" stroke="#313A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</li>
+<li style="position: relative; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 40px; line-height: 1; font-weight: 700; color: #B15130">04</span>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E3B5B3; font-size: 13px; font-weight: 500">всё время</span>
+<h3 style="margin: 4px 0 0; font-size: 19px; line-height: 1.25; font-weight: 700">Тесты креативов</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">От трёх креативов на сегмент при равном бюджете, чтобы цифры были честными</p>
+<svg class="step-arrow" aria-hidden="true" width="28" height="12" viewBox="0 0 28 12" style="position: absolute; right: -31px; top: 42px"><path d="M1 6h24M19 1l6 5-6 5" fill="none" stroke="#313A43" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</li>
+<li style="position: relative; background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 24px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 40px; line-height: 1; font-weight: 700; color: #B15130">05</span>
+<span style="align-self: flex-start; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 999px; background: #E3B5B3; font-size: 13px; font-weight: 500">каждый понедельник</span>
+<h3 style="margin: 4px 0 0; font-size: 19px; line-height: 1.25; font-weight: 700">Отчёт</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.5">Сколько потрачено и пришло, цена единицы, что сработало, план на неделю</p>
+</li>
+</ol>
+<p style="margin: 32px 0 0; background: #E3B5B3; border-radius: 24px; padding: 20px 28px; font-size: 17px; line-height: 1.5">Работаю один: на созвоны выхожу сам, кампании веду сам, отчёты присылаю лично. Без посредников и стажёров.</p>
+</div>
+</section>
+
+<section id="reviews" class="sec" style="padding: 120px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px">
+<h2 class="h2" style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">Отзывы</h2>
+<div style="display: flex; align-items: flex-end; gap: 6px; margin-bottom: -4px">
+<img class="wob" src="assets/flower-1.webp" alt="" aria-hidden="true" style="height: 104px; width: auto; rotate: -6deg">
+<img class="wob" src="assets/flower-2.webp" alt="" aria-hidden="true" style="height: 90px; width: auto; rotate: 5deg">
+</div>
+</div>
+<div class="cards3" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<figure style="margin: 0; background: #E3B5B3; border: 1.5px solid #313A43; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 24px; min-height: 300px">
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.55">[Текст настоящего отзыва: 3–5 предложений о задаче, работе и результате]</blockquote>
+<figcaption style="margin-top: auto; padding-top: 16px; border-top: 1px solid #313A43">
+<span style="display: block; font-size: 16px; font-weight: 600">[Имя Фамилия]</span>
+<span style="display: block; margin-top: 2px; font-size: 14px">[Роль, компания]</span>
+</figcaption>
+</figure>
+<figure style="margin: 0; background: #E3B5B3; border: 1.5px solid #313A43; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 24px; min-height: 300px">
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.55">[Текст настоящего отзыва: 3–5 предложений о задаче, работе и результате]</blockquote>
+<figcaption style="margin-top: auto; padding-top: 16px; border-top: 1px solid #313A43">
+<span style="display: block; font-size: 16px; font-weight: 600">[Имя Фамилия]</span>
+<span style="display: block; margin-top: 2px; font-size: 14px">[Роль, компания]</span>
+</figcaption>
+</figure>
+<figure style="margin: 0; background: #E3B5B3; border: 1.5px solid #313A43; border-radius: 24px; padding: 28px; display: flex; flex-direction: column; gap: 24px; min-height: 300px">
+<blockquote style="margin: 0; font-size: 17px; line-height: 1.55">[Текст настоящего отзыва: 3–5 предложений о задаче, работе и результате]</blockquote>
+<figcaption style="margin-top: auto; padding-top: 16px; border-top: 1px solid #313A43">
+<span style="display: block; font-size: 16px; font-weight: 600">[Имя Фамилия]</span>
+<span style="display: block; margin-top: 2px; font-size: 14px">[Роль, компания]</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="faq" class="sec" style="padding: 120px 0 0">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div class="g2" style="display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 24px; align-items: start">
+<div>
+<h2 class="h2" style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em">FAQ</h2>
+<p style="margin: 16px 0 0; font-size: 17px; line-height: 1.5">Не нашли ответ — <a class="lnk" href="https://t.me/winter_daniil">напишите в Telegram</a></p>
+<img class="wob hide-sm" src="assets/cactus.webp" alt="" aria-hidden="true" style="margin-top: 48px; width: 190px; rotate: 4deg">
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<details open="" style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Какой минимальный бюджет на рекламу нужен для старта?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">Для полноценного ведения — от 100 000 ₽ в месяц на канал. При таком бюджете оптимизация хотя бы на 30% экономит вам 30 000 ₽, и моя работа полностью окупает себя. Кроме того, алгоритмам Директа и VK нужно от 50–100 тысяч, чтобы набрать статистику конверсий. Если бюджет до 50 тысяч, лучше начать с «Разбора рекламы и воронки» за 15 000 ₽.</div>
+</details>
+<details style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Когда появятся первые результаты?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">[Ответ из черновика]</div>
+</details>
+<details style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Какие ниши вы не берёте в работу?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">[Ответ из черновика]</div>
+</details>
+<details style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Как вы отчитываетесь о результатах?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">Каждый понедельник присылаю отчёт человеческим языком: сколько потрачено, сколько пришло подписчиков или заявок, цена единицы, что сработало и план на неделю.</div>
+</details>
+<details style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Как оформляется сотрудничество и оплата?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">Работаю как самозанятый, по договору и с чеками из «Мой налог». Первый месяц оплачиваете перед стартом, дальше в начале каждого месяца.</div>
+</details>
+<details style="background: #FFFFFF; border: 1.5px solid #313A43; border-radius: 20px">
+<summary style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 22px 24px; font-size: 20px; line-height: 1.3; font-weight: 600">Что с рекламой в Telegram до конца 2026 и с 2027 года?<span class="plus" aria-hidden="true" style="flex: none; width: 36px; height: 36px; border-radius: 999px; background: #B15130; display: inline-flex; align-items: center; justify-content: center"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M7 1v12M1 7h12" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"></path></svg></span></summary>
+<div style="padding: 0 24px 24px; font-size: 17px; line-height: 1.55; max-width: 700px">До 31 декабря запускаю Telegram Ads, с января реклама в Telegram под запретом. Дальше привожу подписчиков в канал извне: Яндекс Директ или VK Реклама, лендинг и канал.</div>
+</details>
+</div>
+</div>
+</div>
+</section>
+
+<section id="contact" class="sec contact" style="padding: 210px 0 120px">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div class="cta g2" style="position: relative; background: #B15130; border-radius: 32px; padding: 56px; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); gap: 40px; align-items: start">
+<img class="wob cta-tiger" src="assets/tiger.webp" alt="" aria-hidden="true" style="position: absolute; left: 48px; top: -164px; width: 340px">
+<div>
+<h2 class="h2" style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; color: #FFFFFF">Давайте работать <span class="mark">вместе</span></h2>
+<p style="margin: 20px 0 0; font-size: 18px; line-height: 1.5; color: #FFFFFF; max-width: 460px">Заполните форму или напишите напрямую в Telegram. Можно сразу прислать ссылку на канал или сайт и описать задачу своими словами.</p>
+<a class="btn-w" href="https://t.me/winter_daniil" style="margin-top: 32px; display: inline-flex; align-items: center; gap: 10px; height: 56px; padding: 0 28px; border-radius: 999px; background: #FFFFFF; color: #313A43; font-size: 17px; font-weight: 600; text-decoration: none">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7z"></path></svg>
+Написать в Telegram</a>
+</div>
+<form action="#contact" style="background: #FFFFFF; border-radius: 24px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Имя *
+<input type="text" name="name" required="" placeholder="Как к вам обращаться" style="height: 52px; border: 1.5px solid #313A43; border-radius: 14px; padding: 0 16px; font-family: inherit; font-size: 17px; font-weight: 400; color: #313A43; background: #FFFFFF">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Telegram *
+<input type="text" name="telegram" required="" placeholder="@username" style="height: 52px; border: 1.5px solid #313A43; border-radius: 14px; padding: 0 16px; font-family: inherit; font-size: 17px; font-weight: 400; color: #313A43; background: #FFFFFF">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Ссылка на проект
+<input type="text" name="project" placeholder="t.me/channel или сайт" style="height: 52px; border: 1.5px solid #313A43; border-radius: 14px; padding: 0 16px; font-family: inherit; font-size: 17px; font-weight: 400; color: #313A43; background: #FFFFFF">
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Бюджет на рекламу
+<span style="position: relative; display: block">
+<select name="budget" style="width: 100%; height: 52px; border: 1.5px solid #313A43; border-radius: 14px; padding: 0 44px 0 16px; font-family: inherit; font-size: 17px; font-weight: 400; color: #313A43; background: #FFFFFF; appearance: none; -webkit-appearance: none">
+<option>Выберите</option>
+<option>до 50 000 ₽</option>
+<option>50 000–100 000 ₽</option>
+<option>100 000–300 000 ₽</option>
+<option>больше 300 000 ₽</option>
+</select>
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" style="position: absolute; right: 18px; top: 19px; pointer-events: none"><path d="M2 5l5 5 5-5" fill="none" stroke="#313A43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</span>
+</label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500">Откуда узнали
+<span style="position: relative; display: block">
+<select name="source" style="width: 100%; height: 52px; border: 1.5px solid #313A43; border-radius: 14px; padding: 0 44px 0 16px; font-family: inherit; font-size: 17px; font-weight: 400; color: #313A43; background: #FFFFFF; appearance: none; -webkit-appearance: none">
+<option>Выберите</option>
+<option>Канал «Резонёр»</option>
+<option>Конференция или вебинар</option>
+<option>Рекомендация</option>
+<option>Поиск</option>
+<option>Другое</option>
+</select>
+<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" style="position: absolute; right: 18px; top: 19px; pointer-events: none"><path d="M2 5l5 5 5-5" fill="none" stroke="#313A43" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+</span>
+</label>
+<label style="display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45">
+<input type="checkbox" name="consent" required="" style="flex: none; width: 20px; height: 20px; margin: 1px 0 0; accent-color: #B15130">
+<span>Согласен на обработку персональных данных и с <a class="lnk" href="#contact">политикой конфиденциальности</a></span>
+</label>
+<button class="btn-o" type="submit" style="margin-top: 4px; height: 56px; border: 0; border-radius: 999px; background: #B15130; color: #FFFFFF; font-family: inherit; font-size: 17px; font-weight: 600; cursor: pointer">Отправить</button>
+</form>
+</div>
+</div>
+</section>
+
+</main>
+
+<footer style="background: #36202C; color: #F3EFEA; padding: 64px 0 32px">
+<div class="wrap" style="max-width: 1280px; margin: 0 auto; padding: 0 40px">
+<div class="foot" style="display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) minmax(0, 3fr); gap: 24px">
+<div>
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 48px; height: 48px; border-radius: 999px; background: #F3EFEA; display: inline-flex; align-items: center; justify-content: center"><img src="assets/lion-mark.webp" alt="" aria-hidden="true" style="width: 34px; height: auto"></span>
+<span style="font-size: 20px; font-weight: 700">Даня Винтер</span>
+</div>
+<p style="margin: 20px 0 0; font-size: 15px; line-height: 1.55; color: #CDC6C4; max-width: 440px">Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.</p>
+<p style="margin: 12px 0 0; font-size: 15px; line-height: 1.55; color: #CDC6C4; max-width: 440px">Самозанятый (НПД). Официальный договор, безналичный расчёт, закрывающие электронные чеки через ФНС «Мой налог».</p>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<p style="margin: 0 0 4px; font-size: 14px; color: #CDC6C4">Связаться</p>
+<a class="flink" href="https://t.me/winter_daniil" style="color: #F3EFEA">Telegram @winter_daniil</a>
+<a class="flink" href="https://t.me/rezonerw" style="color: #F3EFEA">Канал «Резонёр»</a>
+<a class="flink" href="mailto:danya@rezoner.ru" style="color: #F3EFEA">danya@rezoner.ru</a>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; font-size: 16px">
+<p style="margin: 0 0 4px; font-size: 14px; color: #CDC6C4">Документы</p>
+<a class="flink" href="#top" style="color: #F3EFEA">Политика конфиденциальности</a>
+<a class="flink" href="#top" style="color: #F3EFEA">Согласие на обработку персональных данных</a>
+</div>
+</div>
+<p style="margin: 48px 0 0; padding-top: 20px; border-top: 1px solid #5A4650; font-size: 14px; color: #CDC6C4">© 2026 Даня Винтер</p>
+</div>
+</footer>
+</body>
+</html>

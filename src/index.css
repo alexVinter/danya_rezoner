@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --paper: #F3EFEA;
+  --white: #FFFFFF;
+  --slate: #313A43;
+  --slate-soft: #585E64;
+  --line: #CCCBC9;
+  --orange: #B15130;
+  --orange-hover: #9C472A;
+  --pink: #E3B5B3;
+  --lime: #BBC65E;
+  --forest: #263C2C;
+  --plum: #36202C;
+
+  --font: "Golos Text", system-ui, sans-serif;
+
+  --r-plate: 32px;
+  --r-card: 24px;
+  --r-faq: 20px;
+  --r-input: 14px;
+  --r-pill: 999px;
+  --stroke: 1.5px solid var(--slate);
+
+  --container: 1200px;
+  --gutter: 24px;
+  --side: 40px;
+  --section-y: 120px;
+}
+@media (max-width: 1023px) {
+  :root { --gutter: 20px; --side: 32px; --section-y: 96px; }
+}
+@media (max-width: 767px) {
+  :root { --gutter: 16px; --side: 16px; --section-y: 64px; }
+}
+
+@layer base {
+  body {
+    margin: 0;
+    background-color: var(--paper);
+    color: var(--slate);
+    font-family: var(--font);
+    -webkit-font-smoothing: antialiased;
+  }
+  * {
+    box-sizing: border-box;
+  }
+  a {
+    color: var(--slate);
+    transition: color 0.15s ease;
+  }
+  a:hover {
+    color: var(--orange);
+  }
+}
+
+/* Key mark highlight plate from TZ-1 */
+.mark {
+  background: var(--slate);
+  color: var(--paper);
+  padding: 0 0.12em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* Buttons */
+.btn-o {
+  background: var(--orange);
+  color: var(--white);
+  transition: background-color 0.15s ease;
+}
+.btn-o:hover {
+  background: var(--orange-hover) !important;
+}
+
+.btn-s {
+  background: var(--slate);
+  color: var(--paper);
+  transition: background-color 0.15s ease;
+}
+.btn-s:hover {
+  background: #1F252B !important;
+}
+
+.btn-line {
+  background: transparent;
+  border: 1.5px solid var(--slate);
+  color: var(--slate);
+  transition: all 0.15s ease;
+}
+.btn-line:hover {
+  background: var(--orange) !important;
+  border-color: var(--orange) !important;
+  color: var(--white) !important;
+}
+
+.btn-w {
+  background: var(--white);
+  color: var(--slate);
+  transition: background-color 0.15s ease;
+}
+.btn-w:hover {
+  background: var(--paper) !important;
+}
+
+/* Links */
+.lnk {
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color 0.15s ease;
+}
+.lnk:hover {
+  text-decoration-color: var(--orange);
+}
+
+.flink {
+  text-decoration: none;
+  transition: text-decoration 0.15s ease;
+}
+.flink:hover {
+  text-decoration: underline;
+}
+
+/* Accessible focus visible */
+:focus-visible {
+  outline: 3px solid var(--slate);
+  outline-offset: 2px;
+}
+
+/* Details summary plus rotation */
+details summary {
+  list-style: none;
+  cursor: pointer;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details[open] .plus {
+  transform: rotate(45deg);
+}
+.plus {
+  transition: transform 0.2s ease;
+}
+
+/* Service row hover */
+.svc-row {
+  transition: background-color 0.15s ease;
+}
+.svc-row:hover {
+  background-color: var(--white);
+}
+
+/* Wobble micro-animation */
+.wob {
+  transform-origin: center center;
+  rotate: 0deg;
+  transition: rotate 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: rotate;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .wob:hover {
+    animation: wob 0.9s cubic-bezier(0.37, 0, 0.63, 1) both;
+  }
+  @keyframes wob {
+    0% {
+      rotate: 0deg;
+    }
+    18% {
+      rotate: -3.5deg;
+    }
+    36% {
+      rotate: 2.8deg;
+    }
+    54% {
+      rotate: -1.8deg;
+    }
+    72% {
+      rotate: 1deg;
+    }
+    88% {
+      rotate: -0.3deg;
+    }
+    100% {
+      rotate: 0deg;
+    }
+  }
+}

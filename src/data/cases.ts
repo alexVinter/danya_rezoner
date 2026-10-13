@@ -109,7 +109,7 @@ export const casesList: CaseData[] = [
     titleHighlight: "Контур.Экстерн",
     lead: "Экстерн — основное B2B-комьюнити, на котором строится контентный прогрев бухгалтеров в продукты Контура. Нужно было снизить цену подписчика, поднять CTR и удержать поток на масштабе.",
     heroIllustration: "/assets/water-pistol.webp?v=3",
-    heroIllustrationClass: "max-w-[280px] sm:max-w-[340px] md:max-w-[400px] -rotate-[12deg]",
+    heroIllustrationClass: "w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] h-auto object-contain -rotate-[12deg]",
     keyMetrics: [
       { value: "€3 → €2", label: "цена подписчика, минус 33%" },
       { value: "0,2% → 0,38%", label: "CTR вырос в 1,9 раза" },
@@ -198,7 +198,7 @@ export const casesList: CaseData[] = [
     lead: "Задача — привлечь регистрации главных бухгалтеров, бухгалтеров и руководителей на двухдневную онлайн-конференцию через платные каналы. Часть аудитории — не клиенты Контура: важно было набрать качественный холодный трафик для прогрева в продуктовый сплит (Экстерн, Диадок, КЭДО, НДС+ и др.).",
     complexity: "Узкая B2B-ниша, конкуренция за внимание бухгалтерской аудитории и активный инфошум вокруг налоговой реформы 2026.",
     heroIllustration: "/assets/hands-keyboard.webp?v=3",
-    heroIllustrationClass: "max-w-[340px] sm:max-w-[420px] md:max-w-[480px] -rotate-[3deg]",
+    heroIllustrationClass: "w-full max-w-[300px] sm:max-w-[380px] md:max-w-[440px] h-auto object-contain -rotate-[3deg]",
     keyMetrics: [
       { value: "114%", label: "выполнение плана по регистрациям" },
       { value: "−30%", label: "средний CPL ниже планового" },
@@ -265,7 +265,7 @@ export const casesList: CaseData[] = [
     lead: "Задача — стабильно привлекать предпринимателей на УСН и патенте в канал «Эльба, бизнес и закон». Сохранять низкую стоимость подписчика и удерживать CTR при росте объёмов трафика.",
     complexity: "Узкая ниша малого бизнеса. Конкуренция с инфо-каналами про налоги и постоянно обновляющаяся повестка по изменениям для ИП.",
     heroIllustration: "/assets/rainbow.webp?v=3",
-    heroIllustrationClass: "max-w-[320px] sm:max-w-[400px] md:max-w-[460px] -rotate-[4deg]",
+    heroIllustrationClass: "w-full max-w-[300px] sm:max-w-[380px] md:max-w-[440px] h-auto object-contain -rotate-[4deg]",
     keyMetrics: [
       { value: "€3,66 → €2,7", label: "цена подписчика, минус 26%" },
       { value: "0,34% → 0,43%", label: "CTR вырос в 1,3 раза" },
@@ -359,7 +359,7 @@ export const casesList: CaseData[] = [
     lead: "Задача — поднять доходимость до вебинаров и выручку с направления. Понять, какие каналы приводят целевых пользователей, чтобы масштабировать рабочие.",
     complexity: "Воронка не размечена, источники трафика не видны. Цепочки короткие, без догрева и пост-коммуникации, часть механик приходилось перезапускать руками.",
     heroIllustration: "/assets/finger-sparkles.webp?v=3",
-    heroIllustrationClass: "max-w-[220px] sm:max-w-[270px] md:max-w-[310px] rotate-[6deg]",
+    heroIllustrationClass: "h-[260px] sm:h-[300px] md:h-[340px] w-auto max-w-[170px] object-contain rotate-[6deg]",
     keyMetrics: [
       { value: "+30%", label: "доходимость до вебинара" },
       { value: "+23%", label: "выручка с направления" },

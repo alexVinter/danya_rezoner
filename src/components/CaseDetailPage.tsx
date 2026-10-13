@@ -85,23 +85,15 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             <p className="mt-6 mb-0 text-[18px] sm:text-[20px] leading-[1.45] text-slate max-w-[620px]">
               {currentCase.lead}
             </p>
-
-            {/* Complexity Badge / Note if available */}
-            {currentCase.complexity && (
-              <div className="mt-5 inline-flex items-start gap-2.5 p-3.5 rounded-card bg-[#F4EFEA] border border-line text-[14px] sm:text-[15px] leading-[1.4] text-slate max-w-[620px]">
-                <span className="font-bold text-orange whitespace-nowrap">Сложность ниши:</span>
-                <span>{currentCase.complexity}</span>
-              </div>
-            )}
           </div>
 
           {/* Hero Illustration */}
-          <div className="md:col-span-5 flex justify-center">
+          <div className="md:col-span-5 flex justify-center items-center mt-6 md:mt-0">
             <img
               src={currentCase.heroIllustration}
               alt=""
               aria-hidden="true"
-              className={`wob w-full h-auto object-contain select-none ${currentCase.heroIllustrationClass}`}
+              className={`wob select-none ${currentCase.heroIllustrationClass}`}
             />
           </div>
         </div>

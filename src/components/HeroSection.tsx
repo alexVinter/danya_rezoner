@@ -45,7 +45,7 @@ export const HeroSection: React.FC = () => {
           {/* Right Column: Lion Illustration */}
           <div className="md:col-span-5 flex justify-center mt-6 md:mt-0">
             <img
-              src="/assets/lion.webp"
+              src="/assets/lion.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob w-full max-w-[280px] sm:max-w-[360px] md:max-w-[440px] h-auto object-contain select-none -rotate-[4deg]"

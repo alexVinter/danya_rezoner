@@ -62,7 +62,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({ onBackToHome }) 
 
           <div className="md:col-span-5 flex justify-center">
             <img
-              src="/assets/water-pistol.webp"
+              src="/assets/water-pistol.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] h-auto object-contain select-none -rotate-[12deg]"
@@ -320,7 +320,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({ onBackToHome }) 
         <section id="contact" className="pt-36 sm:pt-48 md:pt-[210px] pb-16 md:pb-[120px]">
           <div className="relative bg-orange rounded-plate p-6 sm:p-10 md:p-14 grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-10 items-start">
             <img
-              src="/assets/tiger.webp"
+              src="/assets/tiger.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob absolute select-none left-5 sm:left-10 md:left-12 -top-24 sm:-top-32 md:-top-[164px] w-[220px] sm:w-[280px] md:w-[340px] z-10"

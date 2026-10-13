@@ -68,7 +68,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
           {/* Water Pistol Illustration */}
           <div className="md:col-span-5 flex justify-center">
             <img
-              src="/assets/water-pistol.webp"
+              src="/assets/water-pistol.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob w-full max-w-[300px] sm:max-w-[360px] md:max-w-[420px] h-auto object-contain select-none -rotate-[12deg]"

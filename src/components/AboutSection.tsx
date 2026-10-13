@@ -13,7 +13,7 @@ export const AboutSection: React.FC = () => {
           {/* Left Column: Pink Card with Illustration & Bio */}
           <div className="md:col-span-4 bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col items-center gap-7">
             <img
-              src="/assets/finger-sparkles.webp"
+              src="/assets/finger-sparkles.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob h-[240px] sm:h-[300px] w-auto select-none rotate-[6deg]"

@@ -123,7 +123,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               Что входит
             </h2>
             <img
-              src="/assets/hands-keyboard.webp"
+              src="/assets/hands-keyboard.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob w-[180px] sm:w-[220px] md:w-[260px] h-auto select-none -mb-1.5"
@@ -165,7 +165,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               </p>
             </div>
             <img
-              src="/assets/rainbow.webp"
+              src="/assets/rainbow.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob w-[160px] sm:w-[190px] md:w-[230px] h-auto select-none -mb-1"
@@ -378,7 +378,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                   { bold: "Доступы", text: "к каналу, рекламному кабинету и конструктору бота. Можно собрать бота и без конструктора." },
                 ].map((item, idx) => (
                   <li key={idx} className="grid grid-cols-[32px_minmax(0,1fr)] gap-3.5 items-start text-[18px] sm:text-[20px] leading-[1.45] text-slate">
-                    <img src="/assets/arrow.webp" alt="" aria-hidden="true" className="w-[30px] mt-1 select-none" />
+                    <img src="/assets/arrow.webp?v=2" alt="" aria-hidden="true" className="w-[30px] mt-1 select-none" />
                     <span><b>{item.bold}</b> {item.text}</span>
                   </li>
                 ))}
@@ -387,7 +387,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
             <div className="md:col-span-4 flex justify-center">
               <img
-                src="/assets/finger-sparkles.webp"
+                src="/assets/finger-sparkles.webp?v=2"
                 alt=""
                 aria-hidden="true"
                 className="wob hidden md:block h-[340px] lg:h-[380px] w-auto select-none rotate-[6deg]"
@@ -483,7 +483,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
         <section id="contact" className="pt-32 sm:pt-44 md:pt-[200px] pb-16 md:pb-[120px]">
           <div className="relative">
             <img
-              src="/assets/lion.webp"
+              src="/assets/lion.webp?v=2"
               alt=""
               aria-hidden="true"
               className="wob absolute left-7 sm:left-14 md:left-[70px] -top-20 sm:-top-28 md:-top-[134px] w-[180px] sm:w-[220px] md:w-[250px] z-0 select-none -rotate-[6deg]"

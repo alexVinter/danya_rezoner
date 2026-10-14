@@ -674,7 +674,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
           {/* LION TEETH OVERLAY (Layer 20, hooks over the top edge of orange card) */}
           <img
-            src="/assets/lion-teeth.webp?v=5"
+            src="/assets/lion-teeth.webp?v=6"
             alt=""
             aria-hidden="true"
             className="cta-lion-teeth select-none"

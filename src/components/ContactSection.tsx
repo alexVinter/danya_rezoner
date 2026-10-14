@@ -37,7 +37,9 @@ export const ContactSection: React.FC = () => {
           {/* Left Column: Heading, Subtitle & White Button */}
           <div className="md:col-span-6 relative z-10">
             <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-              Давайте работать <span className="mark">вместе</span>
+              Давайте работать
+              <br />
+              <span className="mark inline-block mt-1">вместе</span>
             </h2>
 
             <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">

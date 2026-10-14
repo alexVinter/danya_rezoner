@@ -86,7 +86,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
       case 'rows':
         return (
-          <section key={index} id={block.id} className="pt-16 md:pt-[120px]">
+          <section key={index} id={block.id} className="pt-16 md:pt-[120px] scroll-mt-8 md:scroll-mt-12">
             <div className="wrap">
               <h2 className="m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                 {block.title}
@@ -109,7 +109,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
       case 'steps':
         return (
-          <section key={index} id={block.id} className="pt-16 md:pt-[120px]">
+          <section key={index} id={block.id} className="pt-16 md:pt-[120px] scroll-mt-8 md:scroll-mt-12">
             <div className="wrap">
               <h2 className="m-0 mb-10 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                 {block.title}
@@ -302,7 +302,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
       case 'flow':
         return (
-          <section key={index} id={block.id} className="band mt-16 md:mt-[120px]">
+          <section key={index} id={block.id} className="band mt-16 md:mt-[120px] scroll-mt-8 md:scroll-mt-12">
             <div className="wrap">
               <h2 className="m-0 mb-10 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-paper">
                 {block.title}
@@ -354,7 +354,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
       case 'formats':
         return (
-          <section key={index} id={block.id} className="pt-16 md:pt-[120px]">
+          <section key={index} id={block.id} className="pt-16 md:pt-[120px] scroll-mt-8 md:scroll-mt-12">
             <div className="wrap">
               <h2 className="m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                 {block.title}
@@ -515,12 +515,18 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                   </svg>
                   {currentService.hero.buttonText}
                 </a>
-                <a
-                  className="lnk text-[17px] font-semibold text-slate"
-                  href={`#${currentService.hero.anchor.target}`}
+                <button
+                  type="button"
+                  onClick={() => {
+                    const el = document.getElementById(currentService.hero.anchor.target);
+                    if (el) {
+                      el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="lnk text-[17px] font-semibold text-slate bg-transparent border-0 p-0 cursor-pointer text-left"
                 >
                   {currentService.hero.anchor.text}
-                </a>
+                </button>
               </div>
             </div>
 
@@ -555,8 +561,9 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
           <div className="cta g2 relative z-10 bg-orange rounded-plate p-6 sm:p-10 md:p-14">
             <div>
               <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-                {currentService.cta.title}{' '}
-                <span className="mark">{currentService.cta.titleMark}</span>
+                {currentService.cta.title}
+                <br />
+                <span className="mark inline-block mt-1">{currentService.cta.titleMark}</span>
               </h2>
               <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
                 {currentService.cta.text}
@@ -667,7 +674,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
 
           {/* LION TEETH OVERLAY (Layer 20, hooks over the top edge of orange card) */}
           <img
-            src="/assets/lion-teeth.webp?v=4"
+            src="/assets/lion-teeth.webp?v=5"
             alt=""
             aria-hidden="true"
             className="cta-lion-teeth select-none"

@@ -573,7 +573,9 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
 
             <div>
               <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-                Давайте работать <span className="mark">вместе</span>
+                Давайте работать
+                <br />
+                <span className="mark inline-block mt-1">вместе</span>
               </h2>
               <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
                 Пришлите ссылку на канал и опишите задачу своими словами. За 30 минут созвона забрифуемся, и я соберу стратегию под ваш проект.

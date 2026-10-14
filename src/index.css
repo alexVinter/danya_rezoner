@@ -189,3 +189,229 @@ details[open] .plus {
     }
   }
 }
+
+/* ========================================================
+   Responsive & Prototype layout classes from TZ-3
+   ======================================================== */
+.wrap {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.g2 {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 24px;
+  align-items: center;
+}
+.row2 {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 24px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.price-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
+  gap: 24px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 32px;
+}
+.steps-5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+}
+.cards2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+.cards3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.cards4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+.f-arrow {
+  flex: none;
+  align-self: center;
+}
+.band {
+  background: #263C2C;
+  padding: 104px 0 112px;
+}
+.metrics {
+  background: var(--lime);
+  border: 1.5px solid var(--slate);
+  border-radius: var(--r-card);
+  padding: 40px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+}
+.metrics-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+.metrics-elba {
+  grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 3fr) !important;
+}
+.metric {
+  border-left: 1px solid rgba(49, 58, 67, 0.3);
+  padding-left: 32px;
+}
+.metric:first-child {
+  border-left: 0;
+  padding-left: 0;
+}
+.big-num {
+  font-size: 48px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* CTA character positioning */
+.cta-lion {
+  position: absolute;
+  left: 70px;
+  top: -134px;
+  width: 250px;
+  z-index: 0;
+  rotate: 1deg;
+}
+.cta-lion-teeth {
+  position: absolute;
+  left: 70px;
+  top: -134px;
+  width: 250px;
+  z-index: 20;
+  pointer-events: none;
+  rotate: 1deg;
+}
+.cta-tiger {
+  position: absolute;
+  left: 48px;
+  top: -164px;
+  width: 340px;
+}
+
+@media (max-width: 1100px) {
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .step-arrow {
+    display: none !important;
+  }
+  .cards4 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 900px) {
+  .wrap {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .g2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .row2 {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 6px !important;
+  }
+  .price-row {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 6px !important;
+  }
+  .steps {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .cards2, .cards3 {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .flow {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .f-arrow {
+    rotate: 90deg !important;
+    align-self: center !important;
+  }
+  .band {
+    padding: 64px 0 !important;
+  }
+  .metrics {
+    grid-template-columns: minmax(0, 1fr) !important;
+    padding: 28px !important;
+  }
+  .metric {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+    border-top: 1px solid rgba(49, 58, 67, 0.3) !important;
+    padding-top: 20px !important;
+  }
+  .metric:first-child {
+    border-top: 0 !important;
+    padding-top: 0 !important;
+  }
+  .big-num {
+    font-size: 40px !important;
+  }
+  .hero-tall {
+    height: 300px !important;
+  }
+  .hero-ill {
+    max-width: 280px !important;
+  }
+  .quote {
+    padding: 28px 24px !important;
+  }
+  .quote-text {
+    font-size: 22px !important;
+  }
+  .case-link {
+    padding: 24px !important;
+  }
+  .case-num {
+    font-size: 56px !important;
+  }
+  .plate {
+    padding: 28px 24px !important;
+  }
+  .cta {
+    padding: 32px 20px !important;
+  }
+  .cta-lion, .cta-lion-teeth {
+    width: 180px !important;
+    left: 28px !important;
+    top: -104px !important;
+  }
+  .cta-tiger {
+    width: 240px !important;
+    top: -112px !important;
+    left: 20px !important;
+  }
+  .contact {
+    padding-top: 150px !important;
+  }
+}

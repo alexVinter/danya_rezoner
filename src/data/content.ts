@@ -128,6 +128,8 @@ export const servicesData: ServiceItem[] = [
     ],
     price: "15 000 ₽",
     note: "сбор данных, созвон, презентация, запись",
+    hasDetailsPage: true,
+    slug: "audit",
   },
   {
     id: "direct",
@@ -142,6 +144,8 @@ export const servicesData: ServiceItem[] = [
     ],
     price: "от 30 000 ₽ / мес",
     note: "второй канал (VK Ads) +10 000 ₽",
+    hasDetailsPage: true,
+    slug: "yandex-direct",
   },
   {
     id: "vk",
@@ -156,6 +160,8 @@ export const servicesData: ServiceItem[] = [
     ],
     price: "30 000 ₽ / мес",
     note: "Директ + VK вместе 40 000 ₽ / мес",
+    hasDetailsPage: true,
+    slug: "vk-ads",
   },
   {
     id: "tg-ads",
@@ -187,6 +193,8 @@ export const servicesData: ServiceItem[] = [
     ],
     price: "35 000 ₽ разово",
     note: "под ключ: лендинг, бот, трафик, аналитика",
+    hasDetailsPage: true,
+    slug: "direct-landing-telegram",
   },
   {
     id: "max",
@@ -202,6 +210,8 @@ export const servicesData: ServiceItem[] = [
     price: "10 000 ₽ / мес",
     note: "на время первых публичных кейсов",
     badge: "тестовая цена",
+    hasDetailsPage: true,
+    slug: "max",
   },
   {
     id: "bots",
@@ -216,6 +226,8 @@ export const servicesData: ServiceItem[] = [
     ],
     price: "от 15 000 ₽",
     note: "бот с лид-магнитом 15 000 ₽, воронка прогрева от 30 000 ₽",
+    hasDetailsPage: true,
+    slug: "bot-funnels",
   },
 ];
 
@@ -245,7 +257,7 @@ export const casesData = {
       metricMain: "114%",
       title: "плана по регистрациям на конференцию, CPL на 30% ниже плана",
       tags: ["VK лид-формы", "Яндекс Директ", "B2B для бухгалтеров"],
-      slug: "conference",
+      slug: "accountants-conference",
     },
     {
       id: "elba",
@@ -253,7 +265,7 @@ export const casesData = {
       title: "к цене подписчика для канала предпринимателей Контур.Эльба",
       subtitle: "€3,66 → €2,7 за подписчика",
       tags: ["Telegram Ads", "ИП на УСН и патенте"],
-      slug: "elba",
+      slug: "kontur-elba",
     },
     {
       id: "webinars",
@@ -261,13 +273,13 @@ export const casesData = {
       title: "выручки с вебинаров после пересборки воронки в ботах",
       subtitle: "+30% к доходимости до вебинара",
       tags: ["Чат-боты", "Разметка источников", "B2B-вебинары"],
-      slug: "webinars",
+      slug: "elba-webinars",
     },
   ] as CaseSecondaryItem[],
   earlyCasesText: "Ранние кейсы, 2022:",
   earlyCases: [
-    { title: "HTML Academy, 2 500 человек в чат-бот по 40 ₽ и ROMI 300%", href: "#cases" },
-    { title: "коллаборация с блогером на охват 400 000", href: "#cases" },
+    { title: "HTML Academy, 2 500 человек в чат-бот по 40 ₽ и ROMI 300%", slug: "html-academy-lead-magnet", href: "/cases/html-academy-lead-magnet" },
+    { title: "коллаборация с блогером на охват 400 000", slug: "html-academy-collab", href: "/cases/html-academy-collab" },
   ],
 };
 

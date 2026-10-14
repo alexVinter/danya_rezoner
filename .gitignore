@@ -32,3 +32,8 @@ page2.json
 page1_parsed.md
 page2_parsed.md
 debug_block.json
+
+# Handoff archive & internal scripts
+danya-site-handoff-v2.zip
+danya-site-handoff-v2/
+scripts/

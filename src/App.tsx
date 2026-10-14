@@ -13,43 +13,107 @@ import { Footer } from './components/Footer';
 import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { CaseDetailPage } from './components/CaseDetailPage';
 import { PrivacyModal } from './components/PrivacyModal';
+import { servicesData } from './data/services';
+import { casesList } from './data/cases';
 
 type AppView = 'home' | 'service-detail' | 'case-detail';
 
+const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт через контент | Даниил Винтер';
+const HOME_DESC = 'Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.';
+
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
+  const [activeServiceSlug, setActiveServiceSlug] = useState<string>('audit');
   const [activeCaseSlug, setActiveCaseSlug] = useState<string>('kontur-extern');
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
 
-  // Sync hash routing on mount and on popstate
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.toLowerCase();
-      if (hash.includes('service') || hash.includes('telegram-ads')) {
-        setCurrentView('service-detail');
-        window.scrollTo(0, 0);
-      } else if (hash.includes('case-') || hash.includes('case/') || hash.includes('extern')) {
-        let slug = 'kontur-extern';
-        if (hash.includes('conf')) slug = 'conference';
-        else if (hash.includes('elba') && !hash.includes('webinar')) slug = 'elba';
-        else if (hash.includes('webinar') || hash.includes('funnel')) slug = 'webinars';
-        else if (hash.includes('extern')) slug = 'kontur-extern';
+  const updateSEO = (title: string, description: string) => {
+    document.title = title;
+    let meta = document.querySelector('meta[name="description"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.setAttribute('name', 'description');
+      document.head.appendChild(meta);
+    }
+    meta.setAttribute('content', description);
+  };
 
-        setActiveCaseSlug(slug);
-        setCurrentView('case-detail');
+  // Sync routing on mount, popstate and hashchange
+  useEffect(() => {
+    const handleLocationChange = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      const fullUrl = path + hash;
+
+      // 1. Service Route Matcher
+      if (fullUrl.includes('/services/') || fullUrl.includes('#service') || fullUrl.includes('#/services/')) {
+        let slug = 'audit';
+        if (fullUrl.includes('yandex-direct') || fullUrl.includes('direct') && !fullUrl.includes('landing')) {
+          slug = 'yandex-direct';
+        } else if (fullUrl.includes('direct-landing-telegram') || fullUrl.includes('direct-landing') || fullUrl.includes('landing-telegram')) {
+          slug = 'direct-landing-telegram';
+        } else if (fullUrl.includes('vk-ads') || fullUrl.includes('vk')) {
+          slug = 'vk-ads';
+        } else if (fullUrl.includes('telegram-ads') || fullUrl.includes('tg-ads')) {
+          slug = 'telegram-ads';
+        } else if (fullUrl.includes('max')) {
+          slug = 'max';
+        } else if (fullUrl.includes('bot-funnels') || fullUrl.includes('bots') || fullUrl.includes('funnel')) {
+          slug = 'bot-funnels';
+        } else if (fullUrl.includes('audit')) {
+          slug = 'audit';
+        }
+
+        const foundService = servicesData.find((s) => s.slug === slug) || servicesData[0];
+        setActiveServiceSlug(foundService.slug);
+        setCurrentView('service-detail');
+        updateSEO(foundService.title, foundService.description);
         window.scrollTo(0, 0);
-      } else {
-        setCurrentView('home');
+        return;
       }
+
+      // 2. Case Route Matcher
+      if (fullUrl.includes('/cases/') || fullUrl.includes('#case') || fullUrl.includes('#/cases/')) {
+        let slug = 'kontur-extern';
+        if (fullUrl.includes('conference') || fullUrl.includes('accountants')) {
+          slug = 'accountants-conference';
+        } else if (fullUrl.includes('kontur-elba') || fullUrl.includes('elba') && !fullUrl.includes('webinar')) {
+          slug = 'kontur-elba';
+        } else if (fullUrl.includes('webinar')) {
+          slug = 'elba-webinars';
+        } else if (fullUrl.includes('lead-magnet') || fullUrl.includes('html-lead')) {
+          slug = 'html-academy-lead-magnet';
+        } else if (fullUrl.includes('collab') || fullUrl.includes('html-collab')) {
+          slug = 'html-academy-collab';
+        } else if (fullUrl.includes('extern')) {
+          slug = 'kontur-extern';
+        }
+
+        const foundCase = casesList.find((c) => c.slug === slug) || casesList[0];
+        setActiveCaseSlug(foundCase.slug);
+        setCurrentView('case-detail');
+        updateSEO(foundCase.titleMeta, foundCase.descriptionMeta);
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      // 3. Home Route
+      setCurrentView('home');
+      updateSEO(HOME_TITLE, HOME_DESC);
     };
 
-    handleHashChange();
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    handleLocationChange();
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   const navigateToHome = (hash?: string) => {
     setCurrentView('home');
+    updateSEO(HOME_TITLE, HOME_DESC);
     if (hash) {
       window.location.hash = hash;
       setTimeout(() => {
@@ -64,23 +128,21 @@ export const App: React.FC = () => {
   };
 
   const navigateToService = (slug: string) => {
-    if (slug === 'telegram-ads') {
-      window.location.hash = 'service-telegram-ads';
-      setCurrentView('service-detail');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    const found = servicesData.find((s) => s.slug === slug) || servicesData[0];
+    setActiveServiceSlug(found.slug);
+    setCurrentView('service-detail');
+    updateSEO(found.title, found.description);
+    window.location.hash = `/services/${found.slug}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const navigateToCase = (slug: string = 'kontur-extern') => {
-    let targetSlug = 'kontur-extern';
-    if (slug.includes('conf')) targetSlug = 'conference';
-    else if (slug.includes('elba') && !slug.includes('webinar')) targetSlug = 'elba';
-    else if (slug.includes('webinar') || slug.includes('funnel')) targetSlug = 'webinars';
-
-    window.location.hash = `case-${targetSlug}`;
-    setActiveCaseSlug(targetSlug);
+  const navigateToCase = (slug: string) => {
+    const found = casesList.find((c) => c.slug === slug) || casesList[0];
+    setActiveCaseSlug(found.slug);
     setCurrentView('case-detail');
-    window.scrollTo(0, 0);
+    updateSEO(found.titleMeta, found.descriptionMeta);
+    window.location.hash = `/cases/${found.slug}`;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -95,13 +157,15 @@ export const App: React.FC = () => {
       <main id="top" className="flex-1">
         {currentView === 'service-detail' ? (
           <ServiceDetailPage
-            onBackToHome={() => navigateToHome('#services')}
+            serviceSlug={activeServiceSlug}
+            onBackToHome={navigateToHome}
             onOpenCase={navigateToCase}
+            onOpenService={navigateToService}
           />
         ) : currentView === 'case-detail' ? (
           <CaseDetailPage
             caseSlug={activeCaseSlug}
-            onBackToHome={() => navigateToHome('#cases')}
+            onBackToHome={navigateToHome}
             onSelectCase={navigateToCase}
           />
         ) : (

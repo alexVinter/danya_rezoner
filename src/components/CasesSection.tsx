@@ -126,16 +126,16 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
           {earlyCasesText}{' '}
           <a
             href={earlyCases[0].href}
-            onClick={(e) => { e.preventDefault(); onOpenCase(featured.slug); }}
-            className="lnk text-paper"
+            onClick={(e) => { e.preventDefault(); onOpenCase(earlyCases[0].slug); }}
+            className="lnk text-paper cursor-pointer"
           >
             {earlyCases[0].title}
           </a>{' '}
           и{' '}
           <a
             href={earlyCases[1].href}
-            onClick={(e) => { e.preventDefault(); onOpenCase(featured.slug); }}
-            className="lnk text-paper"
+            onClick={(e) => { e.preventDefault(); onOpenCase(earlyCases[1].slug); }}
+            className="lnk text-paper cursor-pointer"
           >
             {earlyCases[1].title}
           </a>

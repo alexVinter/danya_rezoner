@@ -45,10 +45,28 @@ export const App: React.FC = () => {
       const hash = window.location.hash.toLowerCase();
       const fullUrl = path + hash;
 
-      // 1. Service Route Matcher
-      if (fullUrl.includes('/services/') || fullUrl.includes('#service') || fullUrl.includes('#/services/')) {
+      // 0. Home Section Anchor Matcher (#cases, #services, #about, #process, #reviews, #faq, #contact, #top)
+      const homeSections = ['#cases', '#services', '#about', '#process', '#reviews', '#faq', '#contact', '#top'];
+      if (homeSections.includes(hash)) {
+        setCurrentView('home');
+        updateSEO(HOME_TITLE, HOME_DESC);
+        setTimeout(() => {
+          const el = document.querySelector(hash);
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+          else window.scrollTo({ top: 0, behavior: 'smooth' });
+        }, 50);
+        return;
+      }
+
+      // 1. Service Route Matcher (/services/*, #/services/*, #service-*)
+      const isServiceRoute =
+        path.startsWith('/services/') ||
+        hash.startsWith('#/services/') ||
+        hash.startsWith('#service-');
+
+      if (isServiceRoute) {
         let slug = 'audit';
-        if (fullUrl.includes('yandex-direct') || fullUrl.includes('direct') && !fullUrl.includes('landing')) {
+        if (fullUrl.includes('yandex-direct') || (fullUrl.includes('direct') && !fullUrl.includes('landing'))) {
           slug = 'yandex-direct';
         } else if (fullUrl.includes('direct-landing-telegram') || fullUrl.includes('direct-landing') || fullUrl.includes('landing-telegram')) {
           slug = 'direct-landing-telegram';
@@ -72,12 +90,17 @@ export const App: React.FC = () => {
         return;
       }
 
-      // 2. Case Route Matcher
-      if (fullUrl.includes('/cases/') || fullUrl.includes('#case') || fullUrl.includes('#/cases/')) {
+      // 2. Case Route Matcher (/cases/*, #/cases/*, #case-*)
+      const isCaseRoute =
+        path.startsWith('/cases/') ||
+        hash.startsWith('#/cases/') ||
+        hash.startsWith('#case-');
+
+      if (isCaseRoute) {
         let slug = 'kontur-extern';
         if (fullUrl.includes('conference') || fullUrl.includes('accountants')) {
           slug = 'accountants-conference';
-        } else if (fullUrl.includes('kontur-elba') || fullUrl.includes('elba') && !fullUrl.includes('webinar')) {
+        } else if (fullUrl.includes('kontur-elba') || (fullUrl.includes('elba') && !fullUrl.includes('webinar'))) {
           slug = 'kontur-elba';
         } else if (fullUrl.includes('webinar')) {
           slug = 'elba-webinars';
@@ -115,14 +138,22 @@ export const App: React.FC = () => {
     setCurrentView('home');
     updateSEO(HOME_TITLE, HOME_DESC);
     if (hash) {
-      window.location.hash = hash;
+      if (window.location.pathname !== '/' && window.location.pathname !== '') {
+        window.history.pushState(null, '', `/${hash}`);
+      } else {
+        window.location.hash = hash;
+      }
       setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) el.scrollIntoView({ behavior: 'smooth' });
         else window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 50);
     } else {
-      window.location.hash = '';
+      if (window.location.pathname !== '/' && window.location.pathname !== '') {
+        window.history.pushState(null, '', '/');
+      } else {
+        window.location.hash = '';
+      }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };

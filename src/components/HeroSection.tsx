@@ -9,11 +9,13 @@ export const HeroSection: React.FC = () => {
           {/* Left Column: Text & CTA */}
           <div className="md:col-span-7">
             <h1 className="m-0 text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.1] font-bold tracking-[-0.025em] text-slate max-w-[720px]">
-              <span className="mark">Платный трафик</span> для бизнеса, который продаёт через контент
+              <span className="mark">Платный трафик</span>
+              <br />
+              для бизнеса, который продаёт через контент
             </h1>
 
             <p className="mt-7 text-[18px] sm:text-[20px] leading-[1.45] text-slate max-w-[560px]">
-              Руковожу отделом промо в агентстве АР. До этого 3 года вёл перформанс в Контуре: снизил цену подписчика в Telegram Ads на треть.
+              Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.
             </p>
 
             <div className="mt-9">
@@ -42,14 +44,29 @@ export const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Column: Lion Illustration */}
-          <div className="md:col-span-5 flex justify-center mt-6 md:mt-0">
-            <img
-              src="/assets/lion.webp?v=3"
-              alt=""
-              aria-hidden="true"
-              className="wob w-full max-w-[280px] sm:max-w-[360px] md:max-w-[440px] h-auto object-contain select-none -rotate-[4deg]"
-            />
+          {/* Right Column: Danya's Photo with Lion Mascot Overlay */}
+          <div className="md:col-span-5 flex justify-center mt-8 md:mt-0">
+            <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[430px]">
+              {/* Photo with 20% border radius */}
+              <div
+                className="overflow-hidden border-[1.5px] border-slate shadow-sm aspect-square w-full bg-paper"
+                style={{ borderRadius: '20%' }}
+              >
+                <img
+                  src="/assets/danya-hero.webp?v=1"
+                  alt="Даниил Винтер"
+                  className="w-full h-full object-cover select-none"
+                />
+              </div>
+
+              {/* Lion Mascot Overlay Top-Right */}
+              <img
+                src="/assets/lion.webp?v=6"
+                alt=""
+                aria-hidden="true"
+                className="wob absolute -top-5 -right-5 sm:-top-7 sm:-right-7 md:-top-9 md:-right-8 w-[125px] sm:w-[155px] md:w-[185px] lg:w-[205px] h-auto object-contain select-none z-10 -rotate-[4deg]"
+              />
+            </div>
           </div>
         </div>
       </div>

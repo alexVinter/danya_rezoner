@@ -19,7 +19,7 @@ import { casesList } from './data/cases';
 type AppView = 'home' | 'service-detail' | 'case-detail';
 
 const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт через контент | Даниил Винтер';
-const HOME_DESC = 'Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.';
+const HOME_DESC = 'Платный трафик в контент и воронки. Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');

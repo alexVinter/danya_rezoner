@@ -10,21 +10,14 @@ export const AboutSection: React.FC = () => {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Pink Card with Illustration & Bio */}
-          <div className="md:col-span-4 bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col items-center gap-7">
-            <img
-              src="/assets/finger-sparkles.webp?v=3"
-              alt=""
-              aria-hidden="true"
-              className="wob h-[240px] sm:h-[300px] w-auto select-none rotate-[6deg]"
-            />
-            <div className="self-stretch">
-              <p className="m-0 text-[22px] font-bold text-slate">
-                {aboutData.name}
-              </p>
-              <p className="mt-1.5 mb-0 text-[16px] leading-[1.45] text-slate">
-                {aboutData.role}
-              </p>
+          {/* Left Column: Danya's Photo */}
+          <div className="md:col-span-4">
+            <div className="overflow-hidden border-[1.5px] border-slate rounded-card shadow-sm aspect-[3/4] w-full bg-paper">
+              <img
+                src="/assets/danya-about.webp?v=1"
+                alt="Даниил Винтер"
+                className="w-full h-full object-cover select-none"
+              />
             </div>
           </div>
 

@@ -47,11 +47,8 @@ export const HeroSection: React.FC = () => {
           {/* Right Column: Danya's Photo with Lion Mascot Overlay */}
           <div className="md:col-span-5 flex justify-center mt-8 md:mt-0">
             <div className="relative w-full max-w-[280px] sm:max-w-[340px] md:max-w-[390px] lg:max-w-[430px]">
-              {/* Photo with 20% border radius */}
-              <div
-                className="overflow-hidden border-[1.5px] border-slate shadow-sm aspect-square w-full bg-paper"
-                style={{ borderRadius: '20%' }}
-              >
+              {/* Photo with rounded-card border radius (matching About photo) */}
+              <div className="overflow-hidden border-[1.5px] border-slate rounded-card shadow-sm aspect-square w-full bg-paper">
                 <img
                   src="/assets/danya-hero.webp?v=1"
                   alt="Даниил Винтер"

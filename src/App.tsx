@@ -51,9 +51,13 @@ export const App: React.FC = () => {
         setCurrentView('home');
         updateSEO(HOME_TITLE, HOME_DESC);
         setTimeout(() => {
-          const el = document.querySelector(hash);
-          if (el) el.scrollIntoView({ behavior: 'smooth' });
-          else window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (hash === '#top') {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            const el = document.querySelector(hash);
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+            else window.scrollTo({ top: 0, behavior: 'smooth' });
+          }
         }, 50);
         return;
       }
@@ -137,7 +141,7 @@ export const App: React.FC = () => {
   const navigateToHome = (hash?: string) => {
     setCurrentView('home');
     updateSEO(HOME_TITLE, HOME_DESC);
-    if (hash) {
+    if (hash && hash !== '#top' && hash !== '#') {
       if (window.location.pathname !== '/' && window.location.pathname !== '') {
         window.history.pushState(null, '', `/${hash}`);
       } else {
@@ -152,7 +156,9 @@ export const App: React.FC = () => {
       if (window.location.pathname !== '/' && window.location.pathname !== '') {
         window.history.pushState(null, '', '/');
       } else {
-        window.location.hash = '';
+        if (window.location.hash) {
+          window.history.pushState(null, '', window.location.pathname);
+        }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -177,7 +183,7 @@ export const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-paper text-slate flex flex-col font-sans">
+    <div id="top" className="min-h-screen bg-paper text-slate flex flex-col font-sans">
       {/* 1. Sticky Navigation Header */}
       <Header
         currentView={currentView}
@@ -185,7 +191,7 @@ export const App: React.FC = () => {
       />
 
       {/* 2. Main View Router */}
-      <main id="top" className="flex-1">
+      <main className="flex-1">
         {currentView === 'service-detail' ? (
           <ServiceDetailPage
             serviceSlug={activeServiceSlug}

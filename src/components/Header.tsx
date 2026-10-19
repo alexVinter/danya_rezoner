@@ -12,6 +12,19 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
     e.preventDefault();
     setMobileMenuOpen(false);
+
+    if (!hash || hash === '#top' || hash === '#') {
+      if (currentView !== 'home') {
+        onNavigateHome();
+      } else {
+        if (window.location.hash) {
+          window.history.pushState(null, '', window.location.pathname);
+        }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     if (currentView !== 'home') {
       onNavigateHome(hash);
     } else {

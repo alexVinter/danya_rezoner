@@ -204,6 +204,12 @@ details[open] .plus {
   gap: 24px;
   align-items: center;
 }
+.case-link {
+  display: grid !important;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 9fr) !important;
+  gap: 24px !important;
+  align-items: center !important;
+}
 .row2 {
   display: grid;
   grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
@@ -390,6 +396,7 @@ details[open] .plus {
     font-size: 22px !important;
   }
   .case-link {
+    grid-template-columns: minmax(0, 1fr) !important;
     padding: 24px !important;
   }
   .case-num {

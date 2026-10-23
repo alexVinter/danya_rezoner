@@ -217,7 +217,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               <button
                 type="button"
                 onClick={() => onOpenCase(block.caseSlug)}
-                className="w-full text-left g2 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 md:p-10 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
+                className="w-full text-left case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 md:p-10 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
               >
                 <span className="case-num text-[56px] sm:text-[64px] md:text-[72px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
                   {block.metric}
@@ -396,7 +396,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     <button
                       type="button"
                       onClick={() => onOpenCase(block.caseTeaser!.caseSlug)}
-                      className="w-full text-left mt-3.5 g2 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
+                      className="w-full text-left mt-3.5 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
                     >
                       <span className="case-num text-[48px] sm:text-[56px] md:text-[64px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
                         {block.caseTeaser.metric}

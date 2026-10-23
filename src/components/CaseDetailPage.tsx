@@ -24,8 +24,11 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
   }, [caseSlug]);
 
   const renderTitle = () => {
-    const parts = currentCase.title.split(currentCase.titleHighlight);
-    if (parts.length === 2) {
+    if (!currentCase.titleHighlight) {
+      return currentCase.title;
+    }
+    if (currentCase.title.includes(currentCase.titleHighlight)) {
+      const parts = currentCase.title.split(currentCase.titleHighlight);
       return (
         <>
           {parts[0]}
@@ -34,7 +37,12 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </>
       );
     }
-    return currentCase.title;
+    return (
+      <>
+        {currentCase.title}{' '}
+        <span className="mark whitespace-nowrap">{currentCase.titleHighlight}</span>
+      </>
+    );
   };
 
   return (
@@ -318,19 +326,19 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   Креативы
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="cards3 grid grid-cols-1 md:grid-cols-3 gap-6">
                   {currentCase.creatives.map((cr, idx) => (
-                    <div
+                    <figure
                       key={idx}
-                      className="bg-white border-[1.5px] border-slate rounded-card p-5 sm:p-6 flex flex-col gap-4"
+                      className="m-0 bg-white border-[1.5px] border-slate rounded-card p-4"
                     >
                       <img
                         src={cr.image}
                         alt={cr.alt}
-                        className="w-full h-auto rounded-input object-cover border border-line"
+                        className="w-full h-auto rounded-xl"
                       />
-                      <div className="border-t border-line pt-3 flex items-baseline justify-between">
-                        <span className="text-[14px] text-slate-soft">CTR</span>
+                      <figcaption className="mt-4 mx-2 mb-1 text-[16px] text-slate">
+                        CTR{' '}
                         <span
                           className={`text-[24px] font-bold tabular-nums ${
                             cr.highlight ? 'text-orange' : 'text-slate'
@@ -338,8 +346,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                         >
                           {cr.ctr}
                         </span>
-                      </div>
-                    </div>
+                      </figcaption>
+                    </figure>
                   ))}
                 </div>
               </div>
@@ -352,15 +360,12 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   {currentCase.figure.title}
                 </h2>
-                <figure className="m-0 bg-white border-[1.5px] border-slate rounded-card p-4 sm:p-6">
+                <figure className="m-0 bg-white border-[1.5px] border-slate rounded-card p-5">
                   <img
                     src={currentCase.figure.image}
                     alt={currentCase.figure.alt}
-                    className="w-full h-auto rounded-input object-contain"
+                    className="w-full h-auto"
                   />
-                  <figcaption className="mt-3 text-[14px] sm:text-[15px] text-slate-soft">
-                    {currentCase.figure.caption}
-                  </figcaption>
                 </figure>
                 {currentCase.figure.subheading && (
                   <h3 className="mt-8 mb-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold text-slate">
@@ -385,20 +390,16 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         <section className="sec pt-16 md:pt-[120px]">
           <div className="wrap">
             <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-              Материалы интеграции
+              Материалы
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="cards4 grid grid-cols-2 md:grid-cols-4 gap-4">
               {currentCase.gallery.map((g, idx) => (
-                <div
+                <img
                   key={idx}
-                  className="bg-white border-[1.5px] border-slate rounded-card p-4 flex flex-col"
-                >
-                  <img
-                    src={g.image}
-                    alt={g.alt}
-                    className="w-full h-auto rounded-input object-cover border border-line"
-                  />
-                </div>
+                  src={g.image}
+                  alt={g.alt}
+                  className="w-full h-auto border-[1.5px] border-slate rounded-2xl"
+                />
               ))}
             </div>
           </div>
@@ -455,7 +456,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
           <button
             type="button"
             onClick={() => onSelectCase(currentCase.nextCase.slug)}
-            className="w-full text-left g2 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 md:p-10 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
+            className="w-full text-left case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
           >
             <span className="case-num text-[56px] sm:text-[64px] md:text-[72px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
               {currentCase.nextCase.number}
@@ -466,10 +467,6 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
               </span>
               <span className="block mt-2.5 text-[15px] sm:text-[16px] text-slate-soft">
                 {currentCase.nextCase.text}
-              </span>
-              <span className="inline-block mt-3.5 text-[16px] font-semibold text-slate">
-                <span className="lnk">Читать кейс</span>
-                <span aria-hidden="true" className="text-orange"> →</span>
               </span>
             </span>
           </button>

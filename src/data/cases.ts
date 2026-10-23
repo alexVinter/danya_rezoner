@@ -177,7 +177,7 @@ export const casesList: CaseData[] = [
       bad: {
         badge: 'Было',
         badgeType: 'pink',
-        image: '/assets/extern-ad-bad.webp?v=4',
+        image: '/assets/extern-fail.webp',
         imageAlt: 'Старый креатив Контур.Экстерна',
         metrics: [
           { value: '€3', label: 'цена подписчика' },
@@ -190,7 +190,7 @@ export const casesList: CaseData[] = [
       good: {
         badge: 'Стало',
         badgeType: 'lime',
-        image: '/assets/extern-ad-good.webp?v=4',
+        image: '/assets/extern-win.webp',
         imageAlt: 'Новый креатив Контур.Экстерна',
         metrics: [
           { value: '€2', label: 'цена подписчика', highlight: true },
@@ -405,8 +405,8 @@ export const casesList: CaseData[] = [
     title: '−26% к цене подписчика в Telegram Ads для канала',
     titleHighlight: 'Контур.Эльба',
     lead: 'Задача: протестировать видеокреативы против статики в Telegram Ads и найти связку с минимальной стоимостью подписчика для онлайн-бухгалтерии.',
-    heroIllustration: '/assets/cloud.webp?v=4',
-    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[4deg]',
+    heroIllustration: '/assets/cactus.webp',
+    heroIllustrationClass: 'w-full max-w-[230px] -rotate-[5deg]',
     keyMetrics: [
       { value: '€3,66 → €2,7', label: 'цена подписчика' },
       { value: '0,34% → 0,43%', label: 'CTR' },
@@ -478,8 +478,8 @@ export const casesList: CaseData[] = [
     title: '2 500 человек в чат-бот ВКонтакте по 40 ₽ для',
     titleHighlight: 'HTML Academy',
     lead: 'Задача: привлечь начинающих разработчиков в воронку через полезный лид-магнит и окупить трафик продажами курсов.',
-    heroIllustration: '/assets/paper-plane.webp?v=4',
-    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] rotate-[6deg]',
+    heroIllustration: '/assets/hand3.webp',
+    heroIllustrationClass: 'w-full max-w-[300px] -rotate-[6deg]',
     keyMetrics: [
       { value: '2 500', label: 'человек в чат-боте ВКонтакте' },
       { value: '40 ₽', label: 'за контакт в базе' },
@@ -495,26 +495,26 @@ export const casesList: CaseData[] = [
     layoutType: 'creatives-figure',
     creatives: [
       {
-        image: '/assets/html-ad-1.webp?v=4',
-        alt: 'Объявление HTML Academy: карта компетенций',
-        ctr: '3,8%',
+        image: '/assets/html-cr-map.webp',
+        alt: 'Креатив HTML Academy: «Карта для фронтендеров, которые хотят развиваться»',
+        ctr: '1,7%',
         highlight: true,
       },
       {
-        image: '/assets/html-ad-2.webp?v=4',
-        alt: 'Объявление HTML Academy: с чего начать',
-        ctr: '2,9%',
+        image: '/assets/html-cr-cat.webp',
+        alt: 'Креатив HTML Academy: кот в очках и «Карта компетенций для начинающего фронтендера»',
+        ctr: '1,2%',
       },
       {
-        image: '/assets/html-ad-3.webp?v=4',
-        alt: 'Объявление HTML Academy: тест по фронтенду',
-        ctr: '2,4%',
+        image: '/assets/html-cr-mail.webp',
+        alt: 'Креатив HTML Academy: «Бесплатная рассылка для тех, кто хочет в IT»',
+        ctr: '1,2%',
       },
     ],
     figure: {
       title: 'Часть логики рассылки',
-      image: '/assets/html-flow.webp?v=4',
-      alt: 'Схема цепочки сообщений в чат-боте HTML Academy',
+      image: '/assets/html-mail-flow.webp',
+      alt: 'Схема рассылки в чат-боте: проверка подписки на сообщество, выдача карты, напоминания и таймер',
       caption: 'Схема цепочки: выдача лид-магнита → тест уровня → полезный контент → спецпредложение на курс.',
       subheading: 'Что было дальше',
       sublist: [
@@ -551,8 +551,8 @@ export const casesList: CaseData[] = [
     title: '400 000 охвата с коллаборации с блогером для',
     titleHighlight: 'HTML Academy',
     lead: 'Задача: найти профильного блогера, согласовать нативную интеграцию с пользой для аудитории и получить окупаемые заявки на профессию.',
-    heroIllustration: '/assets/megaphone.webp?v=4',
-    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[6deg]',
+    heroIllustration: '/assets/rainbow.webp',
+    heroIllustrationClass: 'w-full max-w-[440px]',
     keyMetrics: [
       { value: '400 000', label: 'суммарный охват интеграции' },
       { value: '146%', label: 'ROMI проекта' },
@@ -568,9 +568,14 @@ export const casesList: CaseData[] = [
     ],
     layoutType: 'gallery',
     gallery: [
-      { image: '/assets/collab-post-1.webp?v=4', alt: 'Пост-анонс коллаборации' },
-      { image: '/assets/collab-post-2.webp?v=4', alt: 'Образовательные карточки от блогера' },
-      { image: '/assets/collab-post-3.webp?v=4', alt: 'Пост с промокодом на обучение' },
+      { image: '/assets/sticker-jun.webp', alt: 'Карточка: джун и ждун' },
+      { image: '/assets/sticker-bug.webp', alt: 'Карточка: баг и фича' },
+      { image: '/assets/sticker-java.webp', alt: 'Карточка: Java и JavaScript' },
+      { image: '/assets/sticker-coder.webp', alt: 'Карточка: программист и айтишник' },
+      { image: '/assets/sticker-front.webp', alt: 'Карточка: фронтенд- и бэкенд-разработчик' },
+      { image: '/assets/sticker-vpn.webp', alt: 'Карточка: ВПН и прокси' },
+      { image: '/assets/sticker-domain.webp', alt: 'Карточка: домен и хостинг' },
+      { image: '/assets/sticker-promo.webp', alt: 'Карточка с промокодом: скидка 10 000 рублей на профессию «Фронтенд-разработчик»' },
     ],
     whatWorkedColumns: 2,
     whatWorked: [

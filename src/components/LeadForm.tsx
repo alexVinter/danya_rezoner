@@ -72,17 +72,51 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
     }
 
     try {
-      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: lines.join('\n'),
-          parse_mode: 'HTML',
-        }),
+      const messageBody = JSON.stringify({
+        chat_id: chatId,
+        text: lines.join('\n'),
+        parse_mode: 'HTML',
       });
-    } catch {
-      // Ignore network errors so UI transition still happens smoothly
+
+      // Try direct Telegram API
+      let success = false;
+      try {
+        const resp = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: messageBody,
+        });
+        const data = await resp.json().catch(() => null);
+        if (resp.ok && data?.ok) {
+          success = true;
+          console.log('[LeadForm] Sent to Telegram successfully:', data);
+        } else {
+          console.warn('[LeadForm] Direct Telegram returned error:', resp.status, data);
+        }
+      } catch (directErr) {
+        console.warn('[LeadForm] Direct Telegram request failed (possibly blocked by ISP):', directErr);
+      }
+
+      // If direct failed (e.g. blocked by ISP in Russia), try reverse proxy /api/telegram/
+      if (!success) {
+        try {
+          const proxyResp = await fetch(`/api/telegram/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: messageBody,
+          });
+          const proxyData = await proxyResp.json().catch(() => null);
+          if (proxyResp.ok && proxyData?.ok) {
+            console.log('[LeadForm] Sent to Telegram via proxy successfully:', proxyData);
+          } else {
+            console.error('[LeadForm] Proxy Telegram failed:', proxyResp.status, proxyData);
+          }
+        } catch (proxyErr) {
+          console.error('[LeadForm] Proxy Telegram request failed:', proxyErr);
+        }
+      }
+    } catch (err) {
+      console.error('[LeadForm] Unexpected error while sending lead:', err);
     } finally {
       setIsSubmitting(false);
       setSubmitted(true);

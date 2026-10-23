@@ -17,11 +17,15 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
 
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.telegram.trim() || !formData.consent) {
       return;
     }
+
+    setIsSubmitting(true);
 
     const payload = {
       page: pageName,
@@ -34,6 +38,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
       createdAt: new Date().toISOString(),
     };
 
+    // 1. Backup to localStorage
     try {
       const existing = JSON.parse(localStorage.getItem('danya_leads') || '[]');
       existing.push(payload);
@@ -42,7 +47,46 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
       // ignore localStorage errors
     }
 
-    setSubmitted(true);
+    // 2. Send to Telegram
+    const botToken =
+      (import.meta as any).env?.VITE_TELEGRAM_BOT_TOKEN ||
+      '8881601798:AAG9d5YSRk0XDRjdudvCkjXqWxEIqEg17VM';
+    const chatId = (import.meta as any).env?.VITE_TELEGRAM_CHAT_ID || '436863522';
+
+    const lines = [
+      '🔔 <b>Новая заявка с сайта!</b>',
+      '',
+      `📄 <b>Страница:</b> ${pageName}`,
+      `👤 <b>Имя:</b> ${formData.name.trim()}`,
+      `✈️ <b>Telegram:</b> ${formData.telegram.trim()}`,
+    ];
+
+    if (formData.task.trim()) {
+      lines.push(`📝 <b>Задача:</b>\n${formData.task.trim()}`);
+    }
+    if (formData.budget !== 'Выберите') {
+      lines.push(`💰 <b>Бюджет:</b> ${formData.budget}`);
+    }
+    if (formData.source !== 'Выберите') {
+      lines.push(`🔍 <b>Откуда узнали:</b> ${formData.source}`);
+    }
+
+    try {
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: lines.join('\n'),
+          parse_mode: 'HTML',
+        }),
+      });
+    } catch {
+      // Ignore network errors so UI transition still happens smoothly
+    } finally {
+      setIsSubmitting(false);
+      setSubmitted(true);
+    }
   };
 
   if (submitted) {
@@ -220,10 +264,10 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
       {/* Кнопка отправки */}
       <button
         type="submit"
-        disabled={!formData.name || !formData.telegram || !formData.consent}
+        disabled={!formData.name || !formData.telegram || !formData.consent || isSubmitting}
         className="btn-o mt-1 h-14 border-0 rounded-pill text-[17px] font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
-        Отправить
+        {isSubmitting ? 'Отправка...' : 'Отправить'}
       </button>
     </form>
   );

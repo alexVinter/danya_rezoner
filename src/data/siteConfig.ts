@@ -18,13 +18,13 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  authorName: "Даня",
+  authorName: "Даниил Винтер",
   roleTitle: "Платный трафик в контент и воронки",
-  telegramUsername: "@danya_promo",
+  telegramUsername: "@winter_daniil",
   telegramChannelName: "Резонёр",
-  telegramChannelUrl: "https://t.me/rezoner_channel",
-  botLeadMagnetUrl: "https://t.me/rezoner_bot?start=checklist",
-  email: "danya@rezoner.ru",
+  telegramChannelUrl: "https://t.me/rezonerw",
+  botLeadMagnetUrl: "https://t.me/winter_daniil",
+  email: "vinterdaniil@yandex.ru",
   legalEntityInfo: "Самозанятый (НПД). Официальный договор, безналичный расчёт, закрывающие электронные чеки через ФНС «Мой налог».",
   offerHeading: "Платный трафик для бизнеса, который продаёт через контент",
   offerSubheading: "Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.",

@@ -1,59 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { casesList, CaseData } from '../data/cases';
 import { siteConfig } from '../data/content';
+import { LeadForm } from './LeadForm';
 
 interface CaseDetailPageProps {
   caseSlug: string;
   onBackToHome: (hash?: string) => void;
   onSelectCase: (slug: string) => void;
+  onOpenPrivacy?: () => void;
 }
 
 export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
   caseSlug,
   onBackToHome,
   onSelectCase,
+  onOpenPrivacy,
 }) => {
   const currentCase: CaseData =
     casesList.find((c) => c.slug === caseSlug) || casesList[0];
 
-  const [formData, setFormData] = useState({
-    name: '',
-    telegram: '',
-    project: '',
-    consent: false,
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-
   useEffect(() => {
-    setSubmitted(false);
-    setFormData({ name: '', telegram: '', project: '', consent: false });
     window.scrollTo(0, 0);
   }, [caseSlug]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim() || !formData.telegram.trim() || !formData.consent) {
-      return;
-    }
-
-    const payload = {
-      ...formData,
-      page: currentCase.breadcrumb,
-      caseSlug: currentCase.slug,
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('danya_leads') || '[]');
-      existing.push(payload);
-      localStorage.setItem('danya_leads', JSON.stringify(existing));
-    } catch {
-      // ignore
-    }
-
-    setSubmitted(true);
-  };
 
   const renderTitle = () => {
     const parts = currentCase.title.split(currentCase.titleHighlight);
@@ -149,73 +117,123 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </div>
       </section>
 
-      {/* 3. Solution */}
-      <section className="sec pt-16 md:pt-[120px]">
-        <div className="wrap">
-          <div
-            className="g2 items-start"
-            style={{ gridTemplateColumns: 'minmax(0, 4fr) minmax(0, 8fr)' }}
-          >
-            <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-              Решение
-            </h2>
-            <div>
-              {currentCase.solutionParagraphs.map((p, idx) => (
-                <p
-                  key={idx}
-                  className={`m-0 leading-[1.5] max-w-[680px] text-slate ${
-                    idx === 0 ? 'text-[18px] sm:text-[20px]' : 'mt-3.5 text-[16px] sm:text-[18px]'
-                  }`}
-                >
-                  {p}
-                </p>
-              ))}
-
-              {/* Solution cards inside right column (e.g. Extern) */}
-              {currentCase.solutionCards && currentCase.solutionCardsPlacement === 'inside' && (
-                <div className="mt-8 flex flex-col gap-4">
-                  {currentCase.solutionCards.map((sc, scIdx) => (
-                    <div
-                      key={scIdx}
-                      className="bg-pink border-[1.5px] border-slate rounded-card p-6"
-                    >
-                      <h3 className="m-0 text-[20px] font-bold text-slate">
-                        {sc.title}
-                      </h3>
-                      <p className="mt-2 mb-0 text-[16px] leading-[1.5] text-slate">
-                        {sc.desc}
-                      </p>
-                    </div>
+      {/* 3. Done & Result (3 new cases) */}
+      {currentCase.doneResult && (
+        <section className="sec pt-16 md:pt-[120px]">
+          <div className="wrap">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-start">
+              <div>
+                <h2 className="h2 m-0 text-[32px] sm:text-[36px] md:text-[40px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+                  {currentCase.doneResult.done.title}
+                </h2>
+                <ul className="mt-5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate">
+                  {currentCase.doneResult.done.items.map((it, idx) => (
+                    <li key={idx}>{it}</li>
                   ))}
-                </div>
-              )}
+                </ul>
+              </div>
+              <div>
+                <h2 className="h2 m-0 text-[32px] sm:text-[36px] md:text-[40px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+                  {currentCase.doneResult.result.title}
+                </h2>
+                <ul className="mt-5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate">
+                  {currentCase.doneResult.result.items.map((it, idx) => (
+                    <li key={idx}>{it}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            <p className="mt-10 md:mt-12 mb-0 text-[20px] sm:text-[22px] leading-[1.45] font-semibold max-w-[860px] text-slate">
+              {currentCase.doneResult.conclusion}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* 4. Stats Screenshot with Horizontal Scroll on Mobile (3 new cases) */}
+      {currentCase.stats && (
+        <section className="sec pt-16 md:pt-[120px]">
+          <div className="wrap">
+            <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+              {currentCase.stats.title}
+            </h2>
+            <figure className="tbl m-0 inline-block max-w-full bg-white border-[1.5px] border-slate rounded-card p-4">
+              <img
+                src={currentCase.stats.image.file}
+                alt={currentCase.stats.image.alt}
+                width={currentCase.stats.image.width}
+                height={currentCase.stats.image.height}
+                style={{
+                  width: `${currentCase.stats.image.displayWidth}px`,
+                  ['--mw' as any]: `${currentCase.stats.image.mobileWidth}px`,
+                  height: 'auto',
+                  borderRadius: '12px',
+                }}
+              />
+            </figure>
+            <p className="mt-3 mb-0 text-[14px] sm:text-[15px] text-slate-soft">
+              {currentCase.stats.caption}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* 5. Solution / "Что делал" (Old cases) */}
+      {(currentCase.solutionParagraphs || currentCase.solutionList) && (
+        <section className="sec pt-16 md:pt-[120px]">
+          <div className="wrap">
+            <div
+              className="g2 items-start"
+              style={{ gridTemplateColumns: 'minmax(0, 4fr) minmax(0, 8fr)' }}
+            >
+              <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+                {currentCase.solutionTitle || 'Решение'}
+              </h2>
+              <div>
+                {currentCase.solutionList ? (
+                  <ul className="m-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] max-w-[720px] text-slate">
+                    {currentCase.solutionList.map((it, idx) => (
+                      <li key={idx}>{it}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  currentCase.solutionParagraphs?.map((p, idx) => (
+                    <p
+                      key={idx}
+                      className={`m-0 leading-[1.5] max-w-[680px] text-slate ${
+                        idx === 0 ? 'text-[18px] sm:text-[20px]' : 'mt-3.5 text-[16px] sm:text-[18px]'
+                      }`}
+                    >
+                      {p}
+                    </p>
+                  ))
+                )}
+
+                {/* Solution cards inside right column (e.g. Extern) */}
+                {currentCase.solutionCards && currentCase.solutionCardsPlacement === 'inside' && (
+                  <div className="mt-8 flex flex-col gap-4">
+                    {currentCase.solutionCards.map((sc, scIdx) => (
+                      <div
+                        key={scIdx}
+                        className="bg-pink border-[1.5px] border-slate rounded-card p-6"
+                      >
+                        <h3 className="m-0 text-[20px] font-bold text-slate">
+                          {sc.title}
+                        </h3>
+                        <p className="mt-2 mb-0 text-[16px] leading-[1.5] text-slate">
+                          {sc.desc}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+        </section>
+      )}
 
-          {/* Solution cards placed below full width (e.g. Conference) */}
-          {currentCase.solutionCards && currentCase.solutionCardsPlacement === 'below' && (
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-              {currentCase.solutionCards.map((sc, scIdx) => (
-                <div
-                  key={scIdx}
-                  className="bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-7 flex flex-col gap-2.5"
-                >
-                  <h3 className="m-0 text-[19px] sm:text-[20px] leading-[1.3] font-bold text-slate">
-                    {sc.title}
-                  </h3>
-                  <p className="m-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate">
-                    {sc.desc}
-                  </p>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* 4. Layout Specific Sections */}
-
-      {/* Layout A: Comparison (Extern & Elba) */}
+      {/* 6. Layout Specific: Comparison (Extern & Elba) */}
       {currentCase.layoutType === 'comparison' && currentCase.comparisonCards && (
         <section className="sec pt-16 md:pt-[120px]">
           <div className="wrap">
@@ -226,7 +244,6 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              {/* Bad card / or Good card depending on order */}
               {[currentCase.comparisonCards.good, currentCase.comparisonCards.bad].map(
                 (card, cIdx) => (
                   <div
@@ -292,123 +309,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </section>
       )}
 
-      {/* Layout B: Conference MediaPair & Table */}
-      {currentCase.layoutType === 'conference' && (
-        <>
-          {currentCase.mediaPair && (
-            <section className="sec pt-16 md:pt-[120px]">
-              <div className="wrap">
-                <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-                  {currentCase.mediaPair.title}
-                </h2>
-                <div
-                  className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start"
-                >
-                  <div className="md:col-span-8 bg-white border-[1.5px] border-slate rounded-card p-4 sm:p-5">
-                    <img
-                      src={currentCase.mediaPair.left.image}
-                      alt={currentCase.mediaPair.left.alt}
-                      className="w-full h-auto rounded-input"
-                    />
-                    {currentCase.mediaPair.left.caption && (
-                      <p className="mt-3 mb-1 text-[14px] sm:text-[15px] text-slate-soft">
-                        {currentCase.mediaPair.left.caption}
-                      </p>
-                    )}
-                  </div>
-                  <div className="md:col-span-4 bg-white border-[1.5px] border-slate rounded-card p-4 sm:p-5">
-                    <img
-                      src={currentCase.mediaPair.right.image}
-                      alt={currentCase.mediaPair.right.alt}
-                      className="w-full h-auto rounded-input"
-                    />
-                    {currentCase.mediaPair.right.caption && (
-                      <p className="mt-3 mb-1 text-[14px] sm:text-[15px] text-slate-soft">
-                        {currentCase.mediaPair.right.caption}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </section>
-          )}
-
-          {currentCase.tableRows && (
-            <section className="sec pt-16 md:pt-[120px]">
-              <div className="wrap">
-                <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-                  {currentCase.tableTitle || 'CPL по сегментам'}
-                </h2>
-                <div className="border-t border-line">
-                  {currentCase.tableRows.map((tr, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center justify-between py-4 sm:py-5 border-b border-line gap-4 text-[16px] sm:text-[18px]"
-                    >
-                      <span className="font-medium text-slate">{tr.segment}</span>
-                      <span
-                        className={`font-bold tabular-nums text-[20px] sm:text-[22px] ${
-                          tr.highlight ? 'text-orange' : 'text-slate'
-                        }`}
-                      >
-                        {tr.cpl}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-          )}
-        </>
-      )}
-
-      {/* Layout C: Funnel before/after (Webinars) */}
-      {currentCase.layoutType === 'funnel' && currentCase.funnelCards && (
-        <section className="sec pt-16 md:pt-[120px]">
-          <div className="wrap">
-            <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-              Было и стало
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              <div className="bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col gap-4">
-                <span className="inline-flex self-start items-center h-7 px-3.5 rounded-pill bg-pink text-[13px] font-bold uppercase tracking-wider text-slate">
-                  {currentCase.funnelCards.before.badge}
-                </span>
-                <img
-                  src={currentCase.funnelCards.before.image}
-                  alt=""
-                  className="w-full h-auto rounded-input border border-line"
-                />
-                <h3 className="m-0 text-[20px] font-bold text-slate">
-                  {currentCase.funnelCards.before.title}
-                </h3>
-                <p className="m-0 text-[15px] sm:text-[16px] text-slate-soft">
-                  {currentCase.funnelCards.before.desc}
-                </p>
-              </div>
-
-              <div className="bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col gap-4">
-                <span className="inline-flex self-start items-center h-7 px-3.5 rounded-pill bg-lime text-[13px] font-bold uppercase tracking-wider text-slate">
-                  {currentCase.funnelCards.after.badge}
-                </span>
-                <img
-                  src={currentCase.funnelCards.after.image}
-                  alt=""
-                  className="w-full h-auto rounded-input border border-line"
-                />
-                <h3 className="m-0 text-[20px] font-bold text-slate">
-                  {currentCase.funnelCards.after.title}
-                </h3>
-                <p className="m-0 text-[15px] sm:text-[16px] text-slate-soft">
-                  {currentCase.funnelCards.after.desc}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Layout D: Creatives & Figure (HTML Academy Lead Magnet) */}
+      {/* 7. Layout Specific: Creatives & Figure (HTML Academy Lead Magnet) */}
       {currentCase.layoutType === 'creatives-figure' && (
         <>
           {currentCase.creatives && (
@@ -417,19 +318,19 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   Креативы
                 </h2>
-                <div className="cards3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   {currentCase.creatives.map((cr, idx) => (
-                    <figure
+                    <div
                       key={idx}
-                      className="m-0 bg-white border-[1.5px] border-slate rounded-card p-4 flex flex-col"
+                      className="bg-white border-[1.5px] border-slate rounded-card p-5 sm:p-6 flex flex-col gap-4"
                     >
                       <img
                         src={cr.image}
                         alt={cr.alt}
-                        className="w-full h-auto rounded-input"
+                        className="w-full h-auto rounded-input object-cover border border-line"
                       />
-                      <figcaption className="mt-4 mx-2 mb-1 text-[16px] text-slate">
-                        CTR{' '}
+                      <div className="border-t border-line pt-3 flex items-baseline justify-between">
+                        <span className="text-[14px] text-slate-soft">CTR</span>
                         <span
                           className={`text-[24px] font-bold tabular-nums ${
                             cr.highlight ? 'text-orange' : 'text-slate'
@@ -437,8 +338,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                         >
                           {cr.ctr}
                         </span>
-                      </figcaption>
-                    </figure>
+                      </div>
+                    </div>
                   ))}
                 </div>
               </div>
@@ -451,44 +352,60 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   {currentCase.figure.title}
                 </h2>
-                <figure className="m-0 bg-white border-[1.5px] border-slate rounded-card p-5">
+                <figure className="m-0 bg-white border-[1.5px] border-slate rounded-card p-4 sm:p-6">
                   <img
                     src={currentCase.figure.image}
                     alt={currentCase.figure.alt}
-                    className="w-full h-auto rounded-input"
+                    className="w-full h-auto rounded-input object-contain"
                   />
+                  <figcaption className="mt-3 text-[14px] sm:text-[15px] text-slate-soft">
+                    {currentCase.figure.caption}
+                  </figcaption>
                 </figure>
-                <p className="mt-8 mb-0 text-[18px] sm:text-[20px] leading-[1.5] max-w-[780px] text-slate">
-                  {currentCase.figure.caption}
-                </p>
+                {currentCase.figure.subheading && (
+                  <h3 className="mt-8 mb-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold text-slate">
+                    {currentCase.figure.subheading}
+                  </h3>
+                )}
+                {currentCase.figure.sublist && (
+                  <ul className="mt-3.5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2 text-[16px] sm:text-[17px] leading-[1.5] max-w-[760px] text-slate">
+                    {currentCase.figure.sublist.map((it, idx) => (
+                      <li key={idx}>{it}</li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </section>
           )}
         </>
       )}
 
-      {/* Layout E: Gallery (HTML Academy Collab) */}
+      {/* 8. Layout Specific: Gallery (HTML Academy Collab) */}
       {currentCase.layoutType === 'gallery' && currentCase.gallery && (
         <section className="sec pt-16 md:pt-[120px]">
           <div className="wrap">
             <h2 className="h2 m-0 mb-9 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-              Материалы
+              Материалы интеграции
             </h2>
-            <div className="cards4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
               {currentCase.gallery.map((g, idx) => (
-                <img
+                <div
                   key={idx}
-                  src={g.image}
-                  alt={g.alt}
-                  className="w-full h-auto border-[1.5px] border-slate rounded-card"
-                />
+                  className="bg-white border-[1.5px] border-slate rounded-card p-4 flex flex-col"
+                >
+                  <img
+                    src={g.image}
+                    alt={g.alt}
+                    className="w-full h-auto rounded-input object-cover border border-line"
+                  />
+                </div>
               ))}
             </div>
           </div>
         </section>
       )}
 
-      {/* 5. What Worked (Что сработало) */}
+      {/* 9. What Worked */}
       {currentCase.whatWorked && currentCase.whatWorked.length > 0 && (
         <section className="sec pt-16 md:pt-[120px]">
           <div className="wrap">
@@ -496,7 +413,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
               Что сработало
             </h2>
             <div
-              className={`worked grid gap-8 ${
+              className={`grid gap-6 ${
                 currentCase.whatWorkedColumns === 3
                   ? 'grid-cols-1 md:grid-cols-3'
                   : 'grid-cols-1 md:grid-cols-2'
@@ -520,7 +437,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </section>
       )}
 
-      {/* 6. Next Case (Следующий кейс) */}
+      {/* 10. Next Case (Следующий кейс) */}
       <section className="sec pt-16 md:pt-[120px]">
         <div className="wrap">
           <div className="flex items-baseline justify-between gap-6 flex-wrap mb-6">
@@ -541,14 +458,14 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             className="w-full text-left g2 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 md:p-10 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
           >
             <span className="case-num text-[56px] sm:text-[64px] md:text-[72px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
-              {currentCase.nextCase.metricMain}
+              {currentCase.nextCase.number}
             </span>
             <span>
               <span className="block text-[20px] sm:text-[22px] md:text-[24px] leading-[1.25] font-bold text-slate">
                 {currentCase.nextCase.title}
               </span>
               <span className="block mt-2.5 text-[15px] sm:text-[16px] text-slate-soft">
-                {currentCase.nextCase.tags}
+                {currentCase.nextCase.text}
               </span>
               <span className="inline-block mt-3.5 text-[16px] font-semibold text-slate">
                 <span className="lnk">Читать кейс</span>
@@ -559,7 +476,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </div>
       </section>
 
-      {/* 7. CTA with Tiger */}
+      {/* 11. CTA with Tiger */}
       <section id="contact" className="contact pt-36 sm:pt-48 md:pt-[210px]">
         <div className="wrap">
           <div className="cta g2 relative bg-orange rounded-plate p-6 sm:p-10 md:p-14">
@@ -605,82 +522,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             </div>
 
             <div>
-              {submitted ? (
-                <div className="bg-white rounded-card p-8 text-center flex flex-col items-center justify-center min-h-[300px]">
-                  <span className="w-12 h-12 rounded-pill bg-lime text-slate flex items-center justify-center text-xl font-bold mb-3">
-                    ✓
-                  </span>
-                  <h3 className="m-0 text-[22px] font-bold text-slate mb-2">Заявка у меня!</h3>
-                  <p className="m-0 text-[16px] text-slate-soft">
-                    Напишу вам в Telegram в течение рабочего дня.
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white rounded-card p-6 sm:p-8 flex flex-col gap-4 text-slate"
-                >
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>Имя *</span>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder="Как к вам обращаться"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>Telegram *</span>
-                    <input
-                      type="text"
-                      name="telegram"
-                      required
-                      placeholder="@username"
-                      value={formData.telegram}
-                      onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>Ссылка на канал</span>
-                    <input
-                      type="text"
-                      name="project"
-                      placeholder="t.me/channel или сайт"
-                      value={formData.project}
-                      onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex items-start gap-2.5 text-[14px] leading-[1.45] text-slate mt-1 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="consent"
-                      required
-                      checked={formData.consent}
-                      onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                      className="flex-none w-5 h-5 mt-0.5 accent-orange"
-                    />
-                    <span>
-                      Согласен на обработку персональных данных и с{' '}
-                      <span className="lnk">политикой конфиденциальности</span>
-                    </span>
-                  </label>
-
-                  <button
-                    type="submit"
-                    className="btn-o mt-1 h-14 border-0 rounded-pill text-[17px] font-semibold cursor-pointer"
-                  >
-                    Отправить
-                  </button>
-                </form>
-              )}
+              <LeadForm pageName={currentCase.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
             </div>
           </div>
         </div>

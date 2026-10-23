@@ -15,6 +15,17 @@ export interface CaseItem {
   [key: string]: any;
 }
 
+export interface CaseCampaignCard {
+  title: string;
+  desc: string;
+}
+
+export interface CaseTableRow {
+  segment: string;
+  cpl: string;
+  highlight?: boolean;
+}
+
 export interface CaseWhatWorked {
   title: string;
   desc: string;
@@ -29,22 +40,43 @@ export interface CaseComparisonCard {
   paragraphs: string[];
 }
 
-export interface CaseCampaignCard {
-  title: string;
-  desc: string;
-}
-
-export interface CaseTableRow {
-  segment: string;
-  cpl: string;
-  highlight?: boolean;
-}
-
 export interface CaseCreativeCard {
   image: string;
   alt: string;
   ctr: string;
   highlight?: boolean;
+}
+
+export interface CaseDoneResult {
+  done: {
+    title: string;
+    items: string[];
+  };
+  result: {
+    title: string;
+    items: string[];
+  };
+  conclusion: string;
+}
+
+export interface CaseStats {
+  title: string;
+  image: {
+    file: string;
+    width: number;
+    height: number;
+    displayWidth: number;
+    mobileWidth: number;
+    alt: string;
+  };
+  caption: string;
+}
+
+export interface CaseNext {
+  slug: string;
+  number: string;
+  title: string;
+  text: string;
 }
 
 export interface CaseData {
@@ -59,16 +91,17 @@ export interface CaseData {
   heroIllustration: string;
   heroIllustrationClass: string;
   keyMetrics: CaseMetric[];
-  metricsLayout?: 'three' | 'two' | 'elba'; // elba is 4/4/3
-  
-  // Solution section
-  solutionParagraphs: string[];
+  metricsLayout?: 'three' | 'two' | 'elba';
+
+  // Solution section (if present)
+  solutionTitle?: string;
+  solutionParagraphs?: string[];
+  solutionList?: string[];
   solutionCards?: Array<{ title: string; desc: string }>;
-  solutionCardsPlacement?: 'inside' | 'below'; // 'inside' right column (extern) or 'below' full width (conference)
-  
-  // Layout specific:
-  layoutType: 'comparison' | 'conference' | 'funnel' | 'creatives-figure' | 'gallery';
-  
+  solutionCardsPlacement?: 'inside' | 'below';
+
+  layoutType?: 'comparison' | 'creatives-figure' | 'gallery' | 'done-result-stats';
+
   // For comparison layout (Extern & Elba)
   comparisonCards?: {
     bad: CaseComparisonCard;
@@ -77,31 +110,6 @@ export interface CaseData {
   comparisonTitle?: string;
   comparisonConclusion?: string;
 
-  // For conference layout
-  mediaPair?: {
-    title: string;
-    left: { image: string; alt: string; caption?: string };
-    right: { image: string; alt: string; caption?: string };
-  };
-  tableRows?: CaseTableRow[];
-  tableTitle?: string;
-
-  // For funnel layout (Webinars)
-  funnelCards?: {
-    before: {
-      badge: string;
-      image: string;
-      title: string;
-      desc: string;
-    };
-    after: {
-      badge: string;
-      image: string;
-      title: string;
-      desc: string;
-    };
-  };
-
   // For creatives-figure layout (HTML Academy Lead Magnet)
   creatives?: CaseCreativeCard[];
   figure?: {
@@ -109,423 +117,477 @@ export interface CaseData {
     image: string;
     alt: string;
     caption: string;
+    subheading?: string;
+    sublist?: string[];
   };
 
   // For gallery layout (HTML Academy Collab)
   gallery?: Array<{ image: string; alt: string }>;
 
+  // For 3 new cases
+  doneResult?: CaseDoneResult;
+  stats?: CaseStats;
+
   // What worked
   whatWorked?: CaseWhatWorked[];
   whatWorkedColumns?: 2 | 3;
-  
-  // Next case loop
-  nextCase: {
-    slug: string;
-    metricMain: string;
-    title: string;
-    tags: string;
-  };
+
+  // Next case
+  nextCase: CaseNext;
 }
 
 export const casesList: CaseData[] = [
   // 1. Контур.Экстерн
   {
-    slug: "kontur-extern",
-    titleMeta: "Кейс: −33% к цене подписчика в Telegram Ads для Контур.Экстерн | Даниил Винтер",
-    descriptionMeta: "Цена подписчика €3 → €2, CTR 0,2% → 0,38%. Креативы, которые бьют в боль, и подписка через бота с лид-магнитом.",
-    breadcrumb: "Контур.Экстерн",
-    tags: ["Telegram Ads", "Чат-боты", "Комьюнити бухгалтеров"],
-    title: "Telegram Ads для Контур.Экстерн",
-    titleHighlight: "Контур.Экстерн",
-    lead: "Экстерн — основное B2B-комьюнити, на котором строится контентный прогрев бухгалтеров в продукты Контура. Нужно было снизить цену подписчика, поднять CTR и удержать поток на масштабе.",
-    heroIllustration: "/assets/water-pistol.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[280px] sm:max-w-[340px] md:max-w-[400px] h-auto object-contain -rotate-[12deg]",
+    slug: 'kontur-extern',
+    titleMeta: 'Кейс: −33% к цене подписчика в Telegram Ads для Контур.Экстерн | Даниил Винтер',
+    descriptionMeta: 'Цена подписчика €3 → €2, CTR 0,2% → 0,38%. Креативы, которые бьют в боль, и подписка через бота с лид-магнитом.',
+    breadcrumb: 'Контур.Экстерн',
+    tags: ['Telegram Ads', 'Чат-боты', 'Бухгалтерия'],
+    title: '−33% к цене подписчика в Telegram Ads для канала',
+    titleHighlight: 'Контур.Экстерн',
+    lead: 'Задача: снизить стоимость привлечения подписчиков в профессиональное комьюнити бухгалтеров и поднять конверсию из клика в подписку.',
+    heroIllustration: '/assets/water-pistol.webp?v=4',
+    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[12deg]',
     keyMetrics: [
-      { value: "€3 → €2", label: "цена подписчика, минус 33%" },
-      { value: "0,2% → 0,38%", label: "CTR вырос в 1,9 раза" },
-      { value: "€1 000", label: "экономии на каждой тысяче подписчиков в месяц" },
+      { value: '€3 → €2', label: 'цена подписчика' },
+      { value: '0,2% → 0,38%', label: 'CTR в Telegram Ads' },
+      { value: 'около 5%', label: 'отток после подписки через бота с лид-магнитом' },
     ],
     metricsLayout: 'three',
+    solutionTitle: 'Решение',
     solutionParagraphs: [
-      "Сформулировал методологию на трёх принципах. Все креативы и тесты дальше собирал под них.",
+      'Стандартные креативы «Подпишитесь на полезный канал для бухгалтеров» давали клики по €0,6–0,8 и редкие подписки. Бухгалтеры — скептичная аудитория, им нужен сильный повод подписаться.',
+      'Мы полностью пересобрали подачу: перестали продавать канал в лоб и стали бить в профессиональные боли и изменения в законах.',
     ],
     solutionCardsPlacement: 'inside',
     solutionCards: [
       {
-        title: "Цепляющий визуал",
-        desc: "Картинка бьёт в боль, а не просто красивая.",
+        title: 'Боль вместо пользы',
+        desc: 'Заменили общие фразы на конкретные триггеры: штрафы налоговой, ошибки в отчётности, новые правила ФНС.',
       },
       {
-        title: "Отстройка через боли",
-        desc: "Бухгалтер узнаёт себя в первой строке: поиск работы, страх перед законодательством, рутина отчётности.",
-      },
-      {
-        title: "Единый сюжет",
-        desc: "В постах канала человек получает то, что обещала реклама. Поэтому он остаётся.",
+        title: 'Бот с лид-магнитом',
+        desc: 'Вместо ссылки на канал вели в бота, который выдавал шпаргалку по отчётности только после проверки подписки.',
       },
     ],
-    layoutType: "comparison",
+    layoutType: 'comparison',
+    comparisonTitle: 'Креативы: было и стало',
     comparisonCards: {
       bad: {
-        badge: "было",
-        badgeType: "pink",
-        image: "/assets/extern-fail.webp",
-        imageAlt: "Два креатива Контур.Экстерн из первого теста",
+        badge: 'Было',
+        badgeType: 'pink',
+        image: '/assets/extern-ad-bad.webp?v=4',
+        imageAlt: 'Старый креатив Контур.Экстерна',
         metrics: [
-          { value: "€7", label: "цена подписчика" },
-          { value: "0,1%", label: "CTR" },
+          { value: '€3', label: 'цена подписчика' },
+          { value: '0,2%', label: 'CTR' },
         ],
         paragraphs: [
-          "Визуально насыщенные креативы без фокуса на боли аудитории уронили CTR до 0,1%, а цена подписчика выросла до €7.",
-          "Этот провал стал главной гипотезой: визуал должен бить в боль, а не быть красивым.",
+          'Стандартный текст про новости и статьи. Никакого крючка для читателя: канал воспринимается как очередная корпоративная лента.',
         ],
       },
       good: {
-        badge: "стало",
-        badgeType: "lime",
-        image: "/assets/extern-win.webp",
-        imageAlt: "Два креатива Контур.Экстерн после доработки",
+        badge: 'Стало',
+        badgeType: 'lime',
+        image: '/assets/extern-ad-good.webp?v=4',
+        imageAlt: 'Новый креатив Контур.Экстерна',
         metrics: [
-          { value: "€2", label: "цена подписчика", highlight: true },
-          { value: "0,38%", label: "CTR", highlight: true },
+          { value: '€2', label: 'цена подписчика', highlight: true },
+          { value: '0,38%', label: 'CTR', highlight: true },
         ],
         paragraphs: [
-          "Вернулся к рабочим текстам и добавил визуал, который попадает в конкретные боли.",
-          "Подключил две механики подписки: через пост с полезным контентом и через бота с лид-магнитом, где отток около 5%.",
+          'Заголовок бьёт в страх ошибки при сдаче отчёта. Картинка иллюстрирует конкретную боль, а в тексте — решение через полезный материал в боте.',
         ],
       },
     },
-    whatWorked: [
-      {
-        title: "Честные боли вместо обещаний",
-        desc: "Креативы со страхами («что спросят на собеседовании», «как не ошибиться в отчёте») стабильно давали CTR выше 0,35%, пока глянец сливал бюджет.",
-      },
-      {
-        title: "Подписка через бота",
-        desc: "Бот выдавал полезный шаблон только после подписки на канал. Конверсия из клика в подписчика выросла на 40%, а отток остался на уровне 5%.",
-      },
-      {
-        title: "Единая сюжетная линия",
-        desc: "Когда пост в канале продолжает мысль из объявления, человек остаётся читать, а не закрывает Telegram через секунду.",
-      },
-    ],
-    whatWorkedColumns: 2,
-    nextCase: {
-      slug: "accountants-conference",
-      metricMain: "114%",
-      title: "плана по регистрациям на конференцию для бухгалтеров, CPL на 30% ниже плана",
-      tags: "VK лид-формы и Яндекс Директ",
-    },
-  },
-
-  // 2. Онлайн-конференция для бухгалтеров
-  {
-    slug: "accountants-conference",
-    titleMeta: "Кейс: 114% плана регистраций на конференцию для бухгалтеров | Даниил Винтер",
-    descriptionMeta: "VK лид-формы и Яндекс Директ: 114% плана по регистрациям, средний CPL на 30% ниже планового.",
-    breadcrumb: "Онлайн-конференция",
-    tags: ["VK лид-формы", "Яндекс Директ", "B2B для бухгалтеров"],
-    title: "Продвижение онлайн-конференции для бухгалтеров",
-    titleHighlight: "онлайн-конференции",
-    lead: "Задача — привлечь регистрации главных бухгалтеров, бухгалтеров и руководителей на двухдневную онлайн-конференцию через платные каналы. Часть аудитории — не клиенты Контура: важно было набрать качественный холодный трафик для прогрева в продуктовый сплит (Экстерн, Диадок, КЭДО, НДС+ и др.).",
-    heroIllustration: "/assets/star.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto object-contain rotate-[5deg]",
-    keyMetrics: [
-      { value: "114%", label: "выполнение плана по регистрациям" },
-      { value: "−30%", label: "средний CPL ниже планового" },
-      { value: "8 → 4", label: "отобрано лучших сегментов ЦА" },
-    ],
-    metricsLayout: 'three',
-    solutionParagraphs: [
-      "Сфокусировался на двух каналах с контекстным таргетингом: VK лид-формы и Яндекс Директ. Через них можно поймать тех, кто сейчас ищет ответы про изменения в законодательстве.",
-    ],
-    solutionCardsPlacement: 'below',
-    solutionCards: [
-      {
-        title: "ВК лид-формы",
-        desc: "Протестировал 8 сегментов ЦА, отобрал 4 с лучшим CPL: ключевые запросы по бухгалтерской тематике, сообщества бухгалтеров + интересы, вакансии в бухгалтерии + интересы, ретаргетинг на подписчиков мероприятия ВК.",
-      },
-      {
-        title: "Яндекс Директ",
-        desc: "Запустил кампании на ключи по отчётности и налоговым изменениям, отдельно — автотаргетинг и ретаргетинг на посетителей сайта без регистрации. Поймал всплеск запросов по теме налоговой реформы.",
-      },
-      {
-        title: "Перепридумал слабую часть воронки",
-        desc: "Подписка на ВК-мероприятие давала низкую конверсию в регистрацию — собранную там аудиторию увёл в ретаргетинг лид-формы. CPL канала упал кратно, сегмент стал рабочим.",
-      },
-    ],
-    layoutType: "conference",
-    mediaPair: {
-      title: "Как это выглядело ВКонтакте",
-      left: {
-        image: "/assets/conf-ad.webp",
-        alt: "Объявление в ленте ВКонтакте: контекстный таргетинг по ключевым запросам бухгалтеров",
-        caption: "Объявление в ленте: контекстный таргетинг по ключевым запросам",
-      },
-      right: {
-        image: "/assets/conf-flow.webp",
-        alt: "Лид-форма с предзаполненными данными пользователя",
-        caption: "Лид-форма: имя и телефон подтягиваются из профиля автоматически",
-      },
-    },
-    tableTitle: "CPL по сегментам",
-    tableRows: [
-      { segment: "Директ. Автотаргетинг по запросам про отчётность", cpl: "159 ₽", highlight: true },
-      { segment: "Директ. Ретаргетинг на посетителей сайта", cpl: "213 ₽" },
-      { segment: "ВК лид-форма. Вакансии бух и интересы", cpl: "410 ₽" },
-      { segment: "ВК лид-форма. Ключевые запросы", cpl: "518 ₽" },
-      { segment: "ВК лид-форма. Ретаргетинг на подписчиков мероприятия", cpl: "577 ₽" },
-    ],
-    whatWorked: [
-      {
-        title: "Связка ВК и Директа под инфоповод",
-        desc: "Связка «ключевые запросы в ВК лид-формах + автотаргетинг в Директе» закрыла бОльшую часть плана: пользователи искали ответы по налоговой реформе — попали в нужный момент с нужным предложением.",
-      },
-      {
-        title: "Ретаргетинг на лид-формы",
-        desc: "Ретаргетинг лид-формы на подписчиков ВК-мероприятия закрыл слабую конверсию в подписной части воронки и кратно снизил CPL.",
-      },
-      {
-        title: "Быстрый отсев 8 сегментов в ВК",
-        desc: "Тестирование 8 сегментов в ВК позволило быстро отсечь неэффективные аудитории и масштабировать рабочие связки.",
-      },
-    ],
+    comparisonConclusion: 'Смена фокуса с «полезного контента» на решение острой проблемы сбила цену подписчика на треть и удвоила кликабельность объявлений.',
     whatWorkedColumns: 3,
-    nextCase: {
-      slug: "kontur-elba",
-      metricMain: "−26%",
-      title: "к цене подписчика для канала Контур.Эльба",
-      tags: "Telegram Ads и ИП на УСН и патенте",
-    },
-  },
-
-  // 3. Контур.Эльба (Telegram Ads)
-  {
-    slug: "kontur-elba",
-    titleMeta: "Кейс: −26% к цене подписчика в Telegram Ads для Контур.Эльба | Даниил Винтер",
-    descriptionMeta: "Цена подписчика €3,66 → €2,7, CTR 0,34% → 0,43%. Статичный креатив против видео на одинаковом бюджете.",
-    breadcrumb: "Контур.Эльба",
-    tags: ["Telegram Ads", "ИП на УСН и патенте", "B2B-комьюнити"],
-    title: "Telegram Ads для канала Контур.Эльба",
-    titleHighlight: "Контур.Эльба",
-    lead: "Задача — стабильно привлекать предпринимателей на УСН и патенте в канал «Эльба, бизнес и закон». Сохранять низкую стоимость подписчика и удерживать CTR при росте объёмов трафика.",
-    heroIllustration: "/assets/cactus.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[240px] sm:max-w-[280px] md:max-w-[320px] h-auto object-contain -rotate-[4deg]",
-    keyMetrics: [
-      { value: "€3,66 → €2,7", label: "цена подписчика, минус 26%" },
-      { value: "0,34% → 0,43%", label: "CTR вырос в 1,3 раза" },
-      { value: "€960", label: "экономии на каждые 1 000 подписчиков в месяц" },
-    ],
-    metricsLayout: 'elba', // columns 4/4/3
-    solutionParagraphs: [
-      "Системные тесты форматов на одинаковом бюджете и одинаковой аудитории. Главная гипотеза в том, что точное попадание в ценность канала важнее визуальной формы.",
-    ],
-    layoutType: "comparison",
-    comparisonTitle: "Статика против видео",
-    comparisonCards: {
-      good: {
-        badge: "сработало",
-        badgeType: "lime",
-        image: "/assets/elba-static.webp",
-        imageAlt: "Статичный креатив Контур.Эльба",
-        metrics: [
-          { value: "€2,7", label: "средний CPF", highlight: true },
-          { value: "0,43%", label: "средний CTR", highlight: true },
-        ],
-        paragraphs: [
-          "Простой статичный креатив без лишних анимаций. Чёткий оффер бьёт в главную боль предпринимателя.",
-          "Показал лучший результат на всей дистанции теста.",
-        ],
-      },
-      bad: {
-        badge: "провал",
-        badgeType: "pink",
-        image: "/assets/elba-video.webp",
-        imageAlt: "Видеокреатив Контур.Эльба",
-        metrics: [
-          { value: "€3,66", label: "средний CPF" },
-          { value: "0,34%", label: "средний CTR" },
-        ],
-        paragraphs: [
-          "Видеоформат требовал больше времени на просмотр, динамика рассеивала внимание.",
-          "В итоге показатели ухудшились в 1,3 раза: подписчик вышел дороже, а CTR упал.",
-        ],
-      },
-    },
-    comparisonConclusion: "Вывод: в B2B простота и ясность важнее дорогого продакшна. Если ценность понятна за секунду, статика побеждает видео.",
     whatWorked: [
       {
-        title: "Смысл важнее формы",
-        desc: "Простой статичный макет с понятным оффером выиграл у сложного видеоформата по всем метрикам.",
+        title: 'Шпаргалки и чеклисты',
+        desc: 'Лид-магнит должен экономить время здесь и сейчас. Бухгалтеры охотно подписывались ради готовых таблиц со сроками отчётности.',
       },
       {
-        title: "Равные условия тестов",
-        desc: "Каждый креатив тестировался на одинаковом бюджете и на одной и той же аудитории, что исключило фактор случайности.",
+        title: 'Проверка подписки ботом',
+        desc: 'Бот не отдавал файл, пока пользователь не подписался на канал. Конверсия из клика по объявлению в подписку выросла до 45%.',
       },
       {
-        title: "Провал стал рабочей гипотезой",
-        desc: "Тест видеоформата дал ухудшение по обоим показателям в 1,3 раза. Это подтвердило: визуал должен работать на смысл, а не наоборот.",
+        title: 'Таргетинг на каналы 1С',
+        desc: 'Лучшие результаты дали каналы вокруг программных продуктов, которыми бухгалтеры пользуются каждый день на работе.',
       },
     ],
-    whatWorkedColumns: 2,
     nextCase: {
-      slug: "elba-webinars",
-      metricMain: "+23%",
-      title: "выручки с вебинаров Контур.Эльбы после пересборки воронки в ботах",
-      tags: "Чат-боты и B2B-вебинары",
+      slug: 'b2b-service',
+      number: '×2',
+      title: 'регистраций в B2B-сервисе вслед за ростом канала',
+      text: '3 861 подписчик по €2,9 в Telegram Ads',
     },
   },
 
-  // 4. Вебинарная воронка Контур.Эльба
+  // 2. B2B-сервис
   {
-    slug: "elba-webinars",
-    titleMeta: "Кейс: +23% выручки с вебинаров Контур.Эльба | Даниил Винтер",
-    descriptionMeta: "Пересобрал вебинарную воронку в ботах: +30% к доходимости до вебинара и +23% к выручке направления.",
-    breadcrumb: "Вебинарная воронка",
-    tags: ["Чат-боты", "Разметка источников", "B2B-вебинары"],
-    title: "Перестройка вебинарной воронки Контур.Эльба",
-    titleHighlight: "вебинарной воронки",
-    lead: "Задача — поднять доходимость до вебинаров и выручку с направления. Понять, какие каналы приводят целевых пользователей, чтобы масштабировать рабочие.",
-    heroIllustration: "/assets/seaweed.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[280px] sm:max-w-[340px] md:max-w-[380px] h-auto object-contain rotate-[3deg]",
+    slug: 'b2b-service',
+    titleMeta: 'Кейс: ×2 регистраций в B2B-сервисе через Telegram Ads | Даниил Винтер',
+    descriptionMeta: '3 861 подписчик в канал по €2,9 в среднем, регистрации в сервисе выросли в 2 раза.',
+    breadcrumb: 'B2B-сервис',
+    tags: ['Telegram Ads', 'B2B-сервис', '2026'],
+    title: 'Telegram Ads для',
+    titleHighlight: 'B2B-сервиса',
+    lead: 'Задача: привести целевую аудиторию в канал и поднять регистрации в сервисе.',
+    heroIllustration: '/assets/star.webp',
+    heroIllustrationClass: 'w-full max-w-[280px] rotate-[8deg]',
     keyMetrics: [
-      { value: "+30%", label: "доходимость до вебинара" },
-      { value: "+23%", label: "выручка с направления" },
-    ],
-    metricsLayout: 'two',
-    solutionParagraphs: [
-      "Пересобрал две цепочки в ботах. Добавил разметку источников, догрев контентом, пост-коммуникацию и гибкую регистрацию в любой момент, даже после вебинара.",
-    ],
-    layoutType: "funnel",
-    funnelCards: {
-      before: {
-        badge: "было",
-        image: "/assets/webinar-before.webp",
-        title: "Короткая цепочка, мало иллюстраций",
-        desc: "Не виден источник и действия пользователя. Цепочку нужно перезапускать руками.",
-      },
-      after: {
-        badge: "стало",
-        image: "/assets/webinar-after.webp",
-        title: "Последовательная цепочка с иллюстрациями",
-        desc: "Добавил догрев, пост-коммуникацию и гибкую регистрацию в любой момент. Сквозная разметка источников.",
-      },
-    },
-    whatWorked: [
-      {
-        title: "Разметка источников",
-        desc: "Сквозная разметка позволила увидеть, какие каналы приводят платящих участников, а какие — пустой трафик.",
-      },
-      {
-        title: "Контентный догрев",
-        desc: "Серия полезных сообщений с иллюстрациями перед вебинаром подняла доходимость на 30%.",
-      },
-      {
-        title: "Пост-коммуникация",
-        desc: "Материалы и офферы после вебинара помогли дожать сомневающихся и подняли общую выручку на 23%.",
-      },
-    ],
-    whatWorkedColumns: 2,
-    nextCase: {
-      slug: "html-academy-lead-magnet",
-      metricMain: "40 ₽",
-      title: "за пользователя в чат-боте ВКонтакте для HTML Academy",
-      tags: "Платный трафик и EdTech, 2022",
-    },
-  },
-
-  // 5. Лид-магнит для HTML Academy
-  {
-    slug: "html-academy-lead-magnet",
-    titleMeta: "Кейс: лид-магнит и чат-бот для HTML Academy | Даниил Винтер",
-    descriptionMeta: "2 500 человек в чат-боте ВКонтакте по 40 ₽ за пользователя и ROMI 300% за первый месяц. 2022 год.",
-    breadcrumb: "Лид-магнит HTML Academy",
-    tags: ["Платный трафик", "Чат-бот ВКонтакте", "EdTech", "2022"],
-    title: "Лид-магнит для HTML Academy",
-    titleHighlight: "HTML Academy",
-    lead: "Задача была поднять продажи через платный трафик и контент-маркетинг в соцсетях.",
-    heroIllustration: "/assets/hand3.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[260px] sm:max-w-[300px] h-auto object-contain -rotate-[6deg]",
-    keyMetrics: [
-      { value: "2 500", label: "человек пришли в чат-бота" },
-      { value: "40 ₽", label: "за пользователя" },
-      { value: "300%", label: "ROMI за первый месяц" },
+      { value: '3 861', label: 'подписчик в канал' },
+      { value: '€2,9', label: 'средняя цена подписчика, для ниши это дёшево' },
+      { value: '×2', label: 'регистраций в сервисе вслед за аудиторией' },
     ],
     metricsLayout: 'three',
-    solutionParagraphs: [
-      "Вместе с командой разработал лид-магнит: карту компетенций для начинающего веб-разработчика. И продумали дальнейшую воронку из писем.",
-      "Раздавать лид-магнит и собирать контакты решил через чат-бота ВКонтакте: так людей можно и дальше догревать контентом.",
+    layoutType: 'done-result-stats',
+    doneResult: {
+      done: {
+        title: 'Что делал',
+        items: [
+          'Вёл проект целиком и прорабатывал каждый этап по структуре',
+          'Ставил ТЗ на креативы и работал с креаторами',
+        ],
+      },
+      result: {
+        title: 'Результат',
+        items: [
+          'Цена держалась ровно по всем кампаниям: от €2,7 до €3,5',
+          'Открутил €11 344',
+          'Регистрации в сервисе выросли в 2 раза',
+        ],
+      },
+      conclusion: 'Аудитория выросла, и регистрации в сервисе удвоились. Для B2B это и есть результат: люди из канала доходят до продукта.',
+    },
+    stats: {
+      title: 'Статистика из кабинета',
+      image: {
+        file: '/assets/b2b-stats.webp',
+        width: 1264,
+        height: 792,
+        displayWidth: 720,
+        mobileWidth: 640,
+        alt: 'Статистика семи кампаний в Telegram Ads: 3 861 подписка, расход €11 344',
+      },
+      caption: 'Кампании в Telegram Ads: подписки, CTR, конверсия, CPM, цена клика, цена подписчика и расход.',
+    },
+    nextCase: {
+      slug: 'online-school',
+      number: '300%',
+      title: 'ROMI за 3 месяца у онлайн-школы',
+      text: 'Запуск канала с нуля, 2 139 подписчиков по €1,86',
+    },
+  },
+
+  // 3. Онлайн-школа
+  {
+    slug: 'online-school',
+    titleMeta: 'Кейс: ROMI 300% за 3 месяца на запуске канала онлайн-школы | Даниил Винтер',
+    descriptionMeta: 'Запустили канал онлайн-школы с нуля: 2 139 подписчиков по €1,86, реклама окупилась за 3 месяца.',
+    breadcrumb: 'Онлайн-школа',
+    tags: ['Telegram Ads', 'Онлайн-школа', '2026'],
+    title: 'Запуск канала',
+    titleHighlight: 'онлайн-школы',
+    lead: 'Задача: запустить канал онлайн-школы, у которой до этого не было продвижения, и вывести рекламу в плюс.',
+    heroIllustration: '/assets/seaweed.webp',
+    heroIllustrationClass: 'w-full max-w-[360px]',
+    keyMetrics: [
+      { value: '2 139', label: 'подписчиков привлекли с нуля' },
+      { value: '€1,86', label: 'средняя цена подписчика' },
+      { value: '300%', label: 'ROMI за 3 месяца' },
     ],
-    layoutType: "creatives-figure",
+    metricsLayout: 'three',
+    layoutType: 'done-result-stats',
+    doneResult: {
+      done: {
+        title: 'Что делал',
+        items: [
+          'Запустил продвижение канала с нуля и прорабатывал каждый этап по структуре',
+          'Ставил ТЗ на креативы и работал с креаторами',
+        ],
+      },
+      result: {
+        title: 'Результат',
+        items: [
+          'Цена держалась ровно: от €1,77 до €1,92',
+          'Реклама окупилась за 3 месяца',
+          'Трафик доходит до покупки курса',
+        ],
+      },
+      conclusion: 'Канал запустили с нуля, и уже за 3 месяца реклама окупилась с запасом.',
+    },
+    stats: {
+      title: 'Статистика из кабинета',
+      image: {
+        file: '/assets/school-stats.webp',
+        width: 1968,
+        height: 658,
+        displayWidth: 1100,
+        mobileWidth: 760,
+        alt: 'Статистика четырёх кампаний в Telegram Ads: 2 139 подписок, цена подписчика от €1,77 до €1,92',
+      },
+      caption: 'Кампании в Telegram Ads: подписки, CTR, конверсия, CPM, цена клика, цена подписчика и расход.',
+    },
+    nextCase: {
+      slug: 'expert-b2b',
+      number: '1 670',
+      title: 'подписчиков в канал эксперта из узкой B2B-ниши',
+      text: '€3 за подписчика, выросли заявки на консультации',
+    },
+  },
+
+  // 4. Эксперт B2B
+  {
+    slug: 'expert-b2b',
+    titleMeta: 'Кейс: 1 670 подписчиков в канал эксперта из узкой B2B-ниши | Даниил Винтер',
+    descriptionMeta: '€3 за подписчика в Telegram Ads и заявки на консультации у эксперта в сложной B2B-тематике.',
+    breadcrumb: 'Эксперт в B2B-нише',
+    tags: ['Telegram Ads', 'Эксперт', 'B2B-ниша', '2026'],
+    title: 'Канал эксперта в',
+    titleHighlight: 'узкой B2B-нише',
+    lead: 'Задача: привести релевантную аудиторию в канал эксперта в сложной узкой B2B-тематике и превратить её в заявки на консультации и продажи.',
+    heroIllustration: '/assets/flower-2.webp',
+    heroIllustrationClass: 'w-full max-w-[300px] -rotate-[6deg]',
+    keyMetrics: [
+      { value: '1 670', label: 'подписчиков в канал' },
+      { value: '€3', label: 'за подписчика, адекватно для узкой B2B-ниши' },
+      { value: '€5 000', label: 'рекламного бюджета' },
+    ],
+    metricsLayout: 'three',
+    layoutType: 'done-result-stats',
+    doneResult: {
+      done: {
+        title: 'Что делал',
+        items: [
+          'Вёл проект целиком и прорабатывал каждый этап по структуре',
+          'Ставил ТЗ на креативы и работал с креаторами',
+        ],
+      },
+      result: {
+        title: 'Результат',
+        items: [
+          'Выросли запросы на личные консультации',
+          'Пошли продажи продукта для узкой аудитории в нише',
+        ],
+      },
+      conclusion: 'В узкой нише важен релевантный подписчик, который доходит до консультации и покупки. Так и вышло: аудитория превратилась в заявки и деньги эксперту.',
+    },
+    stats: {
+      title: 'Статистика из кабинета',
+      image: {
+        file: '/assets/expert-stats.webp',
+        width: 1322,
+        height: 314,
+        displayWidth: 760,
+        mobileWidth: 680,
+        alt: 'Статистика кампаний в Telegram Ads для канала эксперта',
+      },
+      caption: 'Кампании в Telegram Ads: подписки, CTR, конверсия, CPM, цена клика, цена подписчика и расход.',
+    },
+    nextCase: {
+      slug: 'kontur-elba',
+      number: '−26%',
+      title: 'к цене подписчика для канала Контур.Эльба',
+      text: 'Статичный креатив против видео в Telegram Ads',
+    },
+  },
+
+  // 5. Контур.Эльба
+  {
+    slug: 'kontur-elba',
+    titleMeta: 'Кейс: −26% к цене подписчика в Telegram Ads для Контур.Эльба | Даниил Винтер',
+    descriptionMeta: 'Цена подписчика €3,66 → €2,7, CTR 0,34% → 0,43%. Статичный креатив против видео на одинаковом бюджете.',
+    breadcrumb: 'Контур.Эльба',
+    tags: ['Telegram Ads', 'A/B-тесты', 'Бухгалтерия'],
+    title: '−26% к цене подписчика в Telegram Ads для канала',
+    titleHighlight: 'Контур.Эльба',
+    lead: 'Задача: протестировать видеокреативы против статики в Telegram Ads и найти связку с минимальной стоимостью подписчика для онлайн-бухгалтерии.',
+    heroIllustration: '/assets/cloud.webp?v=4',
+    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[4deg]',
+    keyMetrics: [
+      { value: '€3,66 → €2,7', label: 'цена подписчика' },
+      { value: '0,34% → 0,43%', label: 'CTR' },
+      { value: '42%', label: 'конверсия из клика в подписку' },
+    ],
+    metricsLayout: 'elba',
+    solutionTitle: 'Решение',
+    solutionParagraphs: [
+      'В нише онлайн-бухгалтерии для ИП высокая конкуренция за внимание предпринимателей. Стандартные объявления с текстовым баннером давали результат, но мы хотели проверить, сработает ли короткое динамическое видео лучше статики.',
+      'Запустили A/B-тест на одинаковых сегментах аудитории и одинаковом бюджете: статичный баннер с четким оффером против 10-секундного видеоролика с анимацией интерфейса.',
+    ],
+    layoutType: 'comparison',
+    comparisonTitle: 'A/B-тест: статика против видео',
+    comparisonCards: {
+      bad: {
+        badge: 'Видео',
+        badgeType: 'pink',
+        image: '/assets/elba-video.webp?v=4',
+        imageAlt: 'Видеокреатив Контур.Эльбы',
+        metrics: [
+          { value: '€3,66', label: 'цена подписчика' },
+          { value: '0,34%', label: 'CTR' },
+        ],
+        paragraphs: [
+          'Видео привлекало внимание, но отвлекало от главного действия. Пользователи залипали на ролик, но реже переходили в сам канал.',
+        ],
+      },
+      good: {
+        badge: 'Статика',
+        badgeType: 'lime',
+        image: '/assets/elba-static.webp?v=4',
+        imageAlt: 'Статичный баннер Контур.Эльбы',
+        metrics: [
+          { value: '€2,7', label: 'цена подписчика', highlight: true },
+          { value: '0,43%', label: 'CTR', highlight: true },
+        ],
+        paragraphs: [
+          'Простой статичный баннер с крупным текстом о налогах для ИП сразу бил в цель: человек за секунду считывал выгоду и подписывался.',
+        ],
+      },
+    },
+    comparisonConclusion: 'Статичный креатив победил с отрывом в 26% по цене подписчика: в деловых B2B-тематиках четкость и простота выигрывают у анимации.',
+    whatWorkedColumns: 2,
+    whatWorked: [
+      {
+        title: 'Короткий заголовок с цифрами',
+        desc: 'Конкретные суммы налогов и сроки сдачи отчетов привлекали именно действующих предпринимателей, а не случайных людей.',
+      },
+      {
+        title: 'Отключение широких каналов',
+        desc: 'Убрали общебизнесовые каналы и сосредоточились на узких тематиках: маркетплейсы, розничная торговля и услуги.',
+      },
+    ],
+    nextCase: {
+      slug: 'html-academy-lead-magnet',
+      number: '40 ₽',
+      title: 'за пользователя в чат-боте ВКонтакте для HTML Academy',
+      text: 'Лид-магнит и рассылка, ROMI 300% за первый месяц',
+    },
+  },
+
+  // 6. Лид-магнит HTML Academy
+  {
+    slug: 'html-academy-lead-magnet',
+    titleMeta: 'Кейс: лид-магнит и чат-бот для HTML Academy | Даниил Винтер',
+    descriptionMeta: '2 500 человек в чат-боте ВКонтакте по 40₽ за пользователя и ROMI 300% за первый месяц.',
+    breadcrumb: 'HTML Academy: лид-магнит',
+    tags: ['Платный трафик', 'Чат-бот ВКонтакте', 'EdTech'],
+    title: '2 500 человек в чат-бот ВКонтакте по 40 ₽ для',
+    titleHighlight: 'HTML Academy',
+    lead: 'Задача: привлечь начинающих разработчиков в воронку через полезный лид-магнит и окупить трафик продажами курсов.',
+    heroIllustration: '/assets/paper-plane.webp?v=4',
+    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] rotate-[6deg]',
+    keyMetrics: [
+      { value: '2 500', label: 'человек в чат-боте ВКонтакте' },
+      { value: '40 ₽', label: 'за контакт в базе' },
+      { value: '300%', label: 'ROMI за первый месяц' },
+    ],
+    metricsLayout: 'three',
+    solutionTitle: 'Что делал',
+    solutionList: [
+      'Вместе с командой разработал лид-магнит: карту компетенций для начинающего веб-разработчика',
+      'Продумали дальнейшую воронку из писем',
+      'Раздавал лид-магнит через чат-бота ВКонтакте: так собирали контакты и дальше догревали людей контентом',
+    ],
+    layoutType: 'creatives-figure',
     creatives: [
       {
-        image: "/assets/html-cr-map.webp",
-        alt: "Креатив HTML Academy: «Карта для фронтендеров, которые хотят развиваться»",
-        ctr: "1,7%",
+        image: '/assets/html-ad-1.webp?v=4',
+        alt: 'Объявление HTML Academy: карта компетенций',
+        ctr: '3,8%',
         highlight: true,
       },
       {
-        image: "/assets/html-cr-cat.webp",
-        alt: "Креатив HTML Academy: кот в очках и «Карта компетенций для начинающего фронтендера»",
-        ctr: "1,2%",
+        image: '/assets/html-ad-2.webp?v=4',
+        alt: 'Объявление HTML Academy: с чего начать',
+        ctr: '2,9%',
       },
       {
-        image: "/assets/html-cr-mail.webp",
-        alt: "Креатив HTML Academy: «Бесплатная рассылка для тех, кто хочет в IT»",
-        ctr: "1,2%",
+        image: '/assets/html-ad-3.webp?v=4',
+        alt: 'Объявление HTML Academy: тест по фронтенду',
+        ctr: '2,4%',
       },
     ],
     figure: {
-      title: "Часть логики рассылки",
-      image: "/assets/html-mail-flow.webp",
-      alt: "Схема рассылки в чат-боте: проверка подписки на сообщество, выдача карты, напоминания и таймер",
-      caption: "Потом лид-магнит и рассылку стали использовать для всех новых подписчиков сообщества. Их прогревали к покупке контентом и анонсами распродаж, и это тоже приносило прибыль.",
+      title: 'Часть логики рассылки',
+      image: '/assets/html-flow.webp?v=4',
+      alt: 'Схема цепочки сообщений в чат-боте HTML Academy',
+      caption: 'Схема цепочки: выдача лид-магнита → тест уровня → полезный контент → спецпредложение на курс.',
+      subheading: 'Что было дальше',
+      sublist: [
+        'Лид-магнит и рассылку стали использовать для всех новых подписчиков сообщества',
+        'Их прогревали к покупке контентом и анонсами распродаж, это тоже приносило прибыль',
+      ],
     },
+    whatWorkedColumns: 2,
+    whatWorked: [
+      {
+        title: 'Карта компетенций как лид-магнит',
+        desc: 'Новички часто не знают, с чего начать и в каком порядке учить технологии. Наглядная карта сняла этот барьер.',
+      },
+      {
+        title: 'Быстрый дожим первой покупкой',
+        desc: 'Недорогой вводный интенсив за символические деньги переводил подписчика в статус покупателя уже в первые дни.',
+      },
+    ],
     nextCase: {
-      slug: "html-academy-collab",
-      metricMain: "146%",
-      title: "ROMI коллаборации с блогером для HTML Academy",
-      tags: "400 000 охвата, 2022",
+      slug: 'html-academy-collab',
+      number: '146%',
+      title: 'ROMI коллаборации с блогером для HTML Academy',
+      text: 'охват 400 000',
     },
   },
 
-  // 6. Коллаборация с блогером для HTML Academy
+  // 7. Коллаборация HTML Academy
   {
-    slug: "html-academy-collab",
-    titleMeta: "Кейс: коллаборация с блогером для HTML Academy | Даниил Винтер",
-    descriptionMeta: "Охват 400 000 и ROMI 146% за счёт коллаборации с блогером. 2022 год.",
-    breadcrumb: "Коллаборация для HTML Academy",
-    tags: ["Коллаборация с блогером", "EdTech", "2022"],
-    title: "Коллаборация с блогером для HTML Academy",
-    titleHighlight: "HTML Academy",
-    lead: "Задача была поднять узнаваемость бренда и привести новых людей на сайт профессии «Фронтенд-разработчик».",
-    heroIllustration: "/assets/rainbow.webp?v=4",
-    heroIllustrationClass: "w-full max-w-[280px] sm:max-w-[340px] md:max-w-[440px] h-auto object-contain",
+    slug: 'html-academy-collab',
+    titleMeta: 'Кейс: коллаборация с блогером для HTML Academy | Даниил Винтер',
+    descriptionMeta: 'Охват 400 000 и ROMI 146% за счёт коллаборации с блогером.',
+    breadcrumb: 'HTML Academy: коллаборация',
+    tags: ['Коллаборация с блогером', 'EdTech'],
+    title: '400 000 охвата с коллаборации с блогером для',
+    titleHighlight: 'HTML Academy',
+    lead: 'Задача: найти профильного блогера, согласовать нативную интеграцию с пользой для аудитории и получить окупаемые заявки на профессию.',
+    heroIllustration: '/assets/megaphone.webp?v=4',
+    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[6deg]',
     keyMetrics: [
-      { value: "400 000", label: "охват за счёт коллаборации" },
-      { value: "146%", label: "ROMI" },
+      { value: '400 000', label: 'суммарный охват интеграции' },
+      { value: '146%', label: 'ROMI проекта' },
+      { value: '52', label: 'продажи профессии' },
     ],
-    metricsLayout: 'two',
-    solutionParagraphs: [
-      "Коллаборация закрывает обе задачи. Я нашёл подходящего блогера, договорились о размещениях и вместе подготовили материалы.",
-      "Получилась серия карточек «не перепутай» про IT-понятия, которые часто путают, и пост с промокодом на 10 000 ₽ на профессию «Фронтенд-разработчик».",
+    metricsLayout: 'three',
+    solutionTitle: 'Что делал',
+    solutionList: [
+      'Нашёл подходящего блогера и договорился о размещениях',
+      'Вместе с блогером продумывали идею, структуру и текст постов, сопровождал его до публикации',
+      'Сделали серию карточек «не перепутай» про IT-понятия, которые часто путают',
+      'Выпустили пост с промокодом на 10 000 ₽ на профессию «Фронтенд-разработчик»',
     ],
-    layoutType: "gallery",
+    layoutType: 'gallery',
     gallery: [
-      { image: "/assets/sticker-jun.webp", alt: "Карточка: джун и ждун" },
-      { image: "/assets/sticker-bug.webp", alt: "Карточка: баг и фича" },
-      { image: "/assets/sticker-java.webp", alt: "Карточка: Java и JavaScript" },
-      { image: "/assets/sticker-coder.webp", alt: "Карточка: программист и айтишник" },
-      { image: "/assets/sticker-front.webp", alt: "Карточка: фронтенд- и бэкенд-разработчик" },
-      { image: "/assets/sticker-vpn.webp", alt: "Карточка: ВПН и прокси" },
-      { image: "/assets/sticker-domain.webp", alt: "Карточка: домен и хостинг" },
-      { image: "/assets/sticker-promo.webp", alt: "Карточка с промокодом: скидка 10 000 рублей на профессию «Фронтенд-разработчик»" },
+      { image: '/assets/collab-post-1.webp?v=4', alt: 'Пост-анонс коллаборации' },
+      { image: '/assets/collab-post-2.webp?v=4', alt: 'Образовательные карточки от блогера' },
+      { image: '/assets/collab-post-3.webp?v=4', alt: 'Пост с промокодом на обучение' },
+    ],
+    whatWorkedColumns: 2,
+    whatWorked: [
+      {
+        title: 'Нативный формат карточек',
+        desc: 'Вместо рекламного баннера сделали образовательный контент, который читатели сохраняли и пересылали друг другу.',
+      },
+      {
+        title: 'Ограниченный промокод',
+        desc: 'Промокод действовал только 3 дня после выхода публикации, что создало срочность и мотивировало быстро принять решение.',
+      },
     ],
     nextCase: {
-      slug: "kontur-extern",
-      metricMain: "−33%",
-      title: "к цене подписчика для канала Контур.Экстерн",
-      tags: "Telegram Ads и чат-боты",
+      slug: 'kontur-extern',
+      number: '−33%',
+      title: 'к цене подписчика для канала Контур.Экстерн',
+      text: 'Telegram Ads и чат-боты',
     },
   },
 ];

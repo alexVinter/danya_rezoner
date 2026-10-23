@@ -19,7 +19,7 @@ import { casesList } from './data/cases';
 type AppView = 'home' | 'service-detail' | 'case-detail';
 
 const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт через контент | Даниил Винтер';
-const HOME_DESC = 'Платный трафик в контент и воронки. Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.';
+const HOME_DESC = 'Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
@@ -45,6 +45,19 @@ export const App: React.FC = () => {
       const hash = window.location.hash.toLowerCase();
       const fullUrl = path + hash;
 
+      // Check 301/client-side redirects for removed cases:
+      if (
+        fullUrl.includes('conference') ||
+        fullUrl.includes('accountants') ||
+        fullUrl.includes('webinar')
+      ) {
+        window.history.replaceState(null, '', '/');
+        setCurrentView('home');
+        updateSEO(HOME_TITLE, HOME_DESC);
+        window.scrollTo(0, 0);
+        return;
+      }
+
       // 0. Home Section Anchor Matcher (#cases, #services, #about, #process, #reviews, #faq, #contact, #top)
       const homeSections = ['#cases', '#services', '#about', '#process', '#reviews', '#faq', '#contact', '#top'];
       if (homeSections.includes(hash)) {
@@ -62,11 +75,18 @@ export const App: React.FC = () => {
         return;
       }
 
-      // 1. Service Route Matcher (/services/*, #/services/*, #service-*)
+      // 1. Service Route Matcher (/services/*, #/services/*, #service-*, *.html)
       const isServiceRoute =
         path.startsWith('/services/') ||
         hash.startsWith('#/services/') ||
-        hash.startsWith('#service-');
+        hash.startsWith('#service-') ||
+        path.endsWith('audit.html') ||
+        path.endsWith('yandex-direct.html') ||
+        path.endsWith('vk-ads.html') ||
+        path.endsWith('telegram-ads.html') ||
+        path.endsWith('direct-landing-telegram.html') ||
+        path.endsWith('max.html') ||
+        path.endsWith('bot-funnels.html');
 
       if (isServiceRoute) {
         let slug = 'audit';
@@ -94,25 +114,28 @@ export const App: React.FC = () => {
         return;
       }
 
-      // 2. Case Route Matcher (/cases/*, #/cases/*, #case-*)
+      // 2. Case Route Matcher (/cases/*, #/cases/*, #case-*, case-*.html)
       const isCaseRoute =
         path.startsWith('/cases/') ||
         hash.startsWith('#/cases/') ||
-        hash.startsWith('#case-');
+        hash.startsWith('#case-') ||
+        path.includes('case-');
 
       if (isCaseRoute) {
         let slug = 'kontur-extern';
-        if (fullUrl.includes('conference') || fullUrl.includes('accountants')) {
-          slug = 'accountants-conference';
-        } else if (fullUrl.includes('kontur-elba') || (fullUrl.includes('elba') && !fullUrl.includes('webinar'))) {
+        if (fullUrl.includes('b2b-service') || fullUrl.includes('case-b2b-service')) {
+          slug = 'b2b-service';
+        } else if (fullUrl.includes('online-school') || fullUrl.includes('case-online-school') || fullUrl.includes('school')) {
+          slug = 'online-school';
+        } else if (fullUrl.includes('expert-b2b') || fullUrl.includes('case-expert-b2b') || (fullUrl.includes('expert') && !fullUrl.includes('extern'))) {
+          slug = 'expert-b2b';
+        } else if (fullUrl.includes('kontur-elba') || fullUrl.includes('case-elba') || fullUrl.includes('elba')) {
           slug = 'kontur-elba';
-        } else if (fullUrl.includes('webinar')) {
-          slug = 'elba-webinars';
-        } else if (fullUrl.includes('lead-magnet') || fullUrl.includes('html-lead')) {
+        } else if (fullUrl.includes('lead-magnet') || fullUrl.includes('html-lead') || fullUrl.includes('case-html-lead-magnet')) {
           slug = 'html-academy-lead-magnet';
-        } else if (fullUrl.includes('collab') || fullUrl.includes('html-collab')) {
+        } else if (fullUrl.includes('collab') || fullUrl.includes('html-collab') || fullUrl.includes('case-html-collab')) {
           slug = 'html-academy-collab';
-        } else if (fullUrl.includes('extern')) {
+        } else if (fullUrl.includes('extern') || fullUrl.includes('case-extern')) {
           slug = 'kontur-extern';
         }
 
@@ -132,9 +155,38 @@ export const App: React.FC = () => {
     handleLocationChange();
     window.addEventListener('popstate', handleLocationChange);
     window.addEventListener('hashchange', handleLocationChange);
+
+    const handleDocumentClick = (e: MouseEvent) => {
+      const target = (e.target as HTMLElement).closest('a');
+      if (!target) return;
+      const href = target.getAttribute('href');
+      if (!href) return;
+      if (
+        href.startsWith('http://') ||
+        href.startsWith('https://') ||
+        href.startsWith('mailto:') ||
+        href.startsWith('tel:')
+      ) {
+        return;
+      }
+      if (href.startsWith('#')) return;
+      if (
+        href.startsWith('/services/') ||
+        href.startsWith('/cases/') ||
+        href.endsWith('.html') ||
+        href === '/'
+      ) {
+        e.preventDefault();
+        window.history.pushState(null, '', href);
+        handleLocationChange();
+      }
+    };
+    document.addEventListener('click', handleDocumentClick);
+
     return () => {
       window.removeEventListener('popstate', handleLocationChange);
       window.removeEventListener('hashchange', handleLocationChange);
+      document.removeEventListener('click', handleDocumentClick);
     };
   }, []);
 
@@ -198,12 +250,14 @@ export const App: React.FC = () => {
             onBackToHome={navigateToHome}
             onOpenCase={navigateToCase}
             onOpenService={navigateToService}
+            onOpenPrivacy={() => setPrivacyModalOpen(true)}
           />
         ) : currentView === 'case-detail' ? (
           <CaseDetailPage
             caseSlug={activeCaseSlug}
             onBackToHome={navigateToHome}
             onSelectCase={navigateToCase}
+            onOpenPrivacy={() => setPrivacyModalOpen(true)}
           />
         ) : (
           <>

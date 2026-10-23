@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
-import { faqData, siteConfig } from '../data/content';
+import { faqData, siteConfig, FaqItem } from '../data/content';
 
-export const FaqSection: React.FC = () => {
-  // Allow multiple or single open items
+export interface FaqSectionProps {
+  id?: string;
+  title?: string;
+  subtitle?: React.ReactNode;
+  items?: FaqItem[];
+  showCactus?: boolean;
+}
+
+export const FaqSection: React.FC<FaqSectionProps> = ({
+  id = 'faq',
+  title = 'FAQ',
+  subtitle,
+  items = faqData,
+  showCactus = true,
+}) => {
   const [openIndices, setOpenIndices] = useState<number[]>([0]);
 
   const toggleIndex = (index: number) => {
@@ -11,39 +24,47 @@ export const FaqSection: React.FC = () => {
     );
   };
 
+  const defaultSubtitle = (
+    <>
+      Не нашли ответ —{' '}
+      <a
+        href={siteConfig.telegramPersonalUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="lnk font-medium"
+      >
+        напишите в Telegram
+      </a>
+    </>
+  );
+
   return (
-    <section id="faq" className="pt-16 md:pt-[120px] pb-0">
+    <section id={id} className="pt-16 md:pt-[120px] pb-0">
       <div className="max-w-site mx-auto px-4 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
-          {/* Left Column: Heading, Subtitle & Cactus */}
+          {/* Left Column: Heading, Subtitle & Optional Cactus */}
           <div className="md:col-span-4">
             <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-              FAQ
+              {title}
             </h2>
 
             <p className="mt-4 mb-0 text-[16px] sm:text-[17px] leading-[1.5] text-slate">
-              Не нашли ответ —{' '}
-              <a
-                href={siteConfig.telegramPersonalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="lnk font-medium"
-              >
-                напишите в Telegram
-              </a>
+              {subtitle || defaultSubtitle}
             </p>
 
-            <img
-              src="/assets/cactus.webp"
-              alt=""
-              aria-hidden="true"
-              className="wob hidden md:block mt-12 w-[190px] h-auto select-none rotate-[4deg]"
-            />
+            {showCactus && (
+              <img
+                src="/assets/cactus.webp"
+                alt=""
+                aria-hidden="true"
+                className="wob hidden md:block mt-12 w-[190px] h-auto select-none rotate-[4deg]"
+              />
+            )}
           </div>
 
           {/* Right Column: Accordion Items */}
           <div className="md:col-span-8 flex flex-col gap-3">
-            {faqData.map((item, idx) => {
+            {items.map((item, idx) => {
               const isOpen = openIndices.includes(idx);
               return (
                 <div
@@ -78,9 +99,10 @@ export const FaqSection: React.FC = () => {
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 sm:px-6 pb-6 pt-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate max-w-[700px] animate-in fade-in duration-150">
-                      {item.answer}
-                    </div>
+                    <div
+                      className="px-5 sm:px-6 pb-6 pt-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate max-w-[700px] animate-in fade-in duration-150"
+                      dangerouslySetInnerHTML={{ __html: item.answer }}
+                    />
                   )}
                 </div>
               );

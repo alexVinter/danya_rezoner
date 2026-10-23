@@ -39,7 +39,7 @@ export const ProcessSection: React.FC = () => {
                   {step.title}
                 </h3>
 
-                <p className="m-0 text-[14px] sm:text-[15px] leading-[1.5] text-slate">
+                <p className="m-0 text-[14px] sm:text-[15px] leading-[1.5] text-slate whitespace-pre-line">
                   {step.phrase}
                 </p>
 

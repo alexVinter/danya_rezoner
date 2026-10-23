@@ -6,7 +6,7 @@ interface CasesSectionProps {
 }
 
 export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
-  const { featured, cards, earlyCasesText, earlyCases } = casesData;
+  const { featured, cards, moreCases } = casesData;
 
   return (
     <section id="cases" className="mt-16 md:mt-[120px] bg-forest py-16 sm:py-24 md:py-[112px]">
@@ -16,7 +16,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
         </h2>
 
         {/* Featured Case: Full-width Lime Plate with Water Pistol */}
-        <article className="bg-lime rounded-card p-6 sm:p-10 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <article className="g2 feat bg-lime rounded-card p-6 sm:p-10 md:p-12 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
           <div className="md:col-span-7">
             {/* Tags */}
             <div className="flex flex-wrap gap-2">
@@ -30,13 +30,13 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
               ))}
             </div>
 
-            {/* Giant Metric */}
-            <p className="mt-6 md:mt-7 mb-0 text-[56px] sm:text-[72px] md:text-[88px] leading-[0.95] font-bold tracking-[-0.04em] text-slate tabular-nums">
+            {/* Giant Metric with .feat-num for phone responsive */}
+            <p className="feat-num mt-6 md:mt-7 mb-0 text-[56px] sm:text-[72px] md:text-[88px] leading-[0.95] font-bold tracking-[-0.04em] text-slate tabular-nums">
               {featured.metricMain}
             </p>
 
             {/* Title */}
-            <h3 className="mt-3.5 mb-0 text-[24px] sm:text-[28px] md:text-[32px] leading-[1.15] font-bold tracking-[-0.015em] text-slate max-w-[560px]">
+            <h3 className="h3 mt-3.5 mb-0 text-[24px] sm:text-[28px] md:text-[32px] leading-[1.15] font-bold tracking-[-0.015em] text-slate max-w-[560px]">
               {featured.title}
             </h3>
 
@@ -65,19 +65,19 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
             </div>
           </div>
 
-          {/* Water Pistol Illustration */}
+          {/* Water Pistol Illustration with .feat-ill */}
           <div className="md:col-span-5 flex justify-center">
             <img
               src="/assets/water-pistol.webp?v=3"
               alt=""
               aria-hidden="true"
-              className="wob w-full max-w-[300px] sm:max-w-[360px] md:max-w-[420px] h-auto object-contain select-none -rotate-[12deg]"
+              className="wob feat-ill w-full max-w-[300px] sm:max-w-[360px] md:max-w-[420px] h-auto object-contain select-none -rotate-[12deg]"
             />
           </div>
         </article>
 
-        {/* 3 Secondary Cards */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3 Secondary Cards (.cards3) */}
+        <div className="cards3 mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.map((card) => (
             <article
               key={card.id}
@@ -92,7 +92,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
               </h3>
 
               {card.subtitle && (
-                <p className="m-0 text-[15px] text-slate-soft tabular-nums">
+                <p className="m-0 text-[15px] text-slate-soft tabular-nums whitespace-pre-line">
                   {card.subtitle}
                 </p>
               )}
@@ -121,25 +121,30 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
           ))}
         </div>
 
-        {/* Early cases 2022 */}
-        <p className="mt-8 mb-0 text-[15px] sm:text-[16px] leading-[1.6] text-[#CACBC4]">
-          {earlyCasesText}{' '}
-          <a
-            href={earlyCases[0].href}
-            onClick={(e) => { e.preventDefault(); onOpenCase(earlyCases[0].slug); }}
-            className="lnk text-paper cursor-pointer"
-          >
-            {earlyCases[0].title}
-          </a>{' '}
-          и{' '}
-          <a
-            href={earlyCases[1].href}
-            onClick={(e) => { e.preventDefault(); onOpenCase(earlyCases[1].slug); }}
-            className="lnk text-paper cursor-pointer"
-          >
-            {earlyCases[1].title}
-          </a>
+        {/* More Cases: 3 columns of .more cards */}
+        <p className="mt-10 mb-3.5 text-[16px] font-semibold text-paper">
+          Ещё кейсы
         </p>
+        <div className="cards3 grid grid-cols-1 md:grid-cols-3 gap-4">
+          {moreCases.map((c, idx) => (
+            <button
+              key={idx}
+              type="button"
+              onClick={() => onOpenCase(c.slug)}
+              className="more text-left cursor-pointer bg-transparent"
+            >
+              <span className="block text-[14px] text-[#CACBC4]">
+                {c.company}
+              </span>
+              <span className="block mt-1 text-[17px] leading-[1.35] font-semibold text-paper whitespace-pre-line">
+                {c.title}
+              </span>
+              <span aria-hidden="true" className="absolute top-4 right-4.5 font-semibold text-paper">
+                →
+              </span>
+            </button>
+          ))}
+        </div>
       </div>
     </section>
   );

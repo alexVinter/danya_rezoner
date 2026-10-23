@@ -55,7 +55,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
                   </span>
                 )}
 
-                <p className="mt-2.5 mb-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft">
+                <p className="mt-2.5 mb-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft whitespace-pre-line">
                   {svc.phrase}
                 </p>
               </div>
@@ -65,7 +65,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
                 <p className="m-0 text-[13px] font-medium text-slate-soft">
                   Для кого
                 </p>
-                <p className="mt-0.5 mb-0 text-slate">
+                <p className="mt-0.5 mb-0 text-slate whitespace-pre-line">
                   {svc.forWhom}
                 </p>
 
@@ -73,7 +73,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
                   Что внутри
                 </p>
                 <p className="mt-0.5 mb-0 text-slate">
-                  {svc.whatsInside.join(' · ')}
+                  {svc.whatsInside.map((item, idx) => (
+                    <React.Fragment key={idx}>
+                      {item}
+                      {idx < svc.whatsInside.length - 1 && <br />}
+                    </React.Fragment>
+                  ))}
                 </p>
               </div>
 
@@ -82,9 +87,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
                 <p className="m-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold text-slate tabular-nums">
                   {svc.price}
                 </p>
-                <p className="m-0 text-[13px] sm:text-[14px] leading-[1.45] text-slate-soft">
-                  {svc.note}
-                </p>
+                {svc.note && (
+                  <p className="m-0 text-[13px] sm:text-[14px] leading-[1.45] text-slate-soft whitespace-pre-line">
+                    {svc.note}
+                  </p>
+                )}
 
                 {svc.hasDetailsPage && svc.slug ? (
                   <button

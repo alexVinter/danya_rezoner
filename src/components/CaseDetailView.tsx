@@ -38,7 +38,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({
               onClick={onBack}
               className="font-display text-2xl font-bold tracking-tight text-ink uppercase focus:outline-none"
             >
-              Даня
+              Даниил Винтер
             </button>
             <button
               onClick={onBack}
@@ -215,7 +215,7 @@ export const CaseDetailView: React.FC<CaseDetailViewProps> = ({
               Хотите повторить этот результат в своём проекте?
             </h3>
             <p className="text-sm sm:text-base text-ink-light leading-relaxed mb-6">
-              Методология тестов и связок легко адаптируется под ваши задачи: VK Ads, Директ, Telegram или воронки в ботах. Обсудим проект на 30-минутном созвоне.
+              Методология тестов и связок легко адаптируется под ваши задачи: VK Реклама, Директ, Telegram или воронки в ботах. Обсудим проект на 30-минутном созвоне.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-3">

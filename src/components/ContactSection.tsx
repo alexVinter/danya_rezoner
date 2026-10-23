@@ -1,26 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { siteConfig } from '../data/content';
+import { LeadForm } from './LeadForm';
 
-export const ContactSection: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    telegram: '',
-    project: '',
-    budget: 'Выберите',
-    source: 'Выберите',
-    consent: false,
-  });
+interface ContactSectionProps {
+  onOpenPrivacy?: () => void;
+}
 
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name || !formData.telegram || !formData.consent) {
-      return;
-    }
-    setSubmitted(true);
-  };
-
+export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenPrivacy }) => {
   return (
     <section id="contact" className="pt-36 sm:pt-48 md:pt-[210px] pb-16 md:pb-[120px]">
       <div className="max-w-site mx-auto px-4 md:px-10">
@@ -72,170 +58,7 @@ export const ContactSection: React.FC = () => {
 
           {/* Right Column: White Card with Form */}
           <div className="md:col-span-6 relative z-10 w-full">
-            {submitted ? (
-              <div className="bg-white rounded-card p-8 sm:p-10 text-center flex flex-col items-center justify-center min-h-[360px] animate-in fade-in duration-200">
-                <span className="w-14 h-14 rounded-pill bg-lime text-slate flex items-center justify-center text-2xl font-bold mb-4">
-                  ✓
-                </span>
-                <h3 className="m-0 text-[24px] font-bold text-slate mb-2">
-                  Заявка у меня!
-                </h3>
-                <p className="m-0 text-[17px] text-slate-soft max-w-[340px] leading-[1.5]">
-                  Спасибо за обращение. Напишу вам в Telegram в течение рабочего дня.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => setSubmitted(false)}
-                  className="mt-6 text-[14px] text-slate lnk cursor-pointer bg-transparent border-0 font-medium"
-                >
-                  Отправить ещё одну заявку
-                </button>
-              </div>
-            ) : (
-              <form
-                onSubmit={handleSubmit}
-                className="bg-white rounded-card p-6 sm:p-8 flex flex-col gap-4 text-slate"
-              >
-                {/* Имя */}
-                <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                  <span>Имя *</span>
-                  <input
-                    type="text"
-                    name="name"
-                    required
-                    placeholder="Как к вам обращаться"
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange transition-colors"
-                  />
-                </label>
-
-                {/* Telegram */}
-                <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                  <span>Telegram *</span>
-                  <input
-                    type="text"
-                    name="telegram"
-                    required
-                    placeholder="@username"
-                    value={formData.telegram}
-                    onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
-                    className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange transition-colors"
-                  />
-                </label>
-
-                {/* Ссылка на проект */}
-                <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                  <span>Ссылка на проект</span>
-                  <input
-                    type="text"
-                    name="project"
-                    placeholder="t.me/channel или сайт"
-                    value={formData.project}
-                    onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                    className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange transition-colors"
-                  />
-                </label>
-
-                {/* Бюджет на рекламу */}
-                <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                  <span>Бюджет на рекламу</span>
-                  <span className="relative block">
-                    <select
-                      name="budget"
-                      value={formData.budget}
-                      onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      className="w-full h-[52px] border-[1.5px] border-slate rounded-input pl-4 pr-[44px] text-[17px] text-slate bg-white appearance-none [-webkit-appearance:none] outline-none focus:border-orange transition-colors cursor-pointer"
-                    >
-                      <option value="Выберите">Выберите</option>
-                      <option value="до 50 000 ₽">до 50 000 ₽</option>
-                      <option value="50 000–100 000 ₽">50 000–100 000 ₽</option>
-                      <option value="100 000–300 000 ₽">100 000–300 000 ₽</option>
-                      <option value="от 300 000 ₽">от 300 000 ₽</option>
-                    </select>
-                    <svg
-                      aria-hidden="true"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      className="absolute right-[18px] top-[19px] pointer-events-none"
-                    >
-                      <path
-                        d="M2 5l5 5 5-5"
-                        fill="none"
-                        stroke="#313A43"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </label>
-
-                {/* Откуда узнали */}
-                <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                  <span>Откуда узнали</span>
-                  <span className="relative block">
-                    <select
-                      name="source"
-                      value={formData.source}
-                      onChange={(e) => setFormData({ ...formData, source: e.target.value })}
-                      className="w-full h-[52px] border-[1.5px] border-slate rounded-input pl-4 pr-[44px] text-[17px] text-slate bg-white appearance-none [-webkit-appearance:none] outline-none focus:border-orange transition-colors cursor-pointer"
-                    >
-                      <option value="Выберите">Выберите</option>
-                      <option value="Из «Резонёра»">Из «Резонёра»</option>
-                      <option value="Порекомендовали">Порекомендовали</option>
-                      <option value="vc.ru">vc.ru</option>
-                      <option value="Хабр">Хабр</option>
-                      <option value="Другое">Другое</option>
-                    </select>
-                    <svg
-                      aria-hidden="true"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      className="absolute right-[18px] top-[19px] pointer-events-none"
-                    >
-                      <path
-                        d="M2 5l5 5 5-5"
-                        fill="none"
-                        stroke="#313A43"
-                        strokeWidth="1.8"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </label>
-
-                {/* Чекбокс согласия (пустой по умолчанию) */}
-                <label className="flex items-start gap-2.5 text-[14px] leading-[1.45] text-slate mt-1 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    name="consent"
-                    required
-                    checked={formData.consent}
-                    onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                    className="flex-shrink-0 w-5 h-5 mt-0.5 accent-orange rounded"
-                  />
-                  <span>
-                    Согласен на обработку персональных данных и с{' '}
-                    <a href="#contact" className="lnk text-slate">
-                      политикой конфиденциальности
-                    </a>
-                  </span>
-                </label>
-
-                {/* Кнопка отправки */}
-                <button
-                  type="submit"
-                  disabled={!formData.name || !formData.telegram || !formData.consent}
-                  className="btn-o mt-1 h-14 border-0 rounded-pill text-[17px] font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Отправить
-                </button>
-              </form>
-            )}
+            <LeadForm pageName="Главная" onOpenPrivacy={onOpenPrivacy} />
           </div>
         </div>
       </div>

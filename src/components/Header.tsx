@@ -47,10 +47,13 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
           className="flex items-center gap-2.5 text-slate no-underline hover:text-slate"
         >
           <img
-            src="/assets/lion-mark.webp?v=3"
+            src="/assets/figure-daniil.webp"
             alt=""
             aria-hidden="true"
-            className="w-[38px] h-auto flex-shrink-0"
+            width={46}
+            height={44}
+            style={{ width: 'auto', height: '44px' }}
+            className="flex-shrink-0"
           />
           <span className="text-[18px] font-bold tracking-[-0.01em]">
             {siteConfig.fullName}

@@ -82,7 +82,7 @@ export const Hero: React.FC<HeroProps> = () => {
               <div className="w-64 h-72 sm:w-72 sm:h-80 flex items-center justify-center relative">
                 <img
                   src="/images/lion-avatar.png"
-                  alt="Даня"
+                  alt="Даниил Винтер"
                   className="w-full h-full object-contain filter drop-shadow"
                 />
               </div>

@@ -172,10 +172,10 @@ export const ContactFormSection: React.FC<ContactFormProps> = ({
                   />
                 </div>
 
-                {/* Ссылка на проект */}
+                {/* Задача */}
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-ink mb-1">
-                    Ссылка на проект
+                    Задача
                   </label>
                   <input
                     type="text"

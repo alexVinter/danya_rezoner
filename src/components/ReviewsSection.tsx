@@ -35,16 +35,17 @@ export const ReviewsSection: React.FC = () => {
               key={rev.id}
               className="m-0 bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-7 flex flex-col gap-6 min-h-[280px] sm:min-h-[300px]"
             >
-              <blockquote className="m-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate">
-                «{rev.text}»
-              </blockquote>
+              <blockquote
+                className="m-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate"
+                dangerouslySetInnerHTML={{ __html: rev.text }}
+              />
 
               <figcaption className="mt-auto pt-4 border-t border-slate">
                 <span className="block text-[16px] font-semibold text-slate">
                   {rev.name}
                 </span>
                 <span className="block mt-0.5 text-[14px] text-slate">
-                  {rev.role}, {rev.company}
+                  {rev.company ? `${rev.role}, ${rev.company}` : rev.role}
                 </span>
               </figcaption>
             </figure>

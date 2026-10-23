@@ -415,3 +415,108 @@ details[open] .plus {
     padding-top: 150px !important;
   }
 }
+
+/* ========================================================
+   v3 Styles: .tbl for stats table, new blocks on home page
+   ======================================================== */
+.tbl {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.tbl img {
+  max-width: none !important;
+}
+@media (max-width: 900px) {
+  .tbl img {
+    width: var(--mw) !important;
+  }
+}
+
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  column-gap: 56px;
+  align-items: start;
+}
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+.tile {
+  position: relative;
+  display: block;
+  background: #FFFFFF;
+  border: 1.5px solid #313A43;
+  border-radius: 16px;
+  padding: 16px 44px 16px 18px;
+  text-decoration: none;
+  color: #313A43;
+}
+a.tile:hover {
+  border-color: #B15130;
+}
+a.tile:hover .tile-arrow {
+  color: #B15130;
+}
+.more {
+  display: block;
+  position: relative;
+  border: 1.5px solid rgba(243, 239, 234, 0.45);
+  border-radius: 16px;
+  padding: 16px 44px 16px 20px;
+  text-decoration: none;
+  color: #F3EFEA;
+}
+.more:hover {
+  border-color: #F3EFEA;
+  color: #F3EFEA;
+}
+#cases :focus-visible {
+  outline-color: #F3EFEA;
+}
+
+@media (max-width: 900px) {
+  #about .h2 {
+    margin-bottom: 28px !important;
+  }
+  .about {
+    grid-template-columns: minmax(0, 1fr) !important;
+    row-gap: 32px !important;
+  }
+  .facts {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+  }
+  .fact {
+    padding: 24px !important;
+  }
+  .fact-num {
+    font-size: 40px !important;
+  }
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .tile {
+    padding: 14px 30px 14px 14px !important;
+  }
+  .tile-arrow {
+    top: 14px !important;
+    right: 12px !important;
+  }
+  .lead {
+    font-size: 19px !important;
+  }
+  .feat-num {
+    font-size: 64px !important;
+  }
+  .feat-ill {
+    max-width: 240px !important;
+  }
+}

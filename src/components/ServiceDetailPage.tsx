@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { servicesData, ServiceData, ServiceBlock } from '../data/services';
 import { siteConfig } from '../data/content';
+import { LeadForm } from './LeadForm';
+import { FaqSection } from './FaqSection';
 
 interface ServiceDetailPageProps {
   serviceSlug: string;
   onBackToHome: (hash?: string) => void;
   onOpenCase: (caseSlug: string) => void;
   onOpenService: (serviceSlug: string) => void;
+  onOpenPrivacy?: () => void;
 }
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
@@ -14,49 +17,15 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
   onBackToHome,
   onOpenCase,
   onOpenService: _onOpenService,
+  onOpenPrivacy,
 }) => {
   const currentService: ServiceData =
     servicesData.find((s) => s.slug === serviceSlug) || servicesData[0];
 
-  const [formData, setFormData] = useState({
-    name: '',
-    telegram: '',
-    project: '',
-    consent: false,
-  });
-
-  const [submitted, setSubmitted] = useState(false);
-
-  // Reset form state on service change
+  // Scroll to top on service change
   useEffect(() => {
-    setSubmitted(false);
-    setFormData({ name: '', telegram: '', project: '', consent: false });
     window.scrollTo(0, 0);
   }, [serviceSlug]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formData.name.trim() || !formData.telegram.trim() || !formData.consent) {
-      return;
-    }
-
-    const payload = {
-      ...formData,
-      page: currentService.breadcrumb,
-      serviceSlug: currentService.slug,
-      createdAt: new Date().toISOString(),
-    };
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('danya_leads') || '[]');
-      existing.push(payload);
-      localStorage.setItem('danya_leads', JSON.stringify(existing));
-    } catch {
-      // ignore
-    }
-
-    setSubmitted(true);
-  };
 
   const renderBlock = (block: ServiceBlock, index: number) => {
     switch (block.type) {
@@ -103,6 +72,11 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                   </div>
                 ))}
               </div>
+              {block.footnote && (
+                <p className="mt-5 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft max-w-[780px]">
+                  {block.footnote}
+                </p>
+              )}
             </div>
           </section>
         );
@@ -545,6 +519,30 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
       {/* 2. Dynamic Blocks */}
       {currentService.blocks.map((block, idx) => renderBlock(block, idx))}
 
+      {/* 2.5 FAQ Section if defined for this service */}
+      {currentService.faq && (
+        <FaqSection
+          title={currentService.faq.title}
+          subtitle={
+            currentService.faq.subtitle ? (
+              <>
+                Не нашли ответ?{' '}
+                <a
+                  href={siteConfig.telegramPersonalUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="lnk font-medium"
+                >
+                  Напишите в Telegram
+                </a>
+              </>
+            ) : undefined
+          }
+          items={currentService.faq.items}
+          showCactus={false}
+        />
+      )}
+
       {/* 3. Call to Action Form with Lion biting the card */}
       <section id="contact" className="contact pt-36 sm:pt-48 md:pt-[200px]">
         <div className="wrap relative">
@@ -593,82 +591,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             </div>
 
             <div>
-              {submitted ? (
-                <div className="bg-white rounded-card p-8 text-center flex flex-col items-center justify-center min-h-[300px]">
-                  <span className="w-12 h-12 rounded-pill bg-lime text-slate flex items-center justify-center text-xl font-bold mb-3">
-                    ✓
-                  </span>
-                  <h3 className="m-0 text-[22px] font-bold text-slate mb-2">Заявка принята</h3>
-                  <p className="m-0 text-[16px] text-slate-soft">
-                    Договоримся о времени созвона в Telegram.
-                  </p>
-                </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className="bg-white rounded-card p-6 sm:p-8 flex flex-col gap-4 text-slate"
-                >
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>Имя *</span>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder="Как к вам обращаться"
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>Telegram *</span>
-                    <input
-                      type="text"
-                      name="telegram"
-                      required
-                      placeholder="@username"
-                      value={formData.telegram}
-                      onChange={(e) => setFormData({ ...formData, telegram: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex flex-col gap-1.5 text-[14px] font-medium text-slate">
-                    <span>{currentService.cta.projectLabel || 'Ссылка на проект'}</span>
-                    <input
-                      type="text"
-                      name="project"
-                      placeholder={currentService.cta.projectPlaceholder || 't.me/channel или сайт'}
-                      value={formData.project}
-                      onChange={(e) => setFormData({ ...formData, project: e.target.value })}
-                      className="h-[52px] border-[1.5px] border-slate rounded-input px-4 text-[17px] text-slate bg-white placeholder:text-slate-soft outline-none focus:border-orange"
-                    />
-                  </label>
-
-                  <label className="flex items-start gap-2.5 text-[14px] leading-[1.45] text-slate mt-1 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      name="consent"
-                      required
-                      checked={formData.consent}
-                      onChange={(e) => setFormData({ ...formData, consent: e.target.checked })}
-                      className="flex-none w-5 h-5 mt-0.5 accent-orange"
-                    />
-                    <span>
-                      Согласен на обработку персональных данных и с{' '}
-                      <span className="lnk">политикой конфиденциальности</span>
-                    </span>
-                  </label>
-
-                  <button
-                    type="submit"
-                    className="btn-o mt-1 h-14 border-0 rounded-pill text-[17px] font-semibold cursor-pointer"
-                  >
-                    Отправить
-                  </button>
-                </form>
-              )}
+              <LeadForm pageName={currentService.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
             </div>
           </div>
 

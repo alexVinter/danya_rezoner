@@ -26,6 +26,12 @@ export const App: React.FC = () => {
   const [activeServiceSlug, setActiveServiceSlug] = useState<string>('audit');
   const [activeCaseSlug, setActiveCaseSlug] = useState<string>('kontur-extern');
   const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
+  const [privacyModalTab, setPrivacyModalTab] = useState<'privacy' | 'consent'>('privacy');
+
+  const handleOpenPrivacy = (tab: 'privacy' | 'consent' = 'privacy') => {
+    setPrivacyModalTab(tab);
+    setPrivacyModalOpen(true);
+  };
 
   const updateSEO = (title: string, description: string) => {
     document.title = title;
@@ -250,14 +256,14 @@ export const App: React.FC = () => {
             onBackToHome={navigateToHome}
             onOpenCase={navigateToCase}
             onOpenService={navigateToService}
-            onOpenPrivacy={() => setPrivacyModalOpen(true)}
+            onOpenPrivacy={() => handleOpenPrivacy('privacy')}
           />
         ) : currentView === 'case-detail' ? (
           <CaseDetailPage
             caseSlug={activeCaseSlug}
             onBackToHome={navigateToHome}
             onSelectCase={navigateToCase}
-            onOpenPrivacy={() => setPrivacyModalOpen(true)}
+            onOpenPrivacy={() => handleOpenPrivacy('privacy')}
           />
         ) : (
           <>
@@ -286,18 +292,19 @@ export const App: React.FC = () => {
             <FaqSection />
 
             {/* 9. Давайте работать вместе */}
-            <ContactSection />
+            <ContactSection onOpenPrivacy={() => handleOpenPrivacy('privacy')} />
           </>
         )}
       </main>
 
       {/* 3. Футер (сливовый #36202C) */}
-      <Footer onOpenPrivacy={() => setPrivacyModalOpen(true)} />
+      <Footer onOpenPrivacy={handleOpenPrivacy} />
 
-      {/* 4. Модальное окно политики конфиденциальности */}
+      {/* 4. Модальное окно политики конфиденциальности и согласия */}
       <PrivacyModal
         isOpen={privacyModalOpen}
         onClose={() => setPrivacyModalOpen(false)}
+        initialTab={privacyModalTab}
       />
     </div>
   );

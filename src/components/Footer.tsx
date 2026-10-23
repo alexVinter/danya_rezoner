@@ -2,7 +2,7 @@ import React from 'react';
 import { siteConfig } from '../data/content';
 
 interface FooterProps {
-  onOpenPrivacy?: () => void;
+  onOpenPrivacy?: (tab?: 'privacy' | 'consent') => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
@@ -85,14 +85,14 @@ export const Footer: React.FC<FooterProps> = ({ onOpenPrivacy }) => {
           <div className="flex flex-wrap gap-x-6 gap-y-2">
             <button
               type="button"
-              onClick={onOpenPrivacy}
+              onClick={() => onOpenPrivacy?.('privacy')}
               className="flink text-[#CDC6C4] hover:text-paper bg-transparent border-0 p-0 cursor-pointer text-[14px]"
             >
               Политика конфиденциальности
             </button>
             <button
               type="button"
-              onClick={onOpenPrivacy}
+              onClick={() => onOpenPrivacy?.('consent')}
               className="flink text-[#CDC6C4] hover:text-paper bg-transparent border-0 p-0 cursor-pointer text-[14px]"
             >
               Согласие на обработку персональных данных

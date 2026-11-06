@@ -36,14 +36,14 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               <h2 className="m-0 mb-8 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                 {block.title}
               </h2>
-              <figure className="quote m-0 bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-10 md:p-14">
-                <blockquote className="quote-text m-0 text-[22px] sm:text-[26px] md:text-[30px] leading-[1.25] font-bold tracking-[-0.015em] max-w-[960px] text-slate">
+              <div className="quote m-0 bg-pink border-[1.5px] border-slate rounded-card p-6 sm:p-10 md:p-14">
+                <p className="quote-text m-0 text-[22px] sm:text-[26px] md:text-[30px] leading-[1.25] font-bold tracking-[-0.015em] max-w-[960px] text-slate">
                   {block.quote}
-                </blockquote>
-                <figcaption className="mt-5 text-[16px] sm:text-[18px] leading-[1.55] max-w-[780px] text-slate">
+                </p>
+                <p className="mt-5 text-[16px] sm:text-[18px] leading-[1.55] max-w-[780px] text-slate">
                   {block.caption}
-                </figcaption>
-              </figure>
+                </p>
+              </div>
               {block.paragraph && (
                 <p className="mt-6 mb-0 text-[16px] sm:text-[18px] leading-[1.55] max-w-[780px] text-slate">
                   {block.paragraph}
@@ -73,9 +73,10 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                 ))}
               </div>
               {block.footnote && (
-                <p className="mt-5 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft max-w-[780px]">
-                  {block.footnote}
-                </p>
+                <p
+                  className="mt-5 mb-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft max-w-[780px]"
+                  dangerouslySetInnerHTML={{ __html: block.footnote }}
+                />
               )}
             </div>
           </section>
@@ -92,13 +93,21 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                 {block.items.map((step, idx) => (
                   <li
                     key={idx}
-                    className="relative bg-white border-[1.5px] border-slate rounded-card p-6 flex flex-col gap-2.5 sm:gap-3"
+                    className={`relative ${
+                      step.isLime ? 'bg-lime' : 'bg-white'
+                    } border-[1.5px] border-slate rounded-card p-6 flex flex-col gap-2.5 sm:gap-3 h-full`}
                   >
-                    <span className="text-[36px] sm:text-[40px] leading-none font-bold text-orange">
-                      {step.num}
-                    </span>
+                    {step.num && (
+                      <span className="text-[36px] sm:text-[40px] leading-none font-bold text-orange">
+                        {step.num}
+                      </span>
+                    )}
                     {step.chip && (
-                      <span className="self-start inline-flex items-center h-7 px-3 rounded-pill bg-pink text-[13px] font-medium text-slate">
+                      <span
+                        className={`self-start inline-flex items-center h-7 px-3 rounded-pill text-[13px] font-medium text-slate ${
+                          step.isLime ? 'bg-white border border-slate' : 'bg-pink'
+                        }`}
+                      >
                         {step.chip}
                       </span>
                     )}
@@ -112,7 +121,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     {/* Arrow between steps (hidden on tablet & mobile) */}
                     {idx < block.items.length - 1 && (
                       <svg
-                        className="step-arrow hidden lg:block absolute -right-[31px] top-10 pointer-events-none"
+                        className="step-arrow hidden lg:block absolute -right-[31px] top-1/2 -translate-y-1/2 pointer-events-none"
                         aria-hidden="true"
                         width="28"
                         height="12"
@@ -148,26 +157,29 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     <h3 className="m-0 text-[19px] sm:text-[20px] leading-[1.3] font-bold text-slate">
                       {p.name}
                     </h3>
-                    <p className="m-0 text-[15px] sm:text-[17px] leading-[1.5] text-slate">
-                      {p.text}
-                    </p>
+                    <p
+                      className="m-0 text-[15px] sm:text-[17px] leading-[1.5] text-slate"
+                      dangerouslySetInnerHTML={{ __html: p.text }}
+                    />
                     <div>
                       <p className="m-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold text-slate">
                         {p.price}
                       </p>
                       {p.note && (
-                        <p className="m-0 mt-1 text-[13px] sm:text-[14px] text-slate-soft">
-                          {p.note}
-                        </p>
+                        <p
+                          className="m-0 mt-1 text-[13px] sm:text-[14px] text-slate-soft"
+                          dangerouslySetInnerHTML={{ __html: p.note }}
+                        />
                       )}
                     </div>
                   </div>
                 ))}
               </div>
               {block.footnote && (
-                <p className="mt-5 mb-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft max-w-[780px]">
-                  {block.footnote}
-                </p>
+                <p
+                  className="mt-5 mb-0 text-[15px] sm:text-[16px] leading-[1.5] text-slate-soft max-w-[780px]"
+                  dangerouslySetInnerHTML={{ __html: block.footnote }}
+                />
               )}
             </div>
           </section>
@@ -543,66 +555,59 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
         />
       )}
 
-      {/* 3. Call to Action Form with Lion biting the card */}
-      <section id="contact" className="contact pt-36 sm:pt-48 md:pt-[200px]">
+      {/* 3. Call to Action Form with Tiger */}
+      <section id="contact" className="contact pt-28 md:pt-[140px] pb-24 md:pb-[140px]">
         <div className="wrap relative">
-          
-          {/* LION HEAD (Layer 0, behind orange card) */}
+          {/* Tiger Illustration overlaying the top-left of the orange card */}
           <img
-            src="/assets/lion.webp?v=4"
+            src="/assets/tiger.webp?v=4"
             alt=""
             aria-hidden="true"
-            className="cta-lion select-none"
+            className="wob absolute select-none left-5 sm:left-10 md:left-12 -top-24 sm:-top-32 md:-top-[164px] w-[220px] sm:w-[280px] md:w-[340px] z-10"
           />
 
-          {/* ORANGE CARD (Layer 10) */}
-          <div className="cta g2 relative z-10 bg-orange rounded-plate p-6 sm:p-10 md:p-14">
-            <div>
-              <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-                {currentService.cta.title}
-                <br />
-                <span className="mark inline-block mt-1">{currentService.cta.titleMark}</span>
-              </h2>
-              <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
-                {currentService.cta.text}
-              </p>
-              <a
-                href={siteConfig.telegramPersonalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-w mt-8 inline-flex items-center gap-2.5 h-14 px-7 rounded-pill text-[17px] font-semibold no-underline"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M22 2 11 13" />
-                  <path d="M22 2 15 22l-4-9-9-4 20-7z" />
-                </svg>
-                <span>Написать в Telegram</span>
-              </a>
-            </div>
+          <div className="cta relative bg-orange rounded-plate p-6 sm:p-10 md:p-14 overflow-hidden">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 relative z-10">
+              <div className="md:col-span-6 flex flex-col justify-between">
+                <div>
+                  <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
+                    {currentService.cta.title}
+                    <br />
+                    <span className="mark inline-block mt-1">{currentService.cta.titleMark}</span>
+                  </h2>
+                  <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
+                    {currentService.cta.text}
+                  </p>
+                  <a
+                    href={siteConfig.telegramPersonalUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn-w mt-8 inline-flex items-center gap-2.5 h-14 px-7 rounded-pill text-[17px] font-semibold no-underline"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M22 2 11 13" />
+                      <path d="M22 2 15 22l-4-9-9-4 20-7z" />
+                    </svg>
+                    <span>Написать в Telegram</span>
+                  </a>
+                </div>
+              </div>
 
-            <div>
-              <LeadForm pageName={currentService.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
+              <div className="md:col-span-6">
+                <LeadForm pageName={currentService.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
+              </div>
             </div>
           </div>
-
-          {/* LION TEETH OVERLAY (Layer 20, hooks over the top edge of orange card) */}
-          <img
-            src="/assets/lion-teeth.webp?v=6"
-            alt=""
-            aria-hidden="true"
-            className="cta-lion-teeth select-none"
-          />
-
         </div>
       </section>
     </div>

@@ -65,7 +65,7 @@ export const LeadMagnetModal: React.FC<LeadMagnetModalProps> = ({ isOpen, onClos
           </h3>
 
           <p className="text-xs sm:text-sm text-ink-light leading-relaxed mb-6">
-            Реальные механики из кейсов Экстерна, Эльбы и HTML Academy: как вести людей из Директа и VK в Telegram с удержанием 95% и контролировать цену подписчика.
+            Реальные механики из кейсов Экстерна, Эльбы и .html academy: как вести людей из Директа и VK в Telegram с удержанием 95% и контролировать цену подписчика.
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-4">

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { sendTelegramMessage } from '../utils/sendLead';
 
 export interface LeadFormProps {
   pageName?: string;
   onOpenPrivacy?: () => void;
 }
 
-export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная', onOpenPrivacy }) => {
+export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная', onOpenPrivacy: _onOpenPrivacy }) => {
   const [formData, setFormData] = useState({
     name: '',
     telegram: '',
@@ -16,6 +17,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -25,6 +27,7 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
       return;
     }
 
+    setSubmitError('');
     setIsSubmitting(true);
 
     const payload = {
@@ -53,73 +56,35 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
       '8881601798:AAG9d5YSRk0XDRjdudvCkjXqWxEIqEg17VM';
     const chatId = (import.meta as any).env?.VITE_TELEGRAM_CHAT_ID || '436863522';
 
+    const escapeHtml = (value: string) => value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const lines = [
       '🔔 <b>Новая заявка с сайта!</b>',
       '',
-      `📄 <b>Страница:</b> ${pageName}`,
-      `👤 <b>Имя:</b> ${formData.name.trim()}`,
-      `✈️ <b>Telegram:</b> ${formData.telegram.trim()}`,
+      `📄 <b>Страница:</b> ${escapeHtml(pageName)}`,
+      `👤 <b>Имя:</b> ${escapeHtml(formData.name.trim())}`,
+      `✈️ <b>Telegram:</b> ${escapeHtml(formData.telegram.trim())}`,
     ];
 
     if (formData.task.trim()) {
-      lines.push(`📝 <b>Задача:</b>\n${formData.task.trim()}`);
+      lines.push(`📝 <b>Задача:</b>\n${escapeHtml(formData.task.trim())}`);
     }
     if (formData.budget !== 'Выберите') {
-      lines.push(`💰 <b>Бюджет:</b> ${formData.budget}`);
+      lines.push(`💰 <b>Бюджет:</b> ${escapeHtml(formData.budget)}`);
     }
     if (formData.source !== 'Выберите') {
-      lines.push(`🔍 <b>Откуда узнали:</b> ${formData.source}`);
+      lines.push(`🔍 <b>Откуда узнали:</b> ${escapeHtml(formData.source)}`);
     }
 
+    let success = false;
     try {
-      const messageBody = JSON.stringify({
-        chat_id: chatId,
-        text: lines.join('\n'),
-        parse_mode: 'HTML',
-      });
-
-      // Try direct Telegram API
-      let success = false;
-      try {
-        const resp = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: messageBody,
-        });
-        const data = await resp.json().catch(() => null);
-        if (resp.ok && data?.ok) {
-          success = true;
-          console.log('[LeadForm] Sent to Telegram successfully:', data);
-        } else {
-          console.warn('[LeadForm] Direct Telegram returned error:', resp.status, data);
-        }
-      } catch (directErr) {
-        console.warn('[LeadForm] Direct Telegram request failed (possibly blocked by ISP):', directErr);
-      }
-
-      // If direct failed (e.g. blocked by ISP in Russia), try reverse proxy /api/telegram/
-      if (!success) {
-        try {
-          const proxyResp = await fetch(`/api/telegram/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: messageBody,
-          });
-          const proxyData = await proxyResp.json().catch(() => null);
-          if (proxyResp.ok && proxyData?.ok) {
-            console.log('[LeadForm] Sent to Telegram via proxy successfully:', proxyData);
-          } else {
-            console.error('[LeadForm] Proxy Telegram failed:', proxyResp.status, proxyData);
-          }
-        } catch (proxyErr) {
-          console.error('[LeadForm] Proxy Telegram request failed:', proxyErr);
-        }
-      }
-    } catch (err) {
-      console.error('[LeadForm] Unexpected error while sending lead:', err);
+      success = await sendTelegramMessage({ botToken, chatId, text: lines.join('\n') });
     } finally {
       setIsSubmitting(false);
-      setSubmitted(true);
+      if (success) {
+        setSubmitted(true);
+      } else {
+        setSubmitError('Не удалось отправить заявку. Попробуйте ещё раз или напишите напрямую в Telegram: @winter_daniil.');
+      }
     }
   };
 
@@ -274,31 +239,27 @@ export const LeadForm: React.FC<LeadFormProps> = ({ pageName = 'Главная',
           className="flex-shrink-0 w-5 h-5 mt-0.5 accent-orange rounded cursor-pointer"
         />
         <span>
-          Согласен на обработку персональных данных и с{' '}
-          {onOpenPrivacy ? (
-            <button
-              type="button"
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                onOpenPrivacy();
-              }}
-              className="lnk text-slate bg-transparent border-0 p-0 font-inherit cursor-pointer inline"
-            >
-              политикой конфиденциальности
-            </button>
-          ) : (
-            <a href="/privacy" className="lnk text-slate">
-              политикой конфиденциальности
-            </a>
-          )}
+          Даю{' '}
+          <a href="/soglasie" className="lnk text-slate">
+            согласие на обработку персональных данных
+          </a>{' '}
+          и ознакомлен с{' '}
+          <a href="/policy" className="lnk text-slate">
+            политикой конфиденциальности
+          </a>
         </span>
       </label>
+
+      {submitError && (
+        <p role="alert" className="m-0 text-[14px] leading-[1.5] text-orange-hover">
+          {submitError}
+        </p>
+      )}
 
       {/* Кнопка отправки */}
       <button
         type="submit"
-        disabled={!formData.name || !formData.telegram || !formData.consent || isSubmitting}
+        disabled={!formData.name.trim() || !formData.telegram.trim() || !formData.consent || isSubmitting}
         className="btn-o mt-1 h-14 border-0 rounded-pill text-[17px] font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {isSubmitting ? 'Отправка...' : 'Отправить'}

@@ -12,26 +12,21 @@ import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { CaseDetailPage } from './components/CaseDetailPage';
-import { PrivacyModal } from './components/PrivacyModal';
+import { PolicyPage } from './components/PolicyPage';
+import { ConsentPage } from './components/ConsentPage';
 import { servicesData } from './data/services';
 import { casesList } from './data/cases';
+import { applyTypographerToDOM } from './utils/typography';
 
-type AppView = 'home' | 'service-detail' | 'case-detail';
+type AppView = 'home' | 'service-detail' | 'case-detail' | 'policy' | 'consent';
 
-const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт через контент | Даниил Винтер';
+const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт | Даниил Винтер';
 const HOME_DESC = 'Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.';
 
 export const App: React.FC = () => {
   const [currentView, setCurrentView] = useState<AppView>('home');
   const [activeServiceSlug, setActiveServiceSlug] = useState<string>('audit');
   const [activeCaseSlug, setActiveCaseSlug] = useState<string>('kontur-extern');
-  const [privacyModalOpen, setPrivacyModalOpen] = useState(false);
-  const [privacyModalTab, setPrivacyModalTab] = useState<'privacy' | 'consent'>('privacy');
-
-  const handleOpenPrivacy = (tab: 'privacy' | 'consent' = 'privacy') => {
-    setPrivacyModalTab(tab);
-    setPrivacyModalOpen(true);
-  };
 
   const updateSEO = (title: string, description: string) => {
     document.title = title;
@@ -44,6 +39,30 @@ export const App: React.FC = () => {
     meta.setAttribute('content', description);
   };
 
+  // Run typography formatting across all rendered text nodes and watch dynamic updates
+  useEffect(() => {
+    applyTypographerToDOM();
+
+    let timeoutId: number | undefined;
+    const observer = new MutationObserver(() => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        applyTypographerToDOM();
+      }, 50);
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      observer.disconnect();
+    };
+  }, [currentView, activeServiceSlug, activeCaseSlug]);
+
   // Sync routing on mount, popstate and hashchange
   useEffect(() => {
     const handleLocationChange = () => {
@@ -55,11 +74,52 @@ export const App: React.FC = () => {
       if (
         fullUrl.includes('conference') ||
         fullUrl.includes('accountants') ||
-        fullUrl.includes('webinar')
+        fullUrl.includes('webinar') ||
+        fullUrl.includes('kontur-elba') ||
+        hash === '#case-elba' ||
+        path.endsWith('/case-elba.html')
       ) {
         window.history.replaceState(null, '', '/');
         setCurrentView('home');
         updateSEO(HOME_TITLE, HOME_DESC);
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      // Check Policy route (/policy, #/policy, /privacy)
+      if (
+        path === '/policy' ||
+        path === '/privacy' ||
+        path.endsWith('/policy.html') ||
+        hash === '#/policy' ||
+        hash === '#policy' ||
+        hash === '#/privacy' ||
+        hash === '#privacy'
+      ) {
+        setCurrentView('policy');
+        updateSEO(
+          'Политика конфиденциальности | Даниил Винтер',
+          'Политика в отношении обработки персональных данных ИП Винтер Даниил Денисович.'
+        );
+        window.scrollTo(0, 0);
+        return;
+      }
+
+      // Check Consent route (/soglasie, #/soglasie, /consent)
+      if (
+        path === '/soglasie' ||
+        path === '/consent' ||
+        path.endsWith('/soglasie.html') ||
+        hash === '#/soglasie' ||
+        hash === '#soglasie' ||
+        hash === '#/consent' ||
+        hash === '#consent'
+      ) {
+        setCurrentView('consent');
+        updateSEO(
+          'Согласие на обработку персональных данных | Даниил Винтер',
+          'Согласие на обработку персональных данных ИП Винтер Даниил Денисович.'
+        );
         window.scrollTo(0, 0);
         return;
       }
@@ -135,8 +195,6 @@ export const App: React.FC = () => {
           slug = 'online-school';
         } else if (fullUrl.includes('expert-b2b') || fullUrl.includes('case-expert-b2b') || (fullUrl.includes('expert') && !fullUrl.includes('extern'))) {
           slug = 'expert-b2b';
-        } else if (fullUrl.includes('kontur-elba') || fullUrl.includes('case-elba') || fullUrl.includes('elba')) {
-          slug = 'kontur-elba';
         } else if (fullUrl.includes('lead-magnet') || fullUrl.includes('html-lead') || fullUrl.includes('case-html-lead-magnet')) {
           slug = 'html-academy-lead-magnet';
         } else if (fullUrl.includes('collab') || fullUrl.includes('html-collab') || fullUrl.includes('case-html-collab')) {
@@ -179,6 +237,10 @@ export const App: React.FC = () => {
       if (
         href.startsWith('/services/') ||
         href.startsWith('/cases/') ||
+        href === '/policy' ||
+        href === '/soglasie' ||
+        href === '/privacy' ||
+        href === '/consent' ||
         href.endsWith('.html') ||
         href === '/'
       ) {
@@ -227,7 +289,7 @@ export const App: React.FC = () => {
     setActiveServiceSlug(found.slug);
     setCurrentView('service-detail');
     updateSEO(found.title, found.description);
-    window.location.hash = `/services/${found.slug}`;
+    window.history.pushState(null, '', `/services/${found.slug}`);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -236,7 +298,27 @@ export const App: React.FC = () => {
     setActiveCaseSlug(found.slug);
     setCurrentView('case-detail');
     updateSEO(found.titleMeta, found.descriptionMeta);
-    window.location.hash = `/cases/${found.slug}`;
+    window.history.pushState(null, '', `/cases/${found.slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToPolicy = () => {
+    setCurrentView('policy');
+    updateSEO(
+      'Политика конфиденциальности | Даниил Винтер',
+      'Политика в отношении обработки персональных данных ИП Винтер Даниил Денисович.'
+    );
+    window.history.pushState(null, '', '/policy');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const navigateToConsent = () => {
+    setCurrentView('consent');
+    updateSEO(
+      'Согласие на обработку персональных данных | Даниил Винтер',
+      'Согласие на обработку персональных данных ИП Винтер Даниил Денисович.'
+    );
+    window.history.pushState(null, '', '/soglasie');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -250,20 +332,30 @@ export const App: React.FC = () => {
 
       {/* 2. Main View Router */}
       <main className="flex-1">
-        {currentView === 'service-detail' ? (
+        {currentView === 'policy' ? (
+          <PolicyPage
+            onBackToHome={navigateToHome}
+            onOpenConsent={navigateToConsent}
+          />
+        ) : currentView === 'consent' ? (
+          <ConsentPage
+            onBackToHome={navigateToHome}
+            onOpenPolicy={navigateToPolicy}
+          />
+        ) : currentView === 'service-detail' ? (
           <ServiceDetailPage
             serviceSlug={activeServiceSlug}
             onBackToHome={navigateToHome}
             onOpenCase={navigateToCase}
             onOpenService={navigateToService}
-            onOpenPrivacy={() => handleOpenPrivacy('privacy')}
+            onOpenPrivacy={navigateToPolicy}
           />
         ) : currentView === 'case-detail' ? (
           <CaseDetailPage
             caseSlug={activeCaseSlug}
             onBackToHome={navigateToHome}
             onSelectCase={navigateToCase}
-            onOpenPrivacy={() => handleOpenPrivacy('privacy')}
+            onOpenPrivacy={navigateToPolicy}
           />
         ) : (
           <>
@@ -292,20 +384,13 @@ export const App: React.FC = () => {
             <FaqSection />
 
             {/* 9. Давайте работать вместе */}
-            <ContactSection onOpenPrivacy={() => handleOpenPrivacy('privacy')} />
+            <ContactSection onOpenPrivacy={navigateToPolicy} />
           </>
         )}
       </main>
 
       {/* 3. Футер (сливовый #36202C) */}
-      <Footer onOpenPrivacy={handleOpenPrivacy} />
-
-      {/* 4. Модальное окно политики конфиденциальности и согласия */}
-      <PrivacyModal
-        isOpen={privacyModalOpen}
-        onClose={() => setPrivacyModalOpen(false)}
-        initialTab={privacyModalTab}
-      />
+      <Footer onOpenPrivacy={navigateToPolicy} />
     </div>
   );
 };

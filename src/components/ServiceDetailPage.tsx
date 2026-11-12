@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { servicesData, ServiceData, ServiceBlock } from '../data/services';
 import { siteConfig } from '../data/content';
-import { LeadForm } from './LeadForm';
+import { ContactSection } from './ContactSection';
 import { FaqSection } from './FaqSection';
 
 interface ServiceDetailPageProps {
@@ -189,22 +189,26 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
         return (
           <section key={index} className="pt-16 md:pt-[120px]">
             <div className="wrap">
-              <div className="plate g2 bg-pink border-[1.5px] border-slate rounded-plate p-7 sm:p-10 md:p-14">
+              <div className="plate g2 bg-pink border-[1.5px] border-slate rounded-plate p-7 sm:p-10 md:p-14 items-center">
                 <div>
                   <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                     {block.title}
                   </h2>
-                  <p className="mt-4 mb-0 text-[16px] sm:text-[18px] leading-[1.55] max-w-[560px] text-slate">
-                    {block.text}
-                  </p>
+                  {block.text && (
+                    <p className="mt-4 mb-0 text-[16px] sm:text-[18px] leading-[1.55] max-w-[560px] text-slate">
+                      {block.text}
+                    </p>
+                  )}
                 </div>
                 <div>
                   <p className="m-0 text-[40px] sm:text-[48px] md:text-[56px] leading-none font-bold tracking-[-0.03em] text-slate">
                     {block.price}
                   </p>
-                  <p className="mt-2.5 mb-0 text-[15px] sm:text-[16px] text-slate">
-                    {block.priceNote}
-                  </p>
+                  {block.priceNote && (
+                    <p className="mt-2.5 mb-0 text-[15px] sm:text-[16px] text-slate">
+                      {block.priceNote}
+                    </p>
+                  )}
                   <a
                     className="btn-s mt-6 inline-flex items-center h-12 px-6 rounded-pill text-[17px] font-semibold no-underline"
                     href={siteConfig.telegramPersonalUrl}
@@ -385,21 +389,54 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
         return (
           <section key={index} className="pt-16 md:pt-[120px]">
             <div className="wrap">
-              <div className="g2 items-start" style={{ gridTemplateColumns: 'minmax(0, 4fr) minmax(0, 8fr)' }}>
-                <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
-                  {block.title}
-                </h2>
-                <div>
+              {block.title ? (
+                <div className="g2 items-start" style={{ gridTemplateColumns: 'minmax(0, 4fr) minmax(0, 8fr)' }}>
+                  <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+                    {block.title}
+                  </h2>
+                  <div>
+                    {block.paragraphs.map((p, pIdx) => (
+                      <p
+                        key={pIdx}
+                        className={`mb-0 leading-[1.55] max-w-[680px] ${
+                          pIdx === 0
+                            ? 'text-[18px] sm:text-[20px] text-slate'
+                            : pIdx === 1
+                            ? 'mt-3.5 text-[16px] sm:text-[18px] text-slate-soft'
+                            : 'mt-7 text-[16px] sm:text-[18px] text-slate'
+                        }`}
+                      >
+                        {p}
+                      </p>
+                    ))}
+                    {block.caseTeaser && (
+                      <button
+                        type="button"
+                        onClick={() => onOpenCase(block.caseTeaser!.caseSlug)}
+                        className="w-full text-left mt-3.5 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
+                      >
+                        <span className="case-num text-[48px] sm:text-[56px] md:text-[64px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
+                          {block.caseTeaser.metric}
+                        </span>
+                        <span>
+                          <span className="block text-[19px] sm:text-[21px] md:text-[22px] leading-[1.25] font-bold text-slate">
+                            {block.caseTeaser.heading}
+                          </span>
+                          <span className="inline-block mt-3 text-[16px] font-semibold text-slate">
+                            <span className="lnk">Читать кейс</span>
+                            <span aria-hidden="true" className="text-orange"> →</span>
+                          </span>
+                        </span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="max-w-[780px]">
                   {block.paragraphs.map((p, pIdx) => (
                     <p
                       key={pIdx}
-                      className={`mb-0 leading-[1.55] max-w-[680px] ${
-                        pIdx === 0
-                          ? 'text-[18px] sm:text-[20px] text-slate'
-                          : pIdx === 1
-                          ? 'mt-3.5 text-[16px] sm:text-[18px] text-slate-soft'
-                          : 'mt-7 text-[16px] sm:text-[18px] text-slate'
-                      }`}
+                      className="mb-0 text-[18px] sm:text-[20px] leading-[1.55] text-slate font-medium"
                     >
                       {p}
                     </p>
@@ -408,7 +445,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     <button
                       type="button"
                       onClick={() => onOpenCase(block.caseTeaser!.caseSlug)}
-                      className="w-full text-left mt-3.5 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
+                      className="w-full text-left mt-4 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
                     >
                       <span className="case-num text-[48px] sm:text-[56px] md:text-[64px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
                         {block.caseTeaser.metric}
@@ -425,7 +462,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     </button>
                   )}
                 </div>
-              </div>
+              )}
             </div>
           </section>
         );
@@ -555,61 +592,13 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
         />
       )}
 
-      {/* 3. Call to Action Form with Tiger */}
-      <section id="contact" className="contact pt-28 md:pt-[140px] pb-24 md:pb-[140px]">
-        <div className="wrap relative">
-          {/* Tiger Illustration overlaying the top-left of the orange card */}
-          <img
-            src="/assets/tiger.webp?v=4"
-            alt=""
-            aria-hidden="true"
-            className="wob absolute select-none left-5 sm:left-10 md:left-12 -top-24 sm:-top-32 md:-top-[164px] w-[220px] sm:w-[280px] md:w-[340px] z-10"
-          />
-
-          <div className="cta relative bg-orange rounded-plate p-6 sm:p-10 md:p-14 overflow-hidden">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 relative z-10">
-              <div className="md:col-span-6 flex flex-col justify-between">
-                <div>
-                  <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-                    {currentService.cta.title}
-                    <br />
-                    <span className="mark inline-block mt-1">{currentService.cta.titleMark}</span>
-                  </h2>
-                  <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
-                    {currentService.cta.text}
-                  </p>
-                  <a
-                    href={siteConfig.telegramPersonalUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn-w mt-8 inline-flex items-center gap-2.5 h-14 px-7 rounded-pill text-[17px] font-semibold no-underline"
-                  >
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      aria-hidden="true"
-                    >
-                      <path d="M22 2 11 13" />
-                      <path d="M22 2 15 22l-4-9-9-4 20-7z" />
-                    </svg>
-                    <span>Написать в Telegram</span>
-                  </a>
-                </div>
-              </div>
-
-              <div className="md:col-span-6">
-                <LeadForm pageName={currentService.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactSection
+        pageName={currentService.breadcrumb}
+        title={currentService.cta.title}
+        titleMark={currentService.cta.titleMark}
+        text={currentService.cta.text}
+        onOpenPrivacy={onOpenPrivacy}
+      />
     </div>
   );
 };

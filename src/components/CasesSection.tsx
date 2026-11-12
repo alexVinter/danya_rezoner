@@ -121,17 +121,17 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
           ))}
         </div>
 
-        {/* More Cases: 3 columns of .more cards */}
+        {/* More Cases: 2 columns of .more cards (Elba removed per TZ) */}
         <p className="mt-10 mb-3.5 text-[16px] font-semibold text-paper">
           Ещё кейсы
         </p>
-        <div className="cards3 grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="cards2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {moreCases.map((c, idx) => (
             <button
               key={idx}
               type="button"
               onClick={() => onOpenCase(c.slug)}
-              className="more text-left cursor-pointer bg-transparent"
+              className="more group text-left cursor-pointer bg-transparent relative !pr-14 transition-colors hover:border-paper"
             >
               <span className="block text-[14px] text-[#CACBC4]">
                 {c.company}
@@ -139,7 +139,10 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
               <span className="block mt-1 text-[17px] leading-[1.35] font-semibold text-paper whitespace-pre-line">
                 {c.title}
               </span>
-              <span aria-hidden="true" className="absolute top-4 right-4.5 font-semibold text-paper">
+              <span
+                aria-hidden="true"
+                className="absolute top-4 right-5 text-[18px] font-semibold text-paper/80 group-hover:text-paper group-hover:translate-x-0.5 transition-all"
+              >
                 →
               </span>
             </button>

@@ -33,7 +33,7 @@ export const AdBanner: React.FC = () => {
               {adSlot.title.replace(adSlot.titleMark, '')}
             </h3>
 
-            <p className="mt-3 mb-0 text-[16px] sm:text-[17px] leading-[1.5] text-slate">
+            <p className="mt-3 mb-0 text-[16px] sm:text-[17px] leading-[1.5] text-slate whitespace-pre-line">
               {adSlot.text}
             </p>
           </div>

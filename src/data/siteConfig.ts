@@ -25,7 +25,7 @@ export const siteConfig: SiteConfig = {
   telegramChannelUrl: "https://t.me/rezonerw",
   botLeadMagnetUrl: "https://t.me/winter_daniil",
   email: "vinterdaniil@yandex.ru",
-  legalEntityInfo: "Самозанятый (НПД). Официальный договор, безналичный расчёт, закрывающие электронные чеки через ФНС «Мой налог».",
+  legalEntityInfo: "ИП Винтер Даниил Денисович. Работаю по договору, оплата по безналичному расчёту.",
   offerHeading: "Платный трафик для бизнеса, который продаёт через контент",
   offerSubheading: "Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.",
   stats: {

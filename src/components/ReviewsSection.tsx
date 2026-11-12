@@ -28,8 +28,7 @@ export const ReviewsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* 3 Pink Review Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className={`grid grid-cols-1 gap-6 ${reviewsData.length === 1 ? 'max-w-[800px] mx-auto' : reviewsData.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
           {reviewsData.map((rev) => (
             <figure
               key={rev.id}

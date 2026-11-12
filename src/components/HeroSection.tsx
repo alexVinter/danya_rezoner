@@ -9,13 +9,12 @@ export const HeroSection: React.FC = () => {
           {/* Left Column: Text & CTA */}
           <div className="md:col-span-7">
             <h1 className="m-0 text-[40px] sm:text-[52px] lg:text-[64px] leading-[1.1] font-bold tracking-[-0.025em] text-slate max-w-[720px]">
-              <span className="mark">Платный трафик</span>
-              <br />
-              для бизнеса, который продаёт через контент
+              Платный трафик для бизнеса,<br />
+              <span className="mark">который продаёт</span>
             </h1>
 
             <p className="mt-7 text-[18px] sm:text-[20px] leading-[1.45] text-slate max-w-[560px]">
-              Вы пишете посты и снимаете видео. Я привожу аудиторию, которая у вас покупает.
+              Вы пишете посты, снимаете видео или просто делаете крутой продукт. Я привожу аудиторию, которая у вас покупает.
             </p>
 
             <div className="mt-9">

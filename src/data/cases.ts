@@ -110,7 +110,7 @@ export interface CaseData {
   comparisonTitle?: string;
   comparisonConclusion?: string;
 
-  // For creatives-figure layout (HTML Academy Lead Magnet)
+  // For creatives-figure layout (.html academy Lead Magnet)
   creatives?: CaseCreativeCard[];
   figure?: {
     title: string;
@@ -121,7 +121,7 @@ export interface CaseData {
     sublist?: string[];
   };
 
-  // For gallery layout (HTML Academy Collab)
+  // For gallery layout (.html academy Collab)
   gallery?: Array<{ image: string; alt: string }>;
 
   // For 3 new cases
@@ -148,7 +148,7 @@ export const casesList: CaseData[] = [
     titleHighlight: 'Контур.Экстерн',
     lead: 'Задача: снизить стоимость привлечения подписчиков в профессиональное комьюнити бухгалтеров и поднять конверсию из клика в подписку.',
     heroIllustration: '/assets/water-pistol.webp?v=4',
-    heroIllustrationClass: 'w-full max-w-[340px] md:max-w-[420px] -rotate-[12deg]',
+    heroIllustrationClass: 'w-full max-w-[280px] md:max-w-[420px] -rotate-[12deg]',
     keyMetrics: [
       { value: '€3 → €2', label: 'цена подписчика' },
       { value: '0,2% → 0,38%', label: 'CTR в Telegram Ads' },
@@ -172,7 +172,7 @@ export const casesList: CaseData[] = [
       },
     ],
     layoutType: 'comparison',
-    comparisonTitle: 'Креативы: было и стало',
+    comparisonTitle: 'Креативы',
     comparisonCards: {
       bad: {
         badge: 'Было',
@@ -388,95 +388,22 @@ export const casesList: CaseData[] = [
       caption: 'Кампании в Telegram Ads: подписки, CTR, конверсия, CPM, цена клика, цена подписчика и расход.',
     },
     nextCase: {
-      slug: 'kontur-elba',
-      number: '−26%',
-      title: 'к цене подписчика для канала Контур.Эльба',
-      text: 'Статичный креатив против видео в Telegram Ads',
-    },
-  },
-
-  // 5. Контур.Эльба
-  {
-    slug: 'kontur-elba',
-    titleMeta: 'Кейс: −26% к цене подписчика в Telegram Ads для Контур.Эльба | Даниил Винтер',
-    descriptionMeta: 'Цена подписчика €3,66 → €2,7, CTR 0,34% → 0,43%. Статичный креатив против видео на одинаковом бюджете.',
-    breadcrumb: 'Контур.Эльба',
-    tags: ['Telegram Ads', 'A/B-тесты', 'Бухгалтерия'],
-    title: '−26% к цене подписчика в Telegram Ads для канала',
-    titleHighlight: 'Контур.Эльба',
-    lead: 'Задача: протестировать видеокреативы против статики в Telegram Ads и найти связку с минимальной стоимостью подписчика для онлайн-бухгалтерии.',
-    heroIllustration: '/assets/cactus.webp',
-    heroIllustrationClass: 'w-full max-w-[230px] -rotate-[5deg]',
-    keyMetrics: [
-      { value: '€3,66 → €2,7', label: 'цена подписчика' },
-      { value: '0,34% → 0,43%', label: 'CTR' },
-      { value: '42%', label: 'конверсия из клика в подписку' },
-    ],
-    metricsLayout: 'elba',
-    solutionTitle: 'Решение',
-    solutionParagraphs: [
-      'В нише онлайн-бухгалтерии для ИП высокая конкуренция за внимание предпринимателей. Стандартные объявления с текстовым баннером давали результат, но мы хотели проверить, сработает ли короткое динамическое видео лучше статики.',
-      'Запустили A/B-тест на одинаковых сегментах аудитории и одинаковом бюджете: статичный баннер с четким оффером против 10-секундного видеоролика с анимацией интерфейса.',
-    ],
-    layoutType: 'comparison',
-    comparisonTitle: 'A/B-тест: статика против видео',
-    comparisonCards: {
-      bad: {
-        badge: 'Видео',
-        badgeType: 'pink',
-        image: '/assets/elba-video.webp?v=4',
-        imageAlt: 'Видеокреатив Контур.Эльбы',
-        metrics: [
-          { value: '€3,66', label: 'цена подписчика' },
-          { value: '0,34%', label: 'CTR' },
-        ],
-        paragraphs: [
-          'Видео привлекало внимание, но отвлекало от главного действия. Пользователи залипали на ролик, но реже переходили в сам канал.',
-        ],
-      },
-      good: {
-        badge: 'Статика',
-        badgeType: 'lime',
-        image: '/assets/elba-static.webp?v=4',
-        imageAlt: 'Статичный баннер Контур.Эльбы',
-        metrics: [
-          { value: '€2,7', label: 'цена подписчика', highlight: true },
-          { value: '0,43%', label: 'CTR', highlight: true },
-        ],
-        paragraphs: [
-          'Простой статичный баннер с крупным текстом о налогах для ИП сразу бил в цель: человек за секунду считывал выгоду и подписывался.',
-        ],
-      },
-    },
-    comparisonConclusion: 'Статичный креатив победил с отрывом в 26% по цене подписчика: в деловых B2B-тематиках четкость и простота выигрывают у анимации.',
-    whatWorkedColumns: 2,
-    whatWorked: [
-      {
-        title: 'Короткий заголовок с цифрами',
-        desc: 'Конкретные суммы налогов и сроки сдачи отчетов привлекали именно действующих предпринимателей, а не случайных людей.',
-      },
-      {
-        title: 'Отключение широких каналов',
-        desc: 'Убрали общебизнесовые каналы и сосредоточились на узких тематиках: маркетплейсы, розничная торговля и услуги.',
-      },
-    ],
-    nextCase: {
       slug: 'html-academy-lead-magnet',
       number: '40 ₽',
-      title: 'за пользователя в чат-боте ВКонтакте для HTML Academy',
+      title: 'за пользователя в чат-боте ВКонтакте для .html academy',
       text: 'Лид-магнит и рассылка, ROMI 300% за первый месяц',
     },
   },
 
-  // 6. Лид-магнит HTML Academy
+  // 6. Лид-магнит .html academy
   {
     slug: 'html-academy-lead-magnet',
-    titleMeta: 'Кейс: лид-магнит и чат-бот для HTML Academy | Даниил Винтер',
+    titleMeta: 'Кейс: лид-магнит и чат-бот для .html academy | Даниил Винтер',
     descriptionMeta: '2 500 человек в чат-боте ВКонтакте по 40₽ за пользователя и ROMI 300% за первый месяц.',
-    breadcrumb: 'HTML Academy: лид-магнит',
+    breadcrumb: '.html academy: лид-магнит',
     tags: ['Платный трафик', 'Чат-бот ВКонтакте', 'EdTech'],
     title: '2 500 человек в чат-бот ВКонтакте по 40 ₽ для',
-    titleHighlight: 'HTML Academy',
+    titleHighlight: '.html academy',
     lead: 'Задача: привлечь начинающих разработчиков в воронку через полезный лид-магнит и окупить трафик продажами курсов.',
     heroIllustration: '/assets/hand3.webp',
     heroIllustrationClass: 'w-full max-w-[300px] -rotate-[6deg]',
@@ -496,18 +423,18 @@ export const casesList: CaseData[] = [
     creatives: [
       {
         image: '/assets/html-cr-map.webp',
-        alt: 'Креатив HTML Academy: «Карта для фронтендеров, которые хотят развиваться»',
+        alt: 'Креатив .html academy: «Карта для фронтендеров, которые хотят развиваться»',
         ctr: '1,7%',
         highlight: true,
       },
       {
         image: '/assets/html-cr-cat.webp',
-        alt: 'Креатив HTML Academy: кот в очках и «Карта компетенций для начинающего фронтендера»',
+        alt: 'Креатив .html academy: кот в очках и «Карта компетенций для начинающего фронтендера»',
         ctr: '1,2%',
       },
       {
         image: '/assets/html-cr-mail.webp',
-        alt: 'Креатив HTML Academy: «Бесплатная рассылка для тех, кто хочет в IT»',
+        alt: 'Креатив .html academy: «Бесплатная рассылка для тех, кто хочет в IT»',
         ctr: '1,2%',
       },
     ],
@@ -536,20 +463,20 @@ export const casesList: CaseData[] = [
     nextCase: {
       slug: 'html-academy-collab',
       number: '146%',
-      title: 'ROMI коллаборации с блогером для HTML Academy',
+      title: 'ROMI коллаборации с блогером для .html academy',
       text: 'охват 400 000',
     },
   },
 
-  // 7. Коллаборация HTML Academy
+  // 7. Коллаборация .html academy
   {
     slug: 'html-academy-collab',
-    titleMeta: 'Кейс: коллаборация с блогером для HTML Academy | Даниил Винтер',
+    titleMeta: 'Кейс: коллаборация с блогером для .html academy | Даниил Винтер',
     descriptionMeta: 'Охват 400 000 и ROMI 146% за счёт коллаборации с блогером.',
-    breadcrumb: 'HTML Academy: коллаборация',
+    breadcrumb: '.html academy: коллаборация',
     tags: ['Коллаборация с блогером', 'EdTech'],
     title: '400 000 охвата с коллаборации с блогером для',
-    titleHighlight: 'HTML Academy',
+    titleHighlight: '.html academy',
     lead: 'Задача: найти профильного блогера, согласовать нативную интеграцию с пользой для аудитории и получить окупаемые заявки на профессию.',
     heroIllustration: '/assets/rainbow.webp',
     heroIllustrationClass: 'w-full max-w-[440px]',

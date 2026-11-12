@@ -7,14 +7,14 @@ export const ProcessSection: React.FC = () => {
       <div className="max-w-site mx-auto px-4 md:px-10">
         {/* Header with Rainbow Illustration */}
         <div className="flex items-end justify-between gap-6 mb-10">
-          <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
+          <h2 className="min-w-0 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
             Как работаю
           </h2>
           <img
             src="/assets/rainbow.webp?v=3"
             alt=""
             aria-hidden="true"
-            className="wob w-[150px] sm:w-[190px] md:w-[230px] h-auto select-none -mb-1"
+            className="wob flex-shrink-0 w-[104px] sm:w-[190px] md:w-[230px] h-auto select-none -mb-1"
           />
         </div>
 

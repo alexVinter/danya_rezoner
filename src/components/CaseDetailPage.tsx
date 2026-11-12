@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { casesList, CaseData } from '../data/cases';
-import { siteConfig } from '../data/content';
-import { LeadForm } from './LeadForm';
+import { ContactSection } from './ContactSection';
 
 interface CaseDetailPageProps {
   caseSlug: string;
@@ -32,7 +31,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
       return (
         <>
           {parts[0]}
-          <span className="mark whitespace-nowrap">{currentCase.titleHighlight}</span>
+          <span className="mark">{currentCase.titleHighlight}</span>
           {parts[1]}
         </>
       );
@@ -40,7 +39,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
     return (
       <>
         {currentCase.title}{' '}
-        <span className="mark whitespace-nowrap">{currentCase.titleHighlight}</span>
+        <span className="mark">{currentCase.titleHighlight}</span>
       </>
     );
   };
@@ -134,9 +133,14 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 text-[32px] sm:text-[36px] md:text-[40px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   {currentCase.doneResult.done.title}
                 </h2>
-                <ul className="mt-5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate">
+                <ul className="mt-5 mb-0 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate list-none pl-0">
                   {currentCase.doneResult.done.items.map((it, idx) => (
-                    <li key={idx}>{it}</li>
+                    <li
+                      key={idx}
+                      className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-2 before:h-2 before:rounded-full before:bg-orange"
+                    >
+                      {it}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -144,9 +148,14 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <h2 className="h2 m-0 text-[32px] sm:text-[36px] md:text-[40px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                   {currentCase.doneResult.result.title}
                 </h2>
-                <ul className="mt-5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate">
+                <ul className="mt-5 mb-0 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] text-slate list-none pl-0">
                   {currentCase.doneResult.result.items.map((it, idx) => (
-                    <li key={idx}>{it}</li>
+                    <li
+                      key={idx}
+                      className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-2 before:h-2 before:rounded-full before:bg-orange"
+                    >
+                      {it}
+                    </li>
                   ))}
                 </ul>
               </div>
@@ -199,9 +208,14 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
               </h2>
               <div>
                 {currentCase.solutionList ? (
-                  <ul className="m-0 pl-5 sm:pl-6 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] max-w-[720px] text-slate">
+                  <ul className="m-0 flex flex-col gap-2.5 text-[17px] sm:text-[18px] leading-[1.5] max-w-[720px] text-slate list-none pl-0">
                     {currentCase.solutionList.map((it, idx) => (
-                      <li key={idx}>{it}</li>
+                      <li
+                        key={idx}
+                        className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-2 before:h-2 before:rounded-full before:bg-orange"
+                      >
+                        {it}
+                      </li>
                     ))}
                   </ul>
                 ) : (
@@ -252,15 +266,15 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
-              {[currentCase.comparisonCards.good, currentCase.comparisonCards.bad].map(
+              {[currentCase.comparisonCards.bad, currentCase.comparisonCards.good].map(
                 (card, cIdx) => (
                   <div
                     key={cIdx}
-                    className="bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 flex flex-col gap-5"
+                    className="bg-white border-[1.5px] border-slate rounded-card p-5 sm:p-6 flex flex-col gap-4"
                   >
                     <div className="flex items-center justify-between">
                       <span
-                        className={`inline-flex items-center h-7 px-3.5 rounded-pill text-[13px] font-bold uppercase tracking-wider ${
+                        className={`inline-flex items-center h-7 px-3.5 rounded-pill text-[13px] font-semibold ${
                           card.badgeType === 'lime'
                             ? 'bg-lime text-slate'
                             : 'bg-pink text-slate'
@@ -270,18 +284,20 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                       </span>
                     </div>
 
-                    <img
-                      src={card.image}
-                      alt={card.imageAlt}
-                      className="w-full h-auto rounded-input border border-line object-cover"
-                    />
+                    <div className="flex justify-center bg-[#f7f5f2] rounded-input border border-line p-2 overflow-hidden">
+                      <img
+                        src={card.image}
+                        alt={card.imageAlt}
+                        className="max-h-[220px] sm:max-h-[240px] w-auto h-auto object-contain rounded"
+                      />
+                    </div>
 
                     {/* Card metrics */}
-                    <div className="flex gap-6 border-b border-line pb-4">
+                    <div className="flex gap-6 rounded-input bg-paper px-4 py-3">
                       {card.metrics.map((cm, cmIdx) => (
                         <div key={cmIdx}>
                           <span
-                            className={`block text-[28px] sm:text-[32px] font-bold tabular-nums leading-none ${
+                            className={`block text-[26px] sm:text-[30px] font-bold tabular-nums leading-none ${
                               cm.highlight ? 'text-orange' : 'text-slate'
                             }`}
                           >
@@ -317,7 +333,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </section>
       )}
 
-      {/* 7. Layout Specific: Creatives & Figure (HTML Academy Lead Magnet) */}
+      {/* 7. Layout Specific: Creatives & Figure (.html academy Lead Magnet) */}
       {currentCase.layoutType === 'creatives-figure' && (
         <>
           {currentCase.creatives && (
@@ -373,9 +389,14 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                   </h3>
                 )}
                 {currentCase.figure.sublist && (
-                  <ul className="mt-3.5 mb-0 pl-5 sm:pl-6 flex flex-col gap-2 text-[16px] sm:text-[17px] leading-[1.5] max-w-[760px] text-slate">
+                  <ul className="mt-3.5 mb-0 flex flex-col gap-2 text-[16px] sm:text-[17px] leading-[1.5] max-w-[760px] text-slate list-none pl-0">
                     {currentCase.figure.sublist.map((it, idx) => (
-                      <li key={idx}>{it}</li>
+                      <li
+                        key={idx}
+                        className="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-[10px] before:w-2 before:h-2 before:rounded-full before:bg-orange"
+                      >
+                        {it}
+                      </li>
                     ))}
                   </ul>
                 )}
@@ -385,7 +406,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </>
       )}
 
-      {/* 8. Layout Specific: Gallery (HTML Academy Collab) */}
+      {/* 8. Layout Specific: Gallery (.html academy Collab) */}
       {currentCase.layoutType === 'gallery' && currentCase.gallery && (
         <section className="sec pt-16 md:pt-[120px]">
           <div className="wrap">
@@ -423,7 +444,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
               {currentCase.whatWorked.map((item, idx) => (
                 <div
                   key={idx}
-                  className="border-t border-line pt-6 flex flex-col gap-3"
+                  className="bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 flex flex-col gap-3"
                 >
                   <h3 className="m-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold text-slate">
                     {item.title}
@@ -473,57 +494,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
         </div>
       </section>
 
-      {/* 11. CTA with Tiger */}
-      <section id="contact" className="contact pt-36 sm:pt-48 md:pt-[210px]">
-        <div className="wrap">
-          <div className="cta g2 relative bg-orange rounded-plate p-6 sm:p-10 md:p-14">
-            {/* Tiger Illustration Resting on Top */}
-            <img
-              src="/assets/tiger.webp?v=4"
-              alt=""
-              aria-hidden="true"
-              className="wob cta-tiger select-none"
-            />
-
-            <div>
-              <h2 className="h2 m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-                Давайте работать
-                <br />
-                <span className="mark inline-block mt-1">вместе</span>
-              </h2>
-              <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
-                Пришлите ссылку на канал и опишите задачу своими словами. За 30 минут созвона забрифуемся, и я соберу стратегию под ваш проект.
-              </p>
-              <a
-                href={siteConfig.telegramPersonalUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-w mt-8 inline-flex items-center gap-2.5 h-14 px-7 rounded-pill text-[17px] font-semibold no-underline"
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <path d="M22 2 11 13" />
-                  <path d="M22 2 15 22l-4-9-9-4 20-7z" />
-                </svg>
-                <span>Написать в Telegram</span>
-              </a>
-            </div>
-
-            <div>
-              <LeadForm pageName={currentCase.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
-            </div>
-          </div>
-        </div>
-      </section>
+      <ContactSection pageName={currentCase.breadcrumb} onOpenPrivacy={onOpenPrivacy} />
     </div>
   );
 };

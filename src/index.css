@@ -47,6 +47,9 @@
   * {
     box-sizing: border-box;
   }
+  h1, h2, h3, h4, p, li, blockquote {
+    text-wrap: pretty;
+  }
   a {
     color: var(--slate);
     transition: color 0.15s ease;
@@ -68,41 +71,66 @@
 /* Buttons */
 .btn-o {
   background: var(--orange);
-  color: var(--white);
-  transition: background-color 0.15s ease;
+  color: var(--white) !important;
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
-.btn-o:hover {
-  background: var(--orange-hover) !important;
+.btn-o:hover:not(:disabled) {
+  background: var(--orange) !important;
+  color: var(--white) !important;
+  transform: translateY(-2px);
+}
+.btn-o:active {
+  transform: translateY(0);
 }
 
 .btn-s {
   background: var(--slate);
-  color: var(--paper);
-  transition: background-color 0.15s ease;
+  color: var(--paper) !important;
+  transition: background-color 0.15s ease, transform 0.15s ease;
 }
 .btn-s:hover {
-  background: #1F252B !important;
+  background: var(--slate) !important;
+  color: var(--paper) !important;
+  transform: translateY(-2px);
+}
+.btn-s:active {
+  transform: translateY(0);
 }
 
 .btn-line {
   background: transparent;
   border: 1.5px solid var(--slate);
-  color: var(--slate);
+  color: var(--slate) !important;
   transition: all 0.15s ease;
 }
 .btn-line:hover {
-  background: var(--orange) !important;
-  border-color: var(--orange) !important;
-  color: var(--white) !important;
+  background: transparent !important;
+  border-color: var(--slate) !important;
+  color: var(--slate) !important;
+  transform: translateY(-2px);
+}
+.btn-line:active {
+  transform: translateY(0);
 }
 
 .btn-w {
   background: var(--white);
-  color: var(--slate);
-  transition: background-color 0.15s ease;
+  color: var(--slate) !important;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 .btn-w:hover {
-  background: var(--paper) !important;
+  background: var(--white) !important;
+  color: var(--slate) !important;
+  transform: translateY(-2px);
+}
+.btn-w:active {
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.scroll-smooth { scroll-behavior: auto; }
+  .btn-o, .btn-s, .btn-line, .btn-w { transition: none; }
+  .btn-o:hover, .btn-s:hover, .btn-line:hover, .btn-w:hover { transform: none; }
 }
 
 /* Links */

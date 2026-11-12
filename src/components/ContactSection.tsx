@@ -4,9 +4,19 @@ import { LeadForm } from './LeadForm';
 
 interface ContactSectionProps {
   onOpenPrivacy?: () => void;
+  pageName?: string;
+  title?: string;
+  titleMark?: string;
+  text?: string;
 }
 
-export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenPrivacy }) => {
+export const ContactSection: React.FC<ContactSectionProps> = ({
+  onOpenPrivacy,
+  pageName = 'Главная',
+  title = 'Давайте работать',
+  titleMark = 'вместе',
+  text = 'Заполните форму или напишите напрямую в Telegram. Можно сразу прислать ссылку на канал или сайт и описать задачу своими словами.',
+}) => {
   return (
     <section id="contact" className="pt-36 sm:pt-48 md:pt-[210px] pb-16 md:pb-[120px]">
       <div className="max-w-site mx-auto px-4 md:px-10">
@@ -23,13 +33,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenPrivacy })
           {/* Left Column: Heading, Subtitle & White Button */}
           <div className="md:col-span-6 relative z-10">
             <h2 className="m-0 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-white">
-              Давайте работать
+              {title}
               <br />
-              <span className="mark inline-block mt-1">вместе</span>
+              <span className="mark inline-block mt-1">{titleMark}</span>
             </h2>
 
             <p className="mt-5 mb-0 text-[16px] sm:text-[18px] leading-[1.5] text-white max-w-[460px]">
-              Заполните форму или напишите напрямую в Telegram. Можно сразу прислать ссылку на канал или сайт и описать задачу своими словами.
+              {text}
             </p>
 
             <a
@@ -58,7 +68,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onOpenPrivacy })
 
           {/* Right Column: White Card with Form */}
           <div className="md:col-span-6 relative z-10 w-full">
-            <LeadForm pageName="Главная" onOpenPrivacy={onOpenPrivacy} />
+            <LeadForm key={pageName} pageName={pageName} onOpenPrivacy={onOpenPrivacy} />
           </div>
         </div>
       </div>

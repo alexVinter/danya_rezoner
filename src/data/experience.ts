@@ -40,7 +40,7 @@ export const careerTimeline: CareerRole[] = [
     company: "Ранние проекты & EdTech",
     role: "Специалист по платному трафику",
     highlightNumber: "300% ROMI",
-    description: "Коллаборации с инфлюенсерами, посевы, запуск чат-ботов для HTML Academy (2 500 лидов по 40 ₽) и локальных брендов."
+    description: "Коллаборации с инфлюенсерами, посевы, запуск чат-ботов для .html academy (2 500 лидов по 40 ₽) и локальных брендов."
   }
 ];
 

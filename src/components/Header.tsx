@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { siteConfig } from '../data/content';
 
 interface HeaderProps {
-  currentView: 'home' | 'service-detail' | 'case-detail';
+  currentView: string;
   onNavigateHome: (hash?: string) => void;
 }
 

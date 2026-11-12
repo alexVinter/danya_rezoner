@@ -12,6 +12,8 @@ export const ProcessSection: React.FC = () => {
           </h2>
           <img
             src="/assets/rainbow.webp?v=3"
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden="true"
             className="wob flex-shrink-0 w-[104px] sm:w-[190px] md:w-[230px] h-auto select-none -mb-1"

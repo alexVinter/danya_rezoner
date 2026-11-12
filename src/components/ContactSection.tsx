@@ -25,6 +25,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
           {/* Tiger Illustration Resting on Top */}
           <img
             src="/assets/tiger.webp?v=3"
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden="true"
             className="wob absolute select-none left-5 sm:left-10 md:left-12 -top-24 sm:-top-32 md:-top-[164px] w-[220px] sm:w-[280px] md:w-[340px] z-10"

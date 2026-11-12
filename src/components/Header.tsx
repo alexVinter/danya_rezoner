@@ -10,6 +10,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, hash: string) => {
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
     e.preventDefault();
     setMobileMenuOpen(false);
 
@@ -42,7 +43,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
       <div className="max-w-site mx-auto px-4 md:px-10 h-[72px] flex items-center justify-between gap-6">
         {/* Brand / Logo */}
         <a
-          href="#top"
+          href="/"
           onClick={(e) => handleNavClick(e, '#top')}
           className="flex items-center gap-2.5 text-slate no-underline hover:text-slate"
         >
@@ -63,14 +64,14 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
         {/* Desktop Nav */}
         <nav aria-label="Разделы сайта" className="hidden lg:flex items-center gap-7 text-[16px] font-medium">
           <a
-            href="#about"
+            href="/#about"
             onClick={(e) => handleNavClick(e, '#about')}
             className="text-slate no-underline hover:text-orange transition-colors"
           >
             Обо мне
           </a>
           <a
-            href="#services"
+            href="/#services"
             onClick={(e) => handleNavClick(e, '#services')}
             className={`no-underline transition-colors ${
               currentView === 'service-detail' ? 'text-orange font-semibold' : 'text-slate hover:text-orange'
@@ -79,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
             Услуги
           </a>
           <a
-            href="#cases"
+            href="/#cases"
             onClick={(e) => handleNavClick(e, '#cases')}
             className={`no-underline transition-colors ${
               currentView === 'case-detail' ? 'text-orange font-semibold' : 'text-slate hover:text-orange'
@@ -88,14 +89,14 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
             Кейсы
           </a>
           <a
-            href="#process"
+            href="/#process"
             onClick={(e) => handleNavClick(e, '#process')}
             className="text-slate no-underline hover:text-orange transition-colors"
           >
             Как работаю
           </a>
           <a
-            href="#faq"
+            href="/#faq"
             onClick={(e) => handleNavClick(e, '#faq')}
             className="text-slate no-underline hover:text-orange transition-colors"
           >
@@ -160,35 +161,35 @@ export const Header: React.FC<HeaderProps> = ({ currentView, onNavigateHome }) =
         <div className="lg:hidden bg-paper border-b border-line px-4 py-6 animate-in fade-in duration-150">
           <nav className="flex flex-col gap-4 text-[18px] font-medium mb-6">
             <a
-              href="#about"
+              href="/#about"
               onClick={(e) => handleNavClick(e, '#about')}
               className="text-slate no-underline hover:text-orange py-1"
             >
               Обо мне
             </a>
             <a
-              href="#services"
+              href="/#services"
               onClick={(e) => handleNavClick(e, '#services')}
               className="text-slate no-underline hover:text-orange py-1"
             >
               Услуги
             </a>
             <a
-              href="#cases"
+              href="/#cases"
               onClick={(e) => handleNavClick(e, '#cases')}
               className="text-slate no-underline hover:text-orange py-1"
             >
               Кейсы
             </a>
             <a
-              href="#process"
+              href="/#process"
               onClick={(e) => handleNavClick(e, '#process')}
               className="text-slate no-underline hover:text-orange py-1"
             >
               Как работаю
             </a>
             <a
-              href="#faq"
+              href="/#faq"
               onClick={(e) => handleNavClick(e, '#faq')}
               className="text-slate no-underline hover:text-orange py-1"
             >

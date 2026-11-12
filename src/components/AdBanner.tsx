@@ -1,11 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { adSlot } from '../data/content';
 
-export const AdBanner: React.FC = () => {
-  // Check if banner is enabled and not expired
-  if (!adSlot.enabled) return null;
-  const isExpired = new Date() > new Date(adSlot.showUntil);
-  if (isExpired) return null;
+export function isAdBannerVisible() {
+  return adSlot.enabled && Date.now() <= Date.parse(adSlot.showUntil);
+}
+
+export const AdBanner: React.FC<{ initialVisible?: boolean }> = ({ initialVisible }) => {
+  const [visible, setVisible] = useState(() => initialVisible ?? isAdBannerVisible());
+  useEffect(() => {
+    setVisible(isAdBannerVisible());
+  }, []);
+  if (!visible) return null;
 
   return (
     <section className="pt-14 pb-0">
@@ -16,10 +21,15 @@ export const AdBanner: React.FC = () => {
         >
           {/* Peeking Hand "Three" Illustration */}
           <img
-            src="/assets/hand3.webp"
+            src="/assets/hand3-banner.webp"
+            width={360}
+            height={424}
+            loading="lazy"
+            decoding="async"
+            {...{ fetchpriority: 'low' }}
             alt=""
             aria-hidden="true"
-            className="wob absolute z-0 select-none -rotate-[8deg] md:left-11 md:bottom-[-58px] md:w-[164px] right-7 bottom-[-36px] w-[128px]"
+            className="wob absolute z-0 select-none -rotate-[8deg] md:left-11 md:bottom-[-58px] md:w-[164px] right-7 bottom-[-36px] w-[128px] h-auto"
           />
 
           {/* Banner Content */}

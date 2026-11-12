@@ -89,6 +89,7 @@ export interface CaseData {
   titleHighlight: string;
   lead: string;
   heroIllustration: string;
+  heroIllustrationSrcSet?: string;
   heroIllustrationClass: string;
   keyMetrics: CaseMetric[];
   metricsLayout?: 'three' | 'two' | 'elba';
@@ -147,7 +148,8 @@ export const casesList: CaseData[] = [
     title: '−33% к цене подписчика в Telegram Ads для канала',
     titleHighlight: 'Контур.Экстерн',
     lead: 'Задача: снизить стоимость привлечения подписчиков в профессиональное комьюнити бухгалтеров и поднять конверсию из клика в подписку.',
-    heroIllustration: '/assets/water-pistol.webp?v=4',
+    heroIllustration: '/assets/water-pistol-840.webp',
+    heroIllustrationSrcSet: '/assets/water-pistol-520.webp 520w, /assets/water-pistol-840.webp 840w',
     heroIllustrationClass: 'w-full max-w-[280px] md:max-w-[420px] -rotate-[12deg]',
     keyMetrics: [
       { value: '€3 → €2', label: 'цена подписчика' },

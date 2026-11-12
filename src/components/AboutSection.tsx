@@ -13,10 +13,14 @@ export const AboutSection: React.FC = () => {
           {/* Left Column: Photo from TgConf */}
           <div>
             <img
-              src="/assets/photo-tgconf.webp"
+              src="/assets/photo-tgconf-720.webp"
+              srcSet="/assets/photo-tgconf-480.webp 480w, /assets/photo-tgconf-720.webp 720w, /assets/photo-tgconf.webp 942w"
+              sizes="(min-width: 1440px) 440px, (min-width: 768px) 31vw, calc(100vw - 32px)"
               alt="Даниил Винтер выступает на TgConf 2025"
               width={942}
               height={1262}
+              loading="lazy"
+              decoding="async"
               className="w-full h-auto border-[1.5px] border-slate rounded-card object-cover select-none"
             />
           </div>

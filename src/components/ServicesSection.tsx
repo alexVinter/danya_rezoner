@@ -1,11 +1,7 @@
 import React from 'react';
 import { servicesData, siteConfig } from '../data/content';
 
-interface ServicesSectionProps {
-  onOpenService: (slug: string) => void;
-}
-
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService }) => {
+export const ServicesSection: React.FC = () => {
   return (
     <section id="services" className="pt-16 md:pt-[120px] pb-0">
       <div className="max-w-site mx-auto px-4 md:px-10">
@@ -15,7 +11,11 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
             Услуги
           </h2>
           <img
-            src="/assets/hands-keyboard.webp?v=3"
+            src="/assets/hands-keyboard-540.webp"
+            width={540}
+            height={238}
+            loading="lazy"
+            decoding="async"
             alt=""
             aria-hidden="true"
             className="wob w-[160px] sm:w-[220px] md:w-[260px] h-auto select-none -mb-1.5"
@@ -38,12 +38,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
               <div>
                 <h3 className="m-0 text-[20px] sm:text-[22px] leading-[1.25] font-bold tracking-[-0.01em] text-slate">
                   {svc.slug ? (
-                    <button
-                      onClick={() => onOpenService(svc.slug!)}
+                    <a
+                      href={`/services/${svc.slug}`}
                       className="text-left font-bold text-slate hover:text-orange transition-colors lnk cursor-pointer bg-transparent border-0 p-0"
                     >
                       {svc.title}
-                    </button>
+                    </a>
                   ) : (
                     svc.title
                   )}
@@ -94,12 +94,13 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onOpenService 
                 )}
 
                 {svc.hasDetailsPage && svc.slug ? (
-                  <button
-                    onClick={() => onOpenService(svc.slug!)}
-                    className="btn-line mt-2.5 inline-flex items-center h-11 px-5 rounded-pill text-[15px] font-semibold cursor-pointer"
+                  <a
+                    href={`/services/${svc.slug}`}
+                    aria-label={`Подробнее: ${svc.title}`}
+                    className="btn-line mt-2.5 inline-flex items-center h-11 px-5 rounded-pill text-[15px] font-semibold no-underline"
                   >
                     Подробнее
-                  </button>
+                  </a>
                 ) : (
                   <a
                     href={siteConfig.telegramPersonalUrl}

@@ -15,12 +15,16 @@ export const ReviewsSection: React.FC = () => {
           <div className="flex items-end gap-1.5 -mb-1">
             <img
               src="/assets/flower-1.webp?v=3"
+              loading="lazy"
+              decoding="async"
               alt=""
               aria-hidden="true"
               className="wob h-[72px] sm:h-[90px] md:h-[104px] w-auto select-none -rotate-[6deg]"
             />
             <img
               src="/assets/flower-2.webp?v=3"
+              loading="lazy"
+              decoding="async"
               alt=""
               aria-hidden="true"
               className="wob h-[60px] sm:h-[76px] md:h-[90px] w-auto select-none rotate-[5deg]"

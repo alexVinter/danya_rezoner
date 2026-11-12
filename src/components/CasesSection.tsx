@@ -1,11 +1,7 @@
 import React from 'react';
 import { casesData } from '../data/content';
 
-interface CasesSectionProps {
-  onOpenCase: (slug: string) => void;
-}
-
-export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
+export const CasesSection: React.FC = () => {
   const { featured, cards, moreCases } = casesData;
 
   return (
@@ -56,19 +52,26 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
 
             {/* Button */}
             <div className="mt-8">
-              <button
-                onClick={() => onOpenCase(featured.slug)}
-                className="btn-s inline-flex items-center h-12 px-[26px] rounded-pill text-[17px] font-semibold cursor-pointer border-0"
+              <a
+                href={`/cases/${featured.slug}`}
+                aria-label="Читать кейс Контур.Экстерна"
+                className="btn-s inline-flex items-center h-12 px-[26px] rounded-pill text-[17px] font-semibold no-underline"
               >
                 Читать кейс
-              </button>
+              </a>
             </div>
           </div>
 
           {/* Water Pistol Illustration with .feat-ill */}
           <div className="md:col-span-5 flex justify-center">
             <img
-              src="/assets/water-pistol.webp?v=3"
+              src="/assets/water-pistol-840.webp"
+              srcSet="/assets/water-pistol-520.webp 520w, /assets/water-pistol-840.webp 840w"
+              sizes="(min-width: 768px) 420px, (min-width: 640px) 360px, 300px"
+              width={840}
+              height={636}
+              loading="lazy"
+              decoding="async"
               alt=""
               aria-hidden="true"
               className="wob feat-ill w-full max-w-[300px] sm:max-w-[360px] md:max-w-[420px] h-auto object-contain select-none -rotate-[12deg]"
@@ -109,13 +112,14 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
               </div>
 
               <p className="mt-auto pt-2.5 mb-0 text-[16px]">
-                <button
-                  onClick={() => onOpenCase(card.slug)}
+                <a
+                  href={`/cases/${card.slug}`}
+                  aria-label={`Читать кейс: ${card.title}`}
                   className="lnk font-semibold text-slate inline-flex items-center gap-1 bg-transparent border-0 p-0 cursor-pointer"
                 >
                   <span>Читать кейс</span>
                   <span aria-hidden="true" className="text-orange font-semibold"> →</span>
-                </button>
+                </a>
               </p>
             </article>
           ))}
@@ -127,11 +131,10 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
         </p>
         <div className="cards2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           {moreCases.map((c, idx) => (
-            <button
+            <a
               key={idx}
-              type="button"
-              onClick={() => onOpenCase(c.slug)}
-              className="more group text-left cursor-pointer bg-transparent relative !pr-14 transition-colors hover:border-paper"
+              href={`/cases/${c.slug}`}
+              className="more group text-left no-underline bg-transparent relative !pr-14 transition-colors hover:border-paper"
             >
               <span className="block text-[14px] text-[#CACBC4]">
                 {c.company}
@@ -145,7 +148,7 @@ export const CasesSection: React.FC<CasesSectionProps> = ({ onOpenCase }) => {
               >
                 →
               </span>
-            </button>
+            </a>
           ))}
         </div>
       </div>

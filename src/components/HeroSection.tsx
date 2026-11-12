@@ -1,6 +1,12 @@
 import React from 'react';
 import { siteConfig } from '../data/content';
 
+export const heroPortrait = {
+  src: '/assets/danya-hero-640.webp',
+  srcSet: '/assets/danya-hero-360.webp 360w, /assets/danya-hero-480.webp 480w, /assets/danya-hero-540.webp 540w, /assets/danya-hero-640.webp 640w',
+  sizes: '(min-width: 1024px) 430px, (min-width: 768px) 36vw, (min-width: 640px) 340px, 280px',
+};
+
 export const HeroSection: React.FC = () => {
   return (
     <section className="pt-10 sm:pt-16 pb-0">
@@ -49,7 +55,10 @@ export const HeroSection: React.FC = () => {
               {/* Photo with rounded-card border radius (matching About photo) */}
               <div className="overflow-hidden border-[1.5px] border-slate rounded-card shadow-sm aspect-square w-full bg-paper">
                 <img
-                  src="/assets/danya-hero.webp?v=1"
+                  {...heroPortrait}
+                  width={640}
+                  height={640}
+                  {...{ fetchpriority: 'high' }}
                   alt="Даниил Винтер"
                   className="w-full h-full object-cover select-none"
                 />
@@ -57,7 +66,13 @@ export const HeroSection: React.FC = () => {
 
               {/* Lion Mascot Overlay Top-Right */}
               <img
-                src="/assets/lion.webp?v=6"
+                src="/assets/lion-hero-440.webp"
+                srcSet="/assets/lion-hero-300.webp 300w, /assets/lion-hero-440.webp 440w"
+                sizes="(min-width: 1024px) 205px, (min-width: 768px) 185px, (min-width: 640px) 155px, 125px"
+                width={440}
+                height={398}
+                {...{ fetchpriority: 'low' }}
+                decoding="async"
                 alt=""
                 aria-hidden="true"
                 className="wob absolute -top-5 -right-5 sm:-top-7 sm:-right-7 md:-top-9 md:-right-8 w-[125px] sm:w-[155px] md:w-[185px] lg:w-[205px] h-auto object-contain select-none z-10 -rotate-[4deg]"

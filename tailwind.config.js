@@ -24,7 +24,7 @@ export default {
         plum: '#36202C',
       },
       fontFamily: {
-        sans: ['"Golos Text"', 'system-ui', 'sans-serif'],
+        sans: ['"Golos Text Variable"', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         'plate': '32px',

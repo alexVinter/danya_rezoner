@@ -6,17 +6,11 @@ import { FaqSection } from './FaqSection';
 
 interface ServiceDetailPageProps {
   serviceSlug: string;
-  onBackToHome: (hash?: string) => void;
-  onOpenCase: (caseSlug: string) => void;
-  onOpenService: (serviceSlug: string) => void;
   onOpenPrivacy?: () => void;
 }
 
 export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
   serviceSlug,
-  onBackToHome,
-  onOpenCase,
-  onOpenService: _onOpenService,
   onOpenPrivacy,
 }) => {
   const currentService: ServiceData =
@@ -230,9 +224,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               <h2 className="m-0 mb-8 text-[32px] sm:text-[40px] md:text-[48px] leading-[1.1] font-bold tracking-[-0.02em] text-slate">
                 {block.title}
               </h2>
-              <button
-                type="button"
-                onClick={() => onOpenCase(block.caseSlug)}
+              <a
+                href={`/cases/ + slug + `}
                 className="w-full text-left case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 md:p-10 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
               >
                 <span className="case-num text-[56px] sm:text-[64px] md:text-[72px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
@@ -250,7 +243,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     <span aria-hidden="true" className="text-orange"> →</span>
                   </span>
                 </span>
-              </button>
+              </a>
             </div>
           </section>
         );
@@ -264,10 +257,9 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
               </h2>
               <div className="cards2">
                 {block.cards.map((c, idx) => (
-                  <button
+                  <a
                     key={idx}
-                    type="button"
-                    onClick={() => onOpenCase(c.caseSlug)}
+                    href={`/cases/ + slug + `}
                     className="w-full text-left flex flex-col gap-3 bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
                   >
                     <span className="text-[44px] sm:text-[52px] md:text-[56px] leading-none font-bold tracking-[-0.03em] text-orange tabular-nums">
@@ -283,7 +275,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                       <span className="lnk">Читать кейс</span>
                       <span aria-hidden="true" className="text-orange"> →</span>
                     </span>
-                  </button>
+                  </a>
                 ))}
               </div>
             </div>
@@ -410,9 +402,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                       </p>
                     ))}
                     {block.caseTeaser && (
-                      <button
-                        type="button"
-                        onClick={() => onOpenCase(block.caseTeaser!.caseSlug)}
+                      <a
+                        href={`/cases/ + slug + `}
                         className="w-full text-left mt-3.5 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
                       >
                         <span className="case-num text-[48px] sm:text-[56px] md:text-[64px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
@@ -427,7 +418,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                             <span aria-hidden="true" className="text-orange"> →</span>
                           </span>
                         </span>
-                      </button>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -442,9 +433,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                     </p>
                   ))}
                   {block.caseTeaser && (
-                    <button
-                      type="button"
-                      onClick={() => onOpenCase(block.caseTeaser!.caseSlug)}
+                    <a
+                      href={`/cases/ + slug + `}
                       className="w-full text-left mt-4 case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-7 md:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
                     >
                       <span className="case-num text-[48px] sm:text-[56px] md:text-[64px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
@@ -459,7 +449,7 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
                           <span aria-hidden="true" className="text-orange"> →</span>
                         </span>
                       </span>
-                    </button>
+                    </a>
                   )}
                 </div>
               )}
@@ -478,12 +468,12 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
       <section className="pt-8">
         <div className="wrap">
           <nav aria-label="Хлебные крошки" className="text-[14px] text-slate-soft flex items-center gap-2">
-            <button
-              onClick={() => onBackToHome('#services')}
+            <a
+              href="/#services"
               className="lnk bg-transparent border-0 p-0 font-medium text-slate-soft cursor-pointer"
             >
               Услуги
-            </button>
+            </a>
             <span aria-hidden="true">/</span>
             <span className="text-slate font-medium">{currentService.breadcrumb}</span>
           </nav>
@@ -556,6 +546,8 @@ export const ServiceDetailPage: React.FC<ServiceDetailPageProps> = ({
             <div className="flex justify-center mt-6 md:mt-0">
               <img
                 src={currentService.hero.illustration}
+                srcSet={currentService.hero.illustrationSrcSet}
+                sizes={currentService.hero.illustrationSrcSet ? '(min-width: 1024px) 470px, (min-width: 768px) 43vw, calc(100vw - 32px)' : undefined}
                 alt=""
                 aria-hidden="true"
                 className={`wob select-none ${currentService.hero.illustrationClass}`}

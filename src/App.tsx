@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { AdBanner } from './components/AdBanner';
@@ -14,383 +14,129 @@ import { ServiceDetailPage } from './components/ServiceDetailPage';
 import { CaseDetailPage } from './components/CaseDetailPage';
 import { PolicyPage } from './components/PolicyPage';
 import { ConsentPage } from './components/ConsentPage';
-import { servicesData } from './data/services';
-import { casesList } from './data/cases';
 import { applyTypographerToDOM } from './utils/typography';
+import { resolvePage, type SitePage } from './seo';
+import { updatePageMetadata } from './seoClient';
 
-type AppView = 'home' | 'service-detail' | 'case-detail' | 'policy' | 'consent';
+interface AppProps {
+  initialPage: SitePage;
+  initialAdVisible?: boolean;
+}
 
-const HOME_TITLE = 'Платный трафик для бизнеса, который продаёт | Даниил Винтер';
-const HOME_DESC = 'Платный трафик в контент и воронки. Подписчики в каналы, регистрации на мероприятия и системные тесты креативов.';
+export const App: React.FC<AppProps> = ({ initialPage, initialAdVisible }) => {
+  const [page, setPage] = useState(initialPage);
 
-export const App: React.FC = () => {
-  const [currentView, setCurrentView] = useState<AppView>('home');
-  const [activeServiceSlug, setActiveServiceSlug] = useState<string>('audit');
-  const [activeCaseSlug, setActiveCaseSlug] = useState<string>('kontur-extern');
-
-  const updateSEO = (title: string, description: string) => {
-    document.title = title;
-    let meta = document.querySelector('meta[name="description"]');
-    if (!meta) {
-      meta = document.createElement('meta');
-      meta.setAttribute('name', 'description');
-      document.head.appendChild(meta);
-    }
-    meta.setAttribute('content', description);
-  };
-
-  // Run typography formatting across all rendered text nodes and watch dynamic updates
   useEffect(() => {
+    updatePageMetadata(page);
     applyTypographerToDOM();
 
     let timeoutId: number | undefined;
     const observer = new MutationObserver(() => {
-      if (timeoutId) clearTimeout(timeoutId);
-      timeoutId = window.setTimeout(() => {
-        applyTypographerToDOM();
-      }, 50);
+      clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(applyTypographerToDOM, 50);
     });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true,
-      characterData: true,
-    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
 
     return () => {
-      if (timeoutId) clearTimeout(timeoutId);
+      clearTimeout(timeoutId);
       observer.disconnect();
     };
-  }, [currentView, activeServiceSlug, activeCaseSlug]);
+  }, [page]);
 
-  // Sync routing on mount, popstate and hashchange
+  function syncLocation(scroll = true) {
+    const { page: nextPage, anchor, removed } = resolvePage(location.pathname, location.hash);
+    if (removed) history.replaceState(null, '', '/');
+    setPage(nextPage);
+
+    if (anchor) {
+      requestAnimationFrame(() => {
+        document.getElementById(anchor.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+      });
+    } else if (scroll) {
+      window.scrollTo(0, 0);
+    }
+  }
+
+  function navigate(href: string) {
+    history.pushState(null, '', href);
+    syncLocation();
+  }
+
   useEffect(() => {
-    const handleLocationChange = () => {
-      const path = window.location.pathname.toLowerCase();
-      const hash = window.location.hash.toLowerCase();
-      const fullUrl = path + hash;
+    function onLocationChange() {
+      syncLocation();
+    }
 
-      // Check 301/client-side redirects for removed cases:
-      if (
-        fullUrl.includes('conference') ||
-        fullUrl.includes('accountants') ||
-        fullUrl.includes('webinar') ||
-        fullUrl.includes('kontur-elba') ||
-        hash === '#case-elba' ||
-        path.endsWith('/case-elba.html')
-      ) {
-        window.history.replaceState(null, '', '/');
-        setCurrentView('home');
-        updateSEO(HOME_TITLE, HOME_DESC);
-        window.scrollTo(0, 0);
-        return;
-      }
+    function onLinkClick(event: MouseEvent) {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest('a') : null;
+      const href = link?.getAttribute('href');
+      if (!href?.startsWith('/') || href.startsWith('//') || link?.target || link?.hasAttribute('download')) return;
 
-      // Check Policy route (/policy, #/policy, /privacy)
-      if (
-        path === '/policy' ||
-        path === '/privacy' ||
-        path.endsWith('/policy.html') ||
-        hash === '#/policy' ||
-        hash === '#policy' ||
-        hash === '#/privacy' ||
-        hash === '#privacy'
-      ) {
-        setCurrentView('policy');
-        updateSEO(
-          'Политика конфиденциальности | Даниил Винтер',
-          'Политика в отношении обработки персональных данных ИП Винтер Даниил Денисович.'
-        );
-        window.scrollTo(0, 0);
-        return;
-      }
+      const target = new URL(href, location.origin);
+      if (resolvePage(target.pathname, target.hash).page.view === 'not-found') return;
+      event.preventDefault();
+      navigate(href);
+    }
 
-      // Check Consent route (/soglasie, #/soglasie, /consent)
-      if (
-        path === '/soglasie' ||
-        path === '/consent' ||
-        path.endsWith('/soglasie.html') ||
-        hash === '#/soglasie' ||
-        hash === '#soglasie' ||
-        hash === '#/consent' ||
-        hash === '#consent'
-      ) {
-        setCurrentView('consent');
-        updateSEO(
-          'Согласие на обработку персональных данных | Даниил Винтер',
-          'Согласие на обработку персональных данных ИП Винтер Даниил Денисович.'
-        );
-        window.scrollTo(0, 0);
-        return;
-      }
-
-      // 0. Home Section Anchor Matcher (#cases, #services, #about, #process, #reviews, #faq, #contact, #top)
-      const homeSections = ['#cases', '#services', '#about', '#process', '#reviews', '#faq', '#contact', '#top'];
-      if (homeSections.includes(hash)) {
-        setCurrentView('home');
-        updateSEO(HOME_TITLE, HOME_DESC);
-        setTimeout(() => {
-          if (hash === '#top') {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-          } else {
-            const el = document.querySelector(hash);
-            if (el) el.scrollIntoView({ behavior: 'smooth' });
-            else window.scrollTo({ top: 0, behavior: 'smooth' });
-          }
-        }, 50);
-        return;
-      }
-
-      // 1. Service Route Matcher (/services/*, #/services/*, #service-*, *.html)
-      const isServiceRoute =
-        path.startsWith('/services/') ||
-        hash.startsWith('#/services/') ||
-        hash.startsWith('#service-') ||
-        path.endsWith('audit.html') ||
-        path.endsWith('yandex-direct.html') ||
-        path.endsWith('vk-ads.html') ||
-        path.endsWith('telegram-ads.html') ||
-        path.endsWith('direct-landing-telegram.html') ||
-        path.endsWith('max.html') ||
-        path.endsWith('bot-funnels.html');
-
-      if (isServiceRoute) {
-        let slug = 'audit';
-        if (fullUrl.includes('yandex-direct') || (fullUrl.includes('direct') && !fullUrl.includes('landing'))) {
-          slug = 'yandex-direct';
-        } else if (fullUrl.includes('direct-landing-telegram') || fullUrl.includes('direct-landing') || fullUrl.includes('landing-telegram')) {
-          slug = 'direct-landing-telegram';
-        } else if (fullUrl.includes('vk-ads') || fullUrl.includes('vk')) {
-          slug = 'vk-ads';
-        } else if (fullUrl.includes('telegram-ads') || fullUrl.includes('tg-ads')) {
-          slug = 'telegram-ads';
-        } else if (fullUrl.includes('max')) {
-          slug = 'max';
-        } else if (fullUrl.includes('bot-funnels') || fullUrl.includes('bots') || fullUrl.includes('funnel')) {
-          slug = 'bot-funnels';
-        } else if (fullUrl.includes('audit')) {
-          slug = 'audit';
-        }
-
-        const foundService = servicesData.find((s) => s.slug === slug) || servicesData[0];
-        setActiveServiceSlug(foundService.slug);
-        setCurrentView('service-detail');
-        updateSEO(foundService.title, foundService.description);
-        window.scrollTo(0, 0);
-        return;
-      }
-
-      // 2. Case Route Matcher (/cases/*, #/cases/*, #case-*, case-*.html)
-      const isCaseRoute =
-        path.startsWith('/cases/') ||
-        hash.startsWith('#/cases/') ||
-        hash.startsWith('#case-') ||
-        path.includes('case-');
-
-      if (isCaseRoute) {
-        let slug = 'kontur-extern';
-        if (fullUrl.includes('b2b-service') || fullUrl.includes('case-b2b-service')) {
-          slug = 'b2b-service';
-        } else if (fullUrl.includes('online-school') || fullUrl.includes('case-online-school') || fullUrl.includes('school')) {
-          slug = 'online-school';
-        } else if (fullUrl.includes('expert-b2b') || fullUrl.includes('case-expert-b2b') || (fullUrl.includes('expert') && !fullUrl.includes('extern'))) {
-          slug = 'expert-b2b';
-        } else if (fullUrl.includes('lead-magnet') || fullUrl.includes('html-lead') || fullUrl.includes('case-html-lead-magnet')) {
-          slug = 'html-academy-lead-magnet';
-        } else if (fullUrl.includes('collab') || fullUrl.includes('html-collab') || fullUrl.includes('case-html-collab')) {
-          slug = 'html-academy-collab';
-        } else if (fullUrl.includes('extern') || fullUrl.includes('case-extern')) {
-          slug = 'kontur-extern';
-        }
-
-        const foundCase = casesList.find((c) => c.slug === slug) || casesList[0];
-        setActiveCaseSlug(foundCase.slug);
-        setCurrentView('case-detail');
-        updateSEO(foundCase.titleMeta, foundCase.descriptionMeta);
-        window.scrollTo(0, 0);
-        return;
-      }
-
-      // 3. Home Route
-      setCurrentView('home');
-      updateSEO(HOME_TITLE, HOME_DESC);
-    };
-
-    handleLocationChange();
-    window.addEventListener('popstate', handleLocationChange);
-    window.addEventListener('hashchange', handleLocationChange);
-
-    const handleDocumentClick = (e: MouseEvent) => {
-      const target = (e.target as HTMLElement).closest('a');
-      if (!target) return;
-      const href = target.getAttribute('href');
-      if (!href) return;
-      if (
-        href.startsWith('http://') ||
-        href.startsWith('https://') ||
-        href.startsWith('mailto:') ||
-        href.startsWith('tel:')
-      ) {
-        return;
-      }
-      if (href.startsWith('#')) return;
-      if (
-        href.startsWith('/services/') ||
-        href.startsWith('/cases/') ||
-        href === '/policy' ||
-        href === '/soglasie' ||
-        href === '/privacy' ||
-        href === '/consent' ||
-        href.endsWith('.html') ||
-        href === '/'
-      ) {
-        e.preventDefault();
-        window.history.pushState(null, '', href);
-        handleLocationChange();
-      }
-    };
-    document.addEventListener('click', handleDocumentClick);
-
+    syncLocation(false);
+    window.addEventListener('popstate', onLocationChange);
+    window.addEventListener('hashchange', onLocationChange);
+    document.addEventListener('click', onLinkClick);
     return () => {
-      window.removeEventListener('popstate', handleLocationChange);
-      window.removeEventListener('hashchange', handleLocationChange);
-      document.removeEventListener('click', handleDocumentClick);
+      window.removeEventListener('popstate', onLocationChange);
+      window.removeEventListener('hashchange', onLocationChange);
+      document.removeEventListener('click', onLinkClick);
     };
   }, []);
 
-  const navigateToHome = (hash?: string) => {
-    setCurrentView('home');
-    updateSEO(HOME_TITLE, HOME_DESC);
-    if (hash && hash !== '#top' && hash !== '#') {
-      if (window.location.pathname !== '/' && window.location.pathname !== '') {
-        window.history.pushState(null, '', `/${hash}`);
-      } else {
-        window.location.hash = hash;
-      }
-      setTimeout(() => {
-        const el = document.querySelector(hash);
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-        else window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 50);
-    } else {
-      if (window.location.pathname !== '/' && window.location.pathname !== '') {
-        window.history.pushState(null, '', '/');
-      } else {
-        if (window.location.hash) {
-          window.history.pushState(null, '', window.location.pathname);
-        }
-      }
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
+  function navigateHome(hash = '') {
+    navigate(hash === '#top' ? '/' : `/${hash}`);
+  }
 
-  const navigateToService = (slug: string) => {
-    const found = servicesData.find((s) => s.slug === slug) || servicesData[0];
-    setActiveServiceSlug(found.slug);
-    setCurrentView('service-detail');
-    updateSEO(found.title, found.description);
-    window.history.pushState(null, '', `/services/${found.slug}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToCase = (slug: string) => {
-    const found = casesList.find((c) => c.slug === slug) || casesList[0];
-    setActiveCaseSlug(found.slug);
-    setCurrentView('case-detail');
-    updateSEO(found.titleMeta, found.descriptionMeta);
-    window.history.pushState(null, '', `/cases/${found.slug}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToPolicy = () => {
-    setCurrentView('policy');
-    updateSEO(
-      'Политика конфиденциальности | Даниил Винтер',
-      'Политика в отношении обработки персональных данных ИП Винтер Даниил Денисович.'
-    );
-    window.history.pushState(null, '', '/policy');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const navigateToConsent = () => {
-    setCurrentView('consent');
-    updateSEO(
-      'Согласие на обработку персональных данных | Даниил Винтер',
-      'Согласие на обработку персональных данных ИП Винтер Даниил Денисович.'
-    );
-    window.history.pushState(null, '', '/soglasie');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  let content: React.ReactNode;
+  switch (page.view) {
+    case 'policy':
+      content = <PolicyPage onBackToHome={navigateHome} onOpenConsent={() => navigate('/soglasie')} />;
+      break;
+    case 'consent':
+      content = <ConsentPage onBackToHome={navigateHome} onOpenPolicy={() => navigate('/policy')} />;
+      break;
+    case 'service-detail':
+      content = <ServiceDetailPage serviceSlug={page.slug!} />;
+      break;
+    case 'case-detail':
+      content = <CaseDetailPage caseSlug={page.slug!} />;
+      break;
+    case 'not-found':
+      content = (
+        <section className="wrap py-20">
+          <h1 className="text-[40px] font-bold">Страница не найдена</h1>
+          <a href="/" className="lnk">На главную</a>
+        </section>
+      );
+      break;
+    default:
+      content = (
+        <>
+          <HeroSection />
+          <AdBanner initialVisible={initialAdVisible} />
+          <AboutSection />
+          <ServicesSection />
+          <CasesSection />
+          <ProcessSection />
+          <ReviewsSection />
+          <FaqSection />
+          <ContactSection />
+        </>
+      );
+  }
 
   return (
     <div id="top" className="min-h-screen bg-paper text-slate flex flex-col font-sans">
-      {/* 1. Sticky Navigation Header */}
-      <Header
-        currentView={currentView}
-        onNavigateHome={navigateToHome}
-      />
-
-      {/* 2. Main View Router */}
-      <main className="flex-1">
-        {currentView === 'policy' ? (
-          <PolicyPage
-            onBackToHome={navigateToHome}
-            onOpenConsent={navigateToConsent}
-          />
-        ) : currentView === 'consent' ? (
-          <ConsentPage
-            onBackToHome={navigateToHome}
-            onOpenPolicy={navigateToPolicy}
-          />
-        ) : currentView === 'service-detail' ? (
-          <ServiceDetailPage
-            serviceSlug={activeServiceSlug}
-            onBackToHome={navigateToHome}
-            onOpenCase={navigateToCase}
-            onOpenService={navigateToService}
-            onOpenPrivacy={navigateToPolicy}
-          />
-        ) : currentView === 'case-detail' ? (
-          <CaseDetailPage
-            caseSlug={activeCaseSlug}
-            onBackToHome={navigateToHome}
-            onSelectCase={navigateToCase}
-            onOpenPrivacy={navigateToPolicy}
-          />
-        ) : (
-          <>
-            {/* 1. Первый экран */}
-            <HeroSection />
-
-            {/* 2. Рекламная плашка */}
-            <AdBanner />
-
-            {/* 3. Обо мне */}
-            <AboutSection />
-
-            {/* 4. Услуги */}
-            <ServicesSection onOpenService={navigateToService} />
-
-            {/* 5. Кейсы (тёмная секция #263C2C) */}
-            <CasesSection onOpenCase={navigateToCase} />
-
-            {/* 6. Как работаю */}
-            <ProcessSection />
-
-            {/* 7. Отзывы */}
-            <ReviewsSection />
-
-            {/* 8. FAQ */}
-            <FaqSection />
-
-            {/* 9. Давайте работать вместе */}
-            <ContactSection onOpenPrivacy={navigateToPolicy} />
-          </>
-        )}
-      </main>
-
-      {/* 3. Футер (сливовый #36202C) */}
-      <Footer onOpenPrivacy={navigateToPolicy} />
+      <Header currentView={page.view} onNavigateHome={navigateHome} />
+      <main className="flex-1">{content}</main>
+      <Footer />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { faqData, siteConfig, FaqItem } from '../data/content';
 
 export interface FaqSectionProps {
@@ -16,14 +16,6 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
   items = faqData,
   showCactus = true,
 }) => {
-  const [openIndices, setOpenIndices] = useState<number[]>([0]);
-
-  const toggleIndex = (index: number) => {
-    setOpenIndices((prev) =>
-      prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
-    );
-  };
-
   const defaultSubtitle = (
     <>
       Не нашли ответ —{' '}
@@ -55,6 +47,8 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
             {showCactus && (
               <img
                 src="/assets/cactus.webp"
+                loading="lazy"
+                decoding="async"
                 alt=""
                 aria-hidden="true"
                 className="wob hidden md:block mt-12 w-[190px] h-auto select-none rotate-[4deg]"
@@ -64,49 +58,36 @@ export const FaqSection: React.FC<FaqSectionProps> = ({
 
           {/* Right Column: Accordion Items */}
           <div className="md:col-span-8 flex flex-col gap-3">
-            {items.map((item, idx) => {
-              const isOpen = openIndices.includes(idx);
-              return (
-                <div
-                  key={idx}
-                  className="bg-white border-[1.5px] border-slate rounded-faq overflow-hidden transition-all"
-                >
-                  <button
-                    type="button"
-                    onClick={() => toggleIndex(idx)}
-                    aria-expanded={isOpen}
-                    className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer bg-transparent border-0"
+            {items.map((item, idx) => (
+              <details
+                key={item.question}
+                open={idx === 0}
+                className="group bg-white border-[1.5px] border-slate rounded-faq overflow-hidden"
+              >
+                <summary className="w-full flex items-center justify-between gap-4 p-5 sm:p-6 text-left cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+                  <span className="text-[18px] sm:text-[20px] leading-[1.3] font-semibold text-slate">
+                    {item.question}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="flex-shrink-0 w-9 h-9 rounded-pill bg-orange text-white inline-flex items-center justify-center transition-transform duration-200 group-open:rotate-45"
                   >
-                    <span className="text-[18px] sm:text-[20px] leading-[1.3] font-semibold text-slate">
-                      {item.question}
-                    </span>
-
-                    <span
-                      aria-hidden="true"
-                      className={`flex-shrink-0 w-9 h-9 rounded-pill bg-orange text-white inline-flex items-center justify-center transition-transform duration-200 ${
-                        isOpen ? 'rotate-45' : 'rotate-0'
-                      }`}
-                    >
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path
-                          d="M7 1v12M1 7h12"
-                          stroke="#FFFFFF"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-
-                  {isOpen && (
-                    <div
-                      className="px-5 sm:px-6 pb-6 pt-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate max-w-[700px] animate-in fade-in duration-150"
-                      dangerouslySetInnerHTML={{ __html: item.answer }}
-                    />
-                  )}
-                </div>
-              );
-            })}
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                      <path
+                        d="M7 1v12M1 7h12"
+                        stroke="#FFFFFF"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                </summary>
+                <div
+                  className="px-5 sm:px-6 pb-6 pt-0 text-[16px] sm:text-[17px] leading-[1.55] text-slate max-w-[700px] animate-in fade-in duration-150"
+                  dangerouslySetInnerHTML={{ __html: item.answer }}
+                />
+              </details>
+            ))}
           </div>
         </div>
       </div>

@@ -4,15 +4,11 @@ import { ContactSection } from './ContactSection';
 
 interface CaseDetailPageProps {
   caseSlug: string;
-  onBackToHome: (hash?: string) => void;
-  onSelectCase: (slug: string) => void;
   onOpenPrivacy?: () => void;
 }
 
 export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
   caseSlug,
-  onBackToHome,
-  onSelectCase,
   onOpenPrivacy,
 }) => {
   const currentCase: CaseData =
@@ -50,12 +46,12 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
       <section className="pt-8">
         <div className="wrap">
           <nav aria-label="Хлебные крошки" className="text-[14px] text-slate-soft flex items-center gap-2">
-            <button
-              onClick={() => onBackToHome('#cases')}
+            <a
+              href="/#cases"
               className="lnk bg-transparent border-0 p-0 font-medium text-slate-soft cursor-pointer"
             >
               Кейсы
-            </button>
+            </a>
             <span aria-hidden="true">/</span>
             <span className="text-slate font-medium">{currentCase.breadcrumb}</span>
           </nav>
@@ -89,6 +85,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             <div className="flex justify-center mt-6 md:mt-0">
               <img
                 src={currentCase.heroIllustration}
+                srcSet={currentCase.heroIllustrationSrcSet}
+                sizes={currentCase.heroIllustrationSrcSet ? '(min-width: 768px) 420px, 280px' : undefined}
                 alt=""
                 aria-hidden="true"
                 className={`wob select-none ${currentCase.heroIllustrationClass}`}
@@ -177,6 +175,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             <figure className="tbl m-0 inline-block max-w-full bg-white border-[1.5px] border-slate rounded-card p-4">
               <img
                 src={currentCase.stats.image.file}
+                loading="lazy"
+                decoding="async"
                 alt={currentCase.stats.image.alt}
                 width={currentCase.stats.image.width}
                 height={currentCase.stats.image.height}
@@ -287,6 +287,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                     <div className="flex justify-center bg-[#f7f5f2] rounded-input border border-line p-2 overflow-hidden">
                       <img
                         src={card.image}
+                        loading="lazy"
+                        decoding="async"
                         alt={card.imageAlt}
                         className="max-h-[220px] sm:max-h-[240px] w-auto h-auto object-contain rounded"
                       />
@@ -350,6 +352,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                     >
                       <img
                         src={cr.image}
+                        loading="lazy"
+                        decoding="async"
                         alt={cr.alt}
                         className="w-full h-auto rounded-xl"
                       />
@@ -379,6 +383,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <figure className="m-0 bg-white border-[1.5px] border-slate rounded-card p-5">
                   <img
                     src={currentCase.figure.image}
+                    loading="lazy"
+                    decoding="async"
                     alt={currentCase.figure.alt}
                     className="w-full h-auto"
                   />
@@ -418,6 +424,8 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 <img
                   key={idx}
                   src={g.image}
+                  loading="lazy"
+                  decoding="async"
                   alt={g.alt}
                   className="w-full h-auto border-[1.5px] border-slate rounded-2xl"
                 />
@@ -466,17 +474,16 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
             <h2 className="h2 m-0 text-[28px] sm:text-[32px] leading-[1.15] font-bold tracking-[-0.015em] text-slate">
               Следующий кейс
             </h2>
-            <button
-              onClick={() => onBackToHome('#cases')}
+            <a
+              href="/#cases"
               className="lnk text-[17px] font-semibold text-slate bg-transparent border-0 cursor-pointer p-0"
             >
               Все кейсы
-            </button>
+            </a>
           </div>
 
-          <button
-            type="button"
-            onClick={() => onSelectCase(currentCase.nextCase.slug)}
+          <a
+            href={`/cases/ + slug + `}
             className="w-full text-left case-link bg-white border-[1.5px] border-slate rounded-card p-6 sm:p-8 cursor-pointer no-underline text-slate hover:border-orange transition-colors"
           >
             <span className="case-num text-[56px] sm:text-[64px] md:text-[72px] leading-none font-bold tracking-[-0.04em] text-orange tabular-nums">
@@ -490,7 +497,7 @@ export const CaseDetailPage: React.FC<CaseDetailPageProps> = ({
                 {currentCase.nextCase.text}
               </span>
             </span>
-          </button>
+          </a>
         </div>
       </section>
 
